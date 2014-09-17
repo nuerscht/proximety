@@ -1,0 +1,65 @@
+% Anpassung an deutsche Sprache
+% Umlaute ----------------------------------------------------------------------
+%   Umlaute/Sonderzeichen wie äüöß direkt im Quelltext verwenden (CodePage).
+%   Erlaubt automatische Trennung von Worten mit Umlauten.
+% ------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+% Code support
+\usepackage{listings}
+
+% Seitenränder und Zeilenabstände
+\usepackage{geometry}
+\usepackage{setspace}
+
+% Schriften und Farben
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl} % Für farbige Tabellen
+\usepackage[default,osfigures,scale=1]{opensans} % Select font
+
+% Textumgebungen
+\usepackage{multicol} % Text in mehreren Kolumnen darstellen
+
+% Tabellen
+\usepackage{hhline}
+\usepackage{array}
+\usepackage{longtable}
+
+% Floatbarrier 
+\usepackage{placeins} 
+% Hyperrefs und PDF Information
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Tabellen
+\usepackage{booktabs}
+
+% Inhaltsverzeichnis umbenennen
+\usepackage{tocbibind}
+
+% Listen
+\usepackage[ampersand]{easylist} % Einfache Liste Umgebung
+% http://en.wikibooks.org/wiki/LaTeX/List_Structures
+
+% Kopf und Fusszeilen
+\usepackage{fancyhdr}
+
+% Grafiken und Textbausteine
+\usepackage[absolute]{textpos} % Absolue Positionierung
+%\usepackage[dvips,final]{graphicx} % Einbinden von JPG-Grafiken ermöglichen für
+%dvi format
+\usepackage[pdftex]{graphicx}
+\usepackage{graphics} % keepaspectratio
+\usepackage{floatflt} % zum Umfließen von Bildern
+\graphicspath{{bilder/}} % hier liegen die Bilder des Dokuments
+
+% Mathe
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Acronym Support
+\usepackage[printonlyused]{acronym}

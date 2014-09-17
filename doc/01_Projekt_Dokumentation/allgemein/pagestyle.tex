@@ -1,0 +1,37 @@
+% Setzen der Seitenränder
+\geometry{top=30mm,left=30mm,right=30mm,bottom=35mm,a4paper}
+\setlength{\marginparwidth}{20mm}
+
+% Kein Einzug
+\setlength{\parindent}{0cm} 
+
+% Konfiguration für das textpos
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{\TPHorizModule}
+\textblockorigin{0mm}{0mm}
+
+% Kopf und Fusszeilen
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancy}
+
+% Hyperref
+\hypersetup{
+    bookmarks=false,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={\titel},    % title
+    pdfauthor={\autor},     % author
+    pdfsubject={\untertitel},   % subject of the document
+    pdfcreator={LaTex},   % creator of the document
+    pdfproducer={TeXEclipse}, % producer of the document
+    %pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links (change box color with linkbordercolor)
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black           % color of external links
+}

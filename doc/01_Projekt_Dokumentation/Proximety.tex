@@ -1,0 +1,68 @@
+
+%------------------------------------------------
+% Semesterarbeit ESA
+% 
+% Autor:	Sandro Dallo sandro.dallo@students.ffhs.ch, Patrick Bösch patrick.boesch@students.ffhs.ch
+%			Jonas Alder jonas.alder@students.ffhs.ch, Andy Villiger andy.villiger@students.ffhs.ch
+% Datum:	17.09.2014
+%
+% Version:	1.0
+%
+%------------------------------------------------
+
+%-- Preamble ------------------------------------
+\documentclass[10pt,a4paper,twoside]{article}
+
+%-- Nur für Debugging
+%\usepackage{showframe}
+\usepackage{blindtext}
+\usepackage{url} % Bibtext url
+
+%-- Import packages -----------------------------
+\input{allgemein/packages.tex}
+%-- Import Dokumenten Infos ---------------------
+\input{documentinfo.tex}
+%-- Import Seitenstil ---------------------------
+\input{allgemein/pagestyle.tex}
+%-- Import Definitions --------------------------
+\input{allgemein/definitionen.tex}
+%-- Import Kopf und Fusszeilen ------------------
+\input{allgemein/kopffusszeilen.tex}
+%-- Import Kommandos und Environments -----------
+\input{allgemein/commands.tex}
+%-- Import Tabellendefinitionen -----------
+\input{allgemein/tabellen.tex}
+%-- Tabllenabstände
+%\setlength{\tabcolsep}{10mm} % Column
+\renewcommand{\arraystretch}{1.5} % Row
+% -- Code Styling -------------------------------
+\definecolor{lightgray}{RGB}{224,224,224}
+\begin{document}
+%-- Deckblatt -----------------------------------
+\input{allgemein/deckblatt.tex}
+% Dokumentenverlauf
+\input{history.tex}
+%-- Inhaltsverzeichnis --------------------------
+\tableofcontents
+\newpage 
+%-- Allgemeines --------------------------
+\section{Allgemeines}
+\input{allgemeines.tex}
+%-- Anforderungen --------------------------
+\section{Anforderungen}
+\input{anforderungen.tex}
+%-- Use Cases --------------------------
+\section{Use Cases}
+\input{usecases.tex}
+%--- Appendix -------------------
+\newpage
+\appendix
+\listoffigures
+\listoftables
+
+%-- Import Literature ----
+\newpage
+\renewcommand{\refname}{Quellenverzeichnis} 
+\bibliography{allgemein/literatur}
+\bibliographystyle{alpha}
+\end{document}

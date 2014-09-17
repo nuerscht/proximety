@@ -1,0 +1,67 @@
+%----------------------------------------------------------
+% Allgemeine Latex commands, enviroments etc...
+% gehören in dieses Dokumentenfragment.
+%----------------------------------------------------------
+
+%-- Abbildungsverzeichnis ---------------------------------
+\renewcommand{\listoffigures}{%
+\begingroup
+  \tocsection
+  \tocfile{\listfigurename}{lof}
+\endgroup}
+%-- Abbildungsverzeichnis ---------------------------------
+\renewcommand{\listoftables}{%
+\begingroup
+  \tocsection
+  \tocfile{\listtablename}{lot}
+\endgroup}
+%-- Listings ---------------------------------------------
+\renewcommand{\lstlistingname}{Code}
+\renewcommand{\lstlistlistingname}{Codelistings}
+\renewcommand{\lstlistoflistings}{%
+\begingroup
+  \tocsection
+  \tocfile{\lstlistlistingname}{lol}
+\endgroup}
+
+%-- Aufgabe mit Trennlinie --------------------------------
+\newcounter{cntaufgabe}
+\newcounter{cntfrage}
+\setcounter{cntfrage}{1}
+\newcommand{\resetaufgabe}{%
+\par
+\vspace{10mm}
+\leftskip=0cm
+\setcounter{cntfrage}{1}
+}
+\newcommand{\aufgabe}[1]{%
+\stepcounter{cntaufgabe}
+\resetaufgabe
+\vspace{2ex}
+\begin{tabular}{ r p{0.8\textwidth} }
+\textbf{\thecntaufgabe} &
+\textbf{#1}
+\end{tabular}
+\vspace{1mm}
+\hrule
+\vspace{2ex}%
+}
+%-- Frage mit Trennlinie --------------------------------
+\newcommand{\frage}[1]{%
+\par
+ \vspace{5mm}
+\leftskip=1.4cm
+\begin{tabular}{ r p{0.8\textwidth} }
+\alph{cntfrage}) &
+\textit{#1}
+\end{tabular}
+\vspace{1mm}
+\par
+\leftskip=2.35cm
+\stepcounter{cntfrage}
+}
+%-- new paragraph ------------
+\newcommand{\vpar}{
+\par
+\vspace{1ex}
+}

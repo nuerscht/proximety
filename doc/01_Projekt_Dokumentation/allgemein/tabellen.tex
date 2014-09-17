@@ -1,0 +1,82 @@
+% Definieren von Tabellen und Boxes Umgebung
+% UseCase Tables
+\newenvironment{usecase}%
+{%
+\setlength{\tabcolsep}{5pt}
+%\renewcommand{\arraystretch}{2.5}
+\centering
+\begin{longtable}{|l|p{9cm}|}
+\arrayrulecolor{black}
+\hline
+}{%
+\end{longtable}
+}%
+\newcommand{\ucElement}[2]{%
+\textbf{#1} & #2 \\
+\hline
+}
+% Tabellen definieren
+\newenvironment{deftab}[3]%
+{%
+\setlength{\tabcolsep}{20pt}
+\renewcommand{\arraystretch}{1.5}
+\def\cap{#2}
+\def\lab{#3}
+\begin{table}[!htbp]
+\footnotesize
+\begin{center}
+\begin{longtable}{#1}
+}{%
+\end{longtable}
+\end{center}
+\caption{\cap} % Text unter Tabelle
+\label{table:\lab} % Referenz der Tabelle \ref{table:xyz}
+\end{table}
+\FloatBarrier % Sicherstellen das alles weitere nach der Tabelle kommt
+}%
+% -------------------------------------------------------
+% Boxes
+% Warnbox
+\newsavebox{\wbox}
+\newenvironment{warnbox}[1][]
+  {%
+   \setlength{\fboxsep}{8pt}
+   \setlength{\fboxrule}{1pt}
+   \footnotesize
+   \newcommand\colboxcolor{#1}%
+   \begin{lrbox}{\wbox}%
+   \begin{minipage}[c]{0.9\textwidth}%   
+ }{%
+  \end{minipage}
+  \end{lrbox}%
+   \begin{center}
+   \fcolorbox{warning-line}{warning}{\usebox{\wbox}}
+\end{center}}
+% Errorbox
+\newsavebox{\ebox}
+\newenvironment{errorbox}[1][]
+  {%
+   \setlength{\fboxsep}{8pt}
+   \setlength{\fboxrule}{1pt}
+   \footnotesize
+   \newcommand\colboxcolor{#1}%
+   \begin{lrbox}{\ebox}%
+   \begin{minipage}[c]{0.9\textwidth}%
+ }{%
+  \end{minipage}
+  \end{lrbox}%
+   \begin{center}
+   \fcolorbox{error-line}{error}{\usebox{\ebox}}
+\end{center}}
+%-- Tabellen ----------------------------------------------
+\newcolumntype{+}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+#1\ignorespaces
+}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}} % linksbündig mit Breitenangabe
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}} % zentriert mit Breitenangabe
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} % rechtsbündig mit Breitenangabe
+\newcommand{\ltab}{\raggedright\arraybackslash} % Tabellenabschnitt linksbündig
+\newcommand{\ctab}{\centering\arraybackslash} % Tabellenabschnitt zentriert
+\newcommand{\rtab}{\raggedleft\arraybackslash} % Tabellenabschnitt rechtsbündig

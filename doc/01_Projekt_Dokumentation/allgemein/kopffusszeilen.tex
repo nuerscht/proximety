@@ -1,0 +1,27 @@
+\fancyhf{} % Reset aktueller Style
+%-- Header -----------------------
+\fancyhead[LO,RE]{% 
+\includegraphics[scale=0.25]{bilder/allgemein/logo.png}
+}
+\fancyhead[C]{% Header
+\textit{\titel}
+}
+\fancyhead[LE,RO]{%
+\textit{Seite \thepage}
+}
+\renewcommand{\headrule}
+{
+\hrule
+\vspace{1mm}
+}
+%-- Footer -----------------------
+\renewcommand\footrule{\
+\hrule
+\vspace{1mm}
+}%
+\fancyfoot[LO,RE]{% 
+\small{\textit{\today}}
+}
+\fancyfoot[LE,RO]{%
+\small{\textit{\autor}}
+}

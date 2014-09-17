@@ -1,0 +1,4 @@
+# Exclude everything under output
+output/*
+# Include pdf files
+!output/*.pdf

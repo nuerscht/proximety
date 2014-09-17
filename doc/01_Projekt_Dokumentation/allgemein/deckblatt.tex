@@ -1,0 +1,28 @@
+\thispagestyle{empty}
+\newgeometry{top=25mm,left=20mm,right=65mm,bottom=30mm} % Layout für Deckblatt
+\begin{textblock}{1}(155,35)
+\includegraphics[scale=0.25]{bilder/allgemein/deckblatt.png}
+\end{textblock}
+\begin{titlepage}
+\hspace{\fill}
+\vspace{30mm}
+% Titel
+\begin{center}
+\Huge{\textbf{\titel}}\\[4ex]
+\LARGE{\untertitel}\\[6ex]
+\includegraphics[scale=0.2]{../02_Images/proximety.png}\\
+\end{center}
+\vspace{20mm}
+% Autor, Kommentar, Logo etc 
+\begin{flushright}
+\includegraphics[scale=1]{bilder/allgemein/logo.png}\\[2ex]
+\begin{Large}
+\autor\\
+\comment\\
+Version \version\\
+\datum\\
+\end{Large}
+\end{flushright}
+\end{titlepage}
+\restoregeometry % Aktuelles Seitelayout wiederherstellen
+\newpage
