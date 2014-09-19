@@ -2,7 +2,14 @@
 % Allgemeine Latex commands, enviroments etc...
 % gehören in dieses Dokumentenfragment.
 %----------------------------------------------------------
-
+%-- Renew paragraph command -------------------------------
+\makeatletter
+\renewcommand\paragraph{%
+   \@startsection{paragraph}{4}{0mm}%
+      {-\baselineskip}%
+      {.5\baselineskip}%
+      {\normalfont\normalsize\bfseries}}
+\makeatother
 %-- Abbildungsverzeichnis ---------------------------------
 \renewcommand{\listoffigures}{%
 \begingroup
