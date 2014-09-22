@@ -3,6 +3,8 @@
 \newenvironment{usecase}%
 {%
 \setlength{\tabcolsep}{5pt}
+\setlist[itemize]{noitemsep,topsep=0pt,partopsep=0pt}
+\setlist[enumerate]{noitemsep,topsep=0pt,partopsep=0pt}
 %\renewcommand{\arraystretch}{2.5}
 \centering
 \begin{longtable}[H]{|l|p{9cm}|}
@@ -12,7 +14,7 @@
 \end{longtable}
 }%
 \newcommand{\ucElement}[2]{%
-\textbf{#1} & #2 \\
+\textbf{#1} & \mbox{}\par\vspace{-\baselineskip}#2\\
 \hline
 }
 % Tabellen definieren
