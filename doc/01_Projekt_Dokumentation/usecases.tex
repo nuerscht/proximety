@@ -16,7 +16,7 @@
 	\ucElement{Kurzbeschreibung}{Der Benutzer registriert sich am System und erhält Logindaten.}
 	\ucElement{Akteur}{Benutzer}
 	\ucElement{Auslöser}{Der Akteur beginnt mit der Registrierung}
-	\ucElement{Vorbedingungen}{App auf dem Gerät des Benutzers installiert}
+	\ucElement{Vorbedingungen}{}
 	\ucElement{Eingehende Informationen}{E-Mailadresse, Benutzername, Passwort}
 	\ucElement{Ergebnis}{Registrierungsbestätigung}
 	\ucElement{Nachbedingungen}{Benutzerkonto wurde erstellt}
@@ -45,7 +45,7 @@
 	\ucElement{ID}{UC02}
 	\ucElement{Name}{Freundschaftsanfrage versenden}
 	\ucElement{Kurzbeschreibung}{Der Benutzer sendet eine Anfrage an einen anderen Benutzer um ihn seiner persönlichen Freundesliste hinzu zufügen.}
-	\ucElement{Akteur}{Benutzer}
+	\ucElement{Akteur}{Benutzer, angefragter Benutzer}
 	\ucElement{Auslöser}{Der Akteur beginnt mit der Suche nach einem Freund}
 	\ucElement{Vorbedingungen}{Benutzer besitzt einen Account}
 	\ucElement{Eingehende Informationen}{E-Mailadresse oder Benutzername eines Benutzers}
@@ -71,7 +71,7 @@
 	\ucElement{ID}{UC03}
 	\ucElement{Name}{Freundschaft auflösen}
 	\ucElement{Kurzbeschreibung}{Der Benutzer entfernt einen anderen Benutzer von seiner Freundesliste}
-	\ucElement{Akteur}{Benutzer}
+	\ucElement{Akteur}{Benutzer, Freund}
 	\ucElement{Auslöser}{Der Akteur möchte einen Freund aus seiner Liste entfernen.}
 	\ucElement{Vorbedingungen}{ %
 		\begin{itemize}
@@ -80,7 +80,7 @@
 		\end{itemize}
 		}
 	\ucElement{Eingehende Informationen}{Der zu entfernende Freund}
-	\ucElement{Ergebnis}{Benachrichtigung an beide Benutzer}
+	\ucElement{Ergebnis}{Benachrichtigung an Benutzer und Freund}
 	\ucElement{Nachbedingungen}{Akteur und ausgewählter Benutzer sind keine Freunde mehr.}
 	\ucElement{Ablauf}{%
 		\begin{enumerate}
@@ -136,7 +136,7 @@
 	\ucElement{ID}{UC05}
 	\ucElement{Name}{Proximity Alarm}
 	\ucElement{Kurzbeschreibung}{Benachrichtigung falls sich zwei Benutzer in definierter (oder weniger) Distanz zueinander befinden.}
-	\ucElement{Akteur}{System}
+	\ucElement{Akteur}{Benutzer, Freund}
 	\ucElement{Auslöser}{System ermittelt Distanz zwischen Benutzern unter definiertem Schwellwert.}
 	\ucElement{Vorbedingungen}{ %
 		\begin{itemize}
@@ -193,7 +193,7 @@
 \ucElement{Kurzbeschreibung}{Benutzer kann für jeden Freund Einstellungen anpassen (Tracking ein/aus, Distanz)}
 \ucElement{Akteur}{Benutzer}
 \ucElement{Auslöser}{Benutzer möchte Einstellungen ändern}
-\ucElement{Vorbedingungen}{Beide Benutzer sind Freunde}
+\ucElement{Vorbedingungen}{}
 \ucElement{Eingehende Informationen}{Gewünschte Einstellungen}
 \ucElement{Ergebnis}{Einstellungen sind angepasst}
 \ucElement{Nachbedingungen}{}
