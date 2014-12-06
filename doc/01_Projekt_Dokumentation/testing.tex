@@ -1,0 +1,29 @@
+\subsection{Testing}
+In diesem Kapitel werden die Testing Ideen gesammelt und erläutert sowie die zu verwendenden Resourcen definiert.
+
+\subsubsection{Test Ideen und Vorgehen}
+Unit-Tests können für kritische oder komplexe Komponenten verwendet werden sind aber keine Pflicht (in absprache mit dem Dozenten). 
+Im Allgemeinen wollen wir uns auf die System und UI Tests fokussieren um den Aufwand des Projekts im Rahmen zu halten.
+
+Manualle Tests sind zwar üblicherweise einfach zu erstellen, müssen oder sollten aber bei jeder Änderung des Projekts wiederholt werden. Dies führt schnell zu viel Aufwand, darum sollen alle Tests so weit als möglich automatisiert werden.
+
+Als Richtlinie sollen alle definierten Use Cases mit mindestens einem Test Case abgedeckt werden. Um die ortsabhängigen Fälle zu prüfen soll die Android Mock Location Funktionalität verwendet werden (siehe \ref{test_resources})
+Des weitern soll die Validierung bei allen Eingabemöglichkeiten mit positiven sowie negativen Tests geprüft werden.
+
+Server Kommunikation?! Wie können wir das Mocken? Mock Services?
+
+\subsubsection{Test Resourcen}
+\label{test_resources}
+Android UI Automation: \url{http://developer.android.com/tools/testing/testing_ui.html}
+
+Fake/Mock Locations: \url{http://developer.android.com/training/location/location-testing.html}
+
+Als Test-Geräte wird der Android Emulator (Android 4.4) sowie die vorhandenen Gertäte der Projektmitglieder verwendet. 
+Folgende sind Geräte sind verfügbar:
+- Google/LG Nexus 5 (Android 5.0)
+- Samsung Galaxy Note 6 (Android 4.4)
+- Samsung Galaxy Nexus (Android 4.3)
+
+
+\subsubsection{Test Cases}
+Folgen..
