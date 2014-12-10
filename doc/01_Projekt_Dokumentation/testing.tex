@@ -1,22 +1,23 @@
 In diesem Kapitel werden die Testing Ideen gesammelt und erläutert sowie die zu verwendenden Resourcen definiert.
 
 \subsection{Test Ideen und Vorgehen}
-Unit-Tests können für kritische oder komplexe Komponenten verwendet werden sind aber keine Pflicht (in absprache mit dem Dozenten). 
+Unit-Tests können für kritische oder komplexe Komponenten verwendet werden sind aber keine Pflicht (in Absprache mit dem Dozenten). 
 Im Allgemeinen wollen wir uns auf die System und UI Tests fokussieren um den Aufwand des Projekts im Rahmen zu halten.
 
 \medskip
-Manualle Tests sind zwar üblicherweise einfach zu erstellen, müssen oder sollten aber bei jeder Änderung des Projekts wiederholt werden. Dies führt schnell zu viel Aufwand, darum sollen alle Tests so weit als möglich automatisiert werden.
+Manuelle Tests sind zwar üblicherweise einfach zu erstellen, müssen oder sollten aber bei jeder Änderung des Projekts wiederholt werden. Dies führt schnell zu viel Aufwand, darum sollen alle Tests so weit als möglich automatisiert werden.
 
 \medskip
 Als Richtlinie sollen alle definierten Use Cases mit mindestens einem Test Case abgedeckt werden. Um die ortsabhängigen Fälle zu prüfen soll die Android Mock Location Funktionalität verwendet werden (siehe Resourcen Abschnitt~\ref{sec:test_resources})
 Des weitern soll die Validierung bei allen Eingabemöglichkeiten mit positiven sowie negativen Tests geprüft werden.
 
 \medskip
-Server Kommunikation?! Wie können wir das Mocken? Mock Services?
+Die Kommunikation zum Server wird mit Service Mocks auf der Server Seite geprüft.
 
 \subsection{Test Resourcen}
 \label{sec:test_resources}
 Android UI Automation: \url{http://developer.android.com/tools/testing/testing_ui.html}
+
 Fake/Mock Locations: \url{http://developer.android.com/training/location/location-testing.html}
 
 \medskip
@@ -29,12 +30,12 @@ Folgende Umgebungen sind verfügbar. Eine Abkürzung für spätere referenzierun
 \begin{itemize}
 \item Android Emulator (Android 4.4) [AE-44]
 \item Google/LG Nexus 5 (Android 5.0) [N5-50]
-\item Samsung Galaxy Note 5 (Android 4.4) [Note-44]
+\item Samsung Galaxy Note 4 (Android 4.4) [Note-44]
 \item Samsung Galaxy Nexus (Android 4.3) [GN-43]
 \end{itemize}
 
 \subsection{Test Fälle}
-Hier werden eventuelle manuelle Tests beschriben sowie automatische referenziert. 
+Hier werden eventuelle manuelle Tests beschrieben sowie automatische referenziert. 
 
 \begin{center}
 	\begin{tabular}{ | l | l | l | l | }
