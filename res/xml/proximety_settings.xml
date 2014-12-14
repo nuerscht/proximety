@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/settings_general">
+        <SwitchPreference
+            android:title="@string/settings_proximity_alert"
+            android:key="alert_toggle"
+            android:defaultValue="off" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

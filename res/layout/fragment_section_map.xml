@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_map_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <TextView 
+        android:text="@string/dummy_there_will_be_a_map"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"/>
+    
+</RelativeLayout>
+<!-- 
+
+Not yet working properly.
+
+See: Setup Maps V2 integration https://blog-emildesign.rhcloud.com/?p=435
+And: API-Key https://blog-emildesign.rhcloud.com/?p=403
+
+<com.google.android.gms.maps.MapView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_map_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+</com.google.android.gms.maps.MapView>
+
+ -->
