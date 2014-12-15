@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 
 /*
  * Main view of the app using tabs and fragments
@@ -30,10 +32,19 @@ public class MainActivity extends FragmentActivity {
 
 	ViewPager viewPager;
 
+    //Drawer Navigation
+    DrawerNavActivityDelegate drawerDelegate;
+
+    public MainActivity() {
+        drawerDelegate = new DrawerNavActivityDelegate(this);
+    }
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        drawerDelegate.onCreate(savedInstanceState);
 
 		final ActionBar actionBar = getActionBar();
 
@@ -84,6 +95,27 @@ public class MainActivity extends FragmentActivity {
 				.setTabListener(tabListener));
 	}
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerDelegate.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerDelegate.onConfigurationChanged(newConfig);
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        drawerDelegate.onPrepareOptionsMenu(menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -100,7 +132,9 @@ public class MainActivity extends FragmentActivity {
 		if (id == R.id.action_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
-		}
+		} if (drawerDelegate.onOptionsItemSelected(item)) {
+            return true;
+        }
 		return super.onOptionsItemSelected(item);
 	}
 
