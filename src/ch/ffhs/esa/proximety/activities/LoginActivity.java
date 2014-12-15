@@ -1,4 +1,4 @@
-package ch.ffhs.esa.proximety;
+package ch.ffhs.esa.proximety.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import ch.ffhs.esa.proximety.R;
 
 public class LoginActivity extends Activity {
 

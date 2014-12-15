@@ -1,4 +1,4 @@
-package ch.ffhs.esa.proximety;
+package ch.ffhs.esa.proximety.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,12 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class InitialScreenActivity extends Activity {
+import ch.ffhs.esa.proximety.R;
+
+public class RegisterActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_initial_screen);
+		setContentView(R.layout.activity_register);
 	}
 
 	@Override
@@ -35,14 +37,10 @@ public class InitialScreenActivity extends Activity {
 	}
 	
 	public void onRegisterButtonClick(View button){
-		Intent intent = new Intent(this, RegisterActivity.class);
+		Intent intent = new Intent(this, MainActivity.class);
 		
 		startActivity(intent);
-	}
-	
-	public void onLoginButtonClick(View button){
-		Intent intent = new Intent(this, LoginActivity.class);
 		
-		startActivity(intent);
+		finish();
 	}
 }

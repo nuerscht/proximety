@@ -1,4 +1,4 @@
-package ch.ffhs.esa.proximety;
+package ch.ffhs.esa.proximety.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import ch.ffhs.esa.proximety.R;
 
 /*
  * Main view of the app using tabs and fragments

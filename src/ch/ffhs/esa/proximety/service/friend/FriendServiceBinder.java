@@ -1,0 +1,32 @@
+package ch.ffhs.esa.proximety.service.friend;
+
+import java.util.List;
+
+/**
+ * Created by boe on 15.12.2014.
+ */
+public class FriendServiceBinder {
+    public void sendRequest(int friendId, String token) {
+
+    }
+
+    public void confirmRequest(int requestId, String token) {
+
+    }
+
+    public void declineRequest(int requestId, String token) {
+
+    }
+
+    public void deleteFriend(int friendId, String token) {
+
+    }
+
+    public List<String> search(String searchText, String token) {
+        return null;
+    }
+
+    public void queryOpenRequests(String token) {
+
+    }
+}

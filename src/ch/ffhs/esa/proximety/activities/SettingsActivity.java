@@ -1,7 +1,9 @@
-package ch.ffhs.esa.proximety;
+package ch.ffhs.esa.proximety.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+
+import ch.ffhs.esa.proximety.R;
 
 /**
  * @author alo
