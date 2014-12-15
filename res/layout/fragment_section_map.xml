@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_map_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-    <TextView 
-        android:text="@string/dummy_there_will_be_a_map"
-        android:layout_width="match_parent"
-    	android:layout_height="match_parent"/>
-    
-</RelativeLayout>
-<!-- 
+    android:layout_height="match_parent"
+    android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools">
 
-Not yet working properly.
+    <com.google.android.gms.maps.MapView
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/main_map_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </com.google.android.gms.maps.MapView>
 
-See: Setup Maps V2 integration https://blog-emildesign.rhcloud.com/?p=435
-And: API-Key https://blog-emildesign.rhcloud.com/?p=403
-
-<com.google.android.gms.maps.MapView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_map_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-</com.google.android.gms.maps.MapView>
-
- -->
+</LinearLayout>

@@ -16,9 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /*
  * Main view of the app using tabs and fragments
@@ -95,26 +102,27 @@ public class MainActivity extends FragmentActivity {
 				.setTabListener(tabListener));
 	}
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerDelegate.onPostCreate(savedInstanceState);
-    }
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		drawerDelegate.onPostCreate(savedInstanceState);
+	}
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerDelegate.onConfigurationChanged(newConfig);
-    }
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		drawerDelegate.onConfigurationChanged(newConfig);
+	}
 
-    /* Called whenever we call invalidateOptionsMenu() */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        drawerDelegate.onPrepareOptionsMenu(menu);
-        return super.onPrepareOptionsMenu(menu);
-    }
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content
+		// view
+		drawerDelegate.onPrepareOptionsMenu(menu);
+		return super.onPrepareOptionsMenu(menu);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,9 +140,10 @@ public class MainActivity extends FragmentActivity {
 		if (id == R.id.action_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
 			return true;
-		} if (drawerDelegate.onOptionsItemSelected(item)) {
-            return true;
-        }
+		}
+		if (drawerDelegate.onOptionsItemSelected(item)) {
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -169,14 +178,46 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
-	public static class MapViewFragment extends Fragment {
+	public static class MapViewFragment extends Fragment implements
+			OnMapReadyCallback {
+
+		MapView mapView;
+		GoogleMap map;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_section_map,
 					container, false);
+
+			// Gets the MapView from the XML layout and creates it
+			mapView = (MapView) rootView.findViewById(R.id.main_map_view);
+			mapView.onCreate(savedInstanceState);
+
+			mapView.getMapAsync(this);
+
 			return rootView;
+		}
+
+		@Override
+		public void onMapReady(GoogleMap gMap) {
+			map = gMap;
+
+			// somehow needed but doc says no:
+			// http://developer.android.com/reference/com/google/android/gms/maps/MapsInitializer.html
+			MapsInitializer.initialize(getActivity());
+
+			map.getUiSettings().setMyLocationButtonEnabled(true);
+			map.getUiSettings().setZoomControlsEnabled(true);
+			map.setMyLocationEnabled(true);
+
+			LatLng sydney = new LatLng(-33.867, 151.206);
+
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+
+			map.addMarker(new MarkerOptions().title("Sydney")
+					.snippet("The most populous city in Australia.")
+					.position(sydney));
 		}
 	}
 
