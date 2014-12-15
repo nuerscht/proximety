@@ -1,11 +1,16 @@
 package ch.ffhs.esa.proximety.service.friend;
 
+import android.app.ProgressDialog;
+
 import java.util.List;
+
+import ch.ffhs.esa.proximety.service.ServiceBinder;
 
 /**
  * Created by boe on 15.12.2014.
  */
-public class FriendServiceBinder {
+public class FriendServiceBinder extends ServiceBinder {
+
     public void sendRequest(int friendId, String token) {
 
     }
@@ -27,6 +32,10 @@ public class FriendServiceBinder {
     }
 
     public void queryOpenRequests(String token) {
+
+    }
+
+    private void invokeWebService() {
 
     }
 }

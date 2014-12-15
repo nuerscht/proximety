@@ -1,5 +1,7 @@
 package ch.ffhs.esa.proximety.service.setting;
 
+import android.app.Service;
+
 /**
  * Created by boe on 15.12.2014.
  */
