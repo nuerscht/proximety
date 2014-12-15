@@ -20,5 +20,7 @@
     <string name="settings_proximity_alert">Proximety Alarm</string>
     <string name="dummy_there_will_be_a_map">There will be a map here some time</string>
     <string name="dummy_there_will_be_a_list">There will be a list here some time</string>
+    <string name="drawer_open">Navigation öffnen</string>
+    <string name="drawer_close">Navigation schliessen</string>
 
 </resources>
