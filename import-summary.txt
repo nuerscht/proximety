@@ -1,0 +1,185 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* .metadata\
+* .metadata\.log
+* .metadata\.plugins\
+* .metadata\.plugins\org.eclipse.cdt.core\
+* .metadata\.plugins\org.eclipse.cdt.core\.log
+* README.md
+* doc\
+* doc\01_Projekt_Dokumentation\
+* doc\01_Projekt_Dokumentation\.gitignore
+* doc\01_Projekt_Dokumentation\Proximety.tex
+* doc\01_Projekt_Dokumentation\allgemein\
+* doc\01_Projekt_Dokumentation\allgemein\commands.tex
+* doc\01_Projekt_Dokumentation\allgemein\deckblatt.tex
+* doc\01_Projekt_Dokumentation\allgemein\definitionen.tex
+* doc\01_Projekt_Dokumentation\allgemein\kopffusszeilen.tex
+* doc\01_Projekt_Dokumentation\allgemein\literatur.bib
+* doc\01_Projekt_Dokumentation\allgemein\packages.tex
+* doc\01_Projekt_Dokumentation\allgemein\pagestyle.tex
+* doc\01_Projekt_Dokumentation\allgemein\tabellen.tex
+* doc\01_Projekt_Dokumentation\allgemeines.tex
+* doc\01_Projekt_Dokumentation\anforderungen.tex
+* doc\01_Projekt_Dokumentation\architektur.tex
+* doc\01_Projekt_Dokumentation\bilder\
+* doc\01_Projekt_Dokumentation\bilder\BasicUseCaseDiagramm.png
+* doc\01_Projekt_Dokumentation\bilder\ProximetyUIFlow.png
+* doc\01_Projekt_Dokumentation\bilder\ProximetyUIFlow2.png
+* doc\01_Projekt_Dokumentation\bilder\allgemein\
+* doc\01_Projekt_Dokumentation\bilder\allgemein\deckblatt.png
+* doc\01_Projekt_Dokumentation\bilder\allgemein\logo.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\
+* doc\01_Projekt_Dokumentation\bilder\architektur\Proximety_Classes.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\Proximety_Server_Classes.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\Proximety_Startup_Sequence_Diagram.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC01_Account_registrieren.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC02_Freundschaftsanfrage_versenden.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC03_Freundschaft_aufloesen.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC04_Aktueller_Standort_eines_Freundes_abfragen.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC05_Proximity_Alarm.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC06_Freund_kontaktieren.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC07_Freund_Spezifische_Einstellungen_anpassen.png
+* doc\01_Projekt_Dokumentation\bilder\architektur\UC08_Allgemeine_App_Einstellungen_vornehmen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\anfrage_besttigen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\anmelde_screen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\einstellungen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\freund_details.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\freunde_entfernen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\freunde_hinzufgen_freunde_suchen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\freunde_hinzufgen_offene_anfragen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\freunde_verwalten.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\initialer_screen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\main_screen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\messages_popup_screen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\position_abfragen_auswahl.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\position_anzeigen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\proximety_alarm.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\proximety_auswahl.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante1\register_screen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Anmelden.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Einstellungen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Freund - Details.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Freund - Karte.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Freund hinzufuegen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Freunde - Karte.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Freunde - Liste.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Initialscreen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Leere Freundesliste.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Menu.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Notification - Alarm.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Offene Anfragen.png
+* doc\01_Projekt_Dokumentation\bilder\guivariante2\Registrieren.png
+* doc\01_Projekt_Dokumentation\documentinfo.tex
+* doc\01_Projekt_Dokumentation\gui_einleitung.tex
+* doc\01_Projekt_Dokumentation\history.tex
+* doc\01_Projekt_Dokumentation\output\
+* doc\01_Projekt_Dokumentation\output\Proximety.pdf
+* doc\01_Projekt_Dokumentation\screens_variante_1.tex
+* doc\01_Projekt_Dokumentation\screens_variante_2.tex
+* doc\01_Projekt_Dokumentation\testing.tex
+* doc\01_Projekt_Dokumentation\usecases.tex
+* doc\01_Projekt_Dokumentation\vergleich.tex
+* doc\02_Images\
+* doc\02_Images\Icons\
+* doc\02_Images\Icons\BluePin.png
+* doc\02_Images\Icons\BluePin.svg
+* doc\02_Images\Icons\EC16_NOTEPAD.0.png
+* doc\02_Images\Icons\RedPin.png
+* doc\02_Images\Icons\RedPin.svg
+* doc\02_Images\Icons\account-logged-in.png
+* doc\02_Images\Icons\actions-add.png
+* doc\02_Images\Icons\actions-close.png
+* doc\02_Images\Icons\bookmark-view.png
+* doc\02_Images\Icons\code-context.png
+* doc\02_Images\Icons\config-language.png
+* doc\02_Images\Icons\evolution-contacts.png
+* doc\02_Images\Icons\plugins-search.png
+* doc\02_Images\Icons\zenmap.png
+* doc\02_Images\proximety.ai
+* doc\02_Images\proximety.png
+* doc\02_Images\proximety_icon.ai
+* doc\02_Images\proximety_icon.png
+* doc\03_Diagramme\
+* doc\03_Diagramme\Proximety.asta
+* doc\04_UI_Prototypes\
+* doc\04_UI_Prototypes\All Icons.zip
+* doc\04_UI_Prototypes\Proximety UI Flow 2.png
+* doc\04_UI_Prototypes\Proximety UI Flow.png
+* doc\04_UI_Prototypes\Proximety UI Flow.txt
+* doc\04_UI_Prototypes\Proximety_UI.ep
+* doc\04_UI_Prototypes\Proximety_UI_Material.sketch
+* doc\04_UI_Prototypes\Proximety_UI_vALO.ep
+* doc\04_UI_Prototypes\ReadMe.txt
+* doc\05_Rueckmeldungen\
+* doc\05_Rueckmeldungen\Präsenz_1.pdf
+* ic_launcher-web.png
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:21.0.3
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+google-play-services_lib => [com.google.android.gms:play-services:+]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
