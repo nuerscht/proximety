@@ -22,5 +22,13 @@
     <string name="dummy_there_will_be_a_list">There will be a list here some time</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schliessen</string>
+    <string name="title_activity_friend_detail">Freund Details</string>
+    <string name="infos">Infos</string>
+    <string name="distance">Distanz</string>
+    <string name="alarm_on_off">Alarm An/Aus</string>
+    <string name="friend_delete">Freund entfernen</string>
+    <string name="friend_dummy_name">Hans Landolt</string>
+    <string name="details">Details</string>
+
 
 </resources>

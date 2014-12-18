@@ -12,18 +12,21 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
-    <!--<permission
+    <!--
+    <permission
         android:name="ch.ffhs.esa.proximety.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="your.application.package.permission.MAPS_RECEIVE" />
-    //-->
+    //
+    -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -63,6 +66,14 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".activities.FriendDetailActivity"
+            android:label="@string/title_activity_friend_detail"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ch.ffhs.esa.proximety.activities.MainActivity" />
         </activity>
     </application>
 

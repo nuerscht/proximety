@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ch.ffhs.esa.proximety.activities.FriendDetailActivity$PlaceholderFragment">
+
+    <TextView
+        android:id="@+id/text_infos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/infos"/>
+
+    <TextView
+        android:id="@+id/text_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_infos"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="@string/distance"/>
+
+    <TextView
+        android:id="@+id/text_distance_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_infos"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/text_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/settings_general"
+        android:layout_below="@+id/text_distance"/>
+
+    <TextView
+        android:id="@+id/text_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_settings"
+        android:layout_marginTop="25dp"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="@string/alarm_on_off"/>
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_settings"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:id="@+id/button_friend_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/text_alarm"
+        android:text="@string/friend_delete"/>
+
+</RelativeLayout>
