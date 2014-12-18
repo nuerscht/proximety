@@ -62,6 +62,9 @@ public class MainActivity extends FragmentActivity {
 		// Specify that tabs should be displayed in the action bar.
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        //Workaround for Icon in Android older 5.0
+        actionBar.setDisplayShowHomeEnabled(false);
+
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -100,7 +103,7 @@ public class MainActivity extends FragmentActivity {
 		actionBar.addTab(actionBar.newTab()
 				.setText(getResources().getText(R.string.map))
 				.setTabListener(tabListener));
-	}
+    }
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
