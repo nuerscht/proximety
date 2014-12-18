@@ -184,6 +184,15 @@ public class MainActivity extends FragmentActivity {
 		MapView mapView;
 		GoogleMap map;
 
+        @Override
+        public void onResume() {
+            if (mapView != null) {
+                mapView.onResume();
+            }
+
+            super.onResume();
+        }
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
