@@ -6,8 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import org.apache.http.Header;
+import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.domain.test.JsonTestValidate;
+import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
+import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 public class LoginActivity extends Activity {
 
@@ -35,12 +42,30 @@ public class LoginActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    private void onLoginSuccess(JsonTestValidate jsonTestValidate) {
+        Intent intent = new Intent(this, MainActivity.class);
+
+        startActivity(intent);
+
+        finish();
+    }
 	
 	public void onLoginButtonClick(View button){
-		Intent intent = new Intent(this, MainActivity.class);
-		
-		startActivity(intent);
-		
-		finish();
+
+        ServiceBinder sb = new ServiceBinder();
+        JsonTestValidate jtv = sb.get(new ResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                Toast.makeText(getApplicationContext(), "Yeah :)", Toast.LENGTH_SHORT).show();
+                onLoginSuccess((JsonTestValidate) response);
+            }
+
+            @Override
+            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Toast.makeText(getApplicationContext(), "Fehler :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Toast.makeText(getApplicationContext(), "sali :)", Toast.LENGTH_SHORT).show();
 	}
 }

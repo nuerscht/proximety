@@ -1,10 +1,8 @@
-package ch.ffhs.esa.proximety.service.friend;
-
-import android.app.ProgressDialog;
+package ch.ffhs.esa.proximety.service.binder.friend;
 
 import java.util.List;
 
-import ch.ffhs.esa.proximety.service.ServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 
 /**
  * Created by boe on 15.12.2014.
