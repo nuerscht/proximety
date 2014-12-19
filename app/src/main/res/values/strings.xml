@@ -3,7 +3,7 @@
 
     <string name="app_name">Proximety</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <string name="action_register">Registrieren</string>
     <string name="action_login">Anmelden</string>
     <string name="title_activity_register">Registrieren</string>
@@ -16,6 +16,10 @@
     <string name="list">Liste</string>
     <string name="map">Karte</string>
     <string name="friends">Freunde</string>
+    <string name="friends_add">Freunde hinzufügen</string>
+    <string name="requests_open">Offene Anfragen</string>
+    <string name="help">Hilfe</string>
+    <string name="about">Über</string>
     <string name="settings_general">Allgmeine Einstellungen</string>
     <string name="settings_proximity_alert">Proximety Alarm</string>
     <string name="dummy_there_will_be_a_map">There will be a map here some time</string>
