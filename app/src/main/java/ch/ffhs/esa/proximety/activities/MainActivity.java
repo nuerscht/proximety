@@ -11,11 +11,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 
@@ -27,6 +33,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Main view of the app using tabs and fragments
  * 
@@ -36,8 +45,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity {
 
 	AppSectionsPagerAdapter sectionsPagerAdapter;
-
 	ViewPager viewPager;
+    DrawerLayout drawerLayout;
+    ListView drawerList;
 
     //Drawer Navigation
     DrawerNavActivityDelegate drawerDelegate;
@@ -52,6 +62,17 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 
         drawerDelegate.onCreate(savedInstanceState);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+
+        String[] menuList = getResources().getStringArray(R.array.main_drawer_list);
+
+        // Set adapter for drawer
+        drawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, menuList));
+
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		final ActionBar actionBar = getActionBar();
 
@@ -103,6 +124,40 @@ public class MainActivity extends FragmentActivity {
 		actionBar.addTab(actionBar.newTab()
 				.setText(getResources().getText(R.string.map))
 				.setTabListener(tabListener));
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    /** Handle drawer menu actions */
+    private void selectItem(int position) {
+        switch (position) {
+            case 0:
+                Toast.makeText(getApplicationContext(), "Activity not here yet!", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(getApplicationContext(), "Activity not here either!", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            case 3:
+                Toast.makeText(getApplicationContext(), "Help is currently unavailable!", Toast.LENGTH_SHORT).show();
+                break;
+            case 4:
+                Toast.makeText(getApplicationContext(), "About what?", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "Invalid menu option selected!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Highlight the selected item, update the title, and close the drawer
+        drawerList.setItemChecked(position, true);
+        drawerLayout.closeDrawer(drawerList);
     }
 
 	@Override

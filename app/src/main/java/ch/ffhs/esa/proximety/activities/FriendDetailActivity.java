@@ -41,6 +41,8 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
         // Set up the action bar.
         final android.app.ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -68,6 +70,8 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
                     actionBar.newTab()
                             .setText(getText(R.string.map))
                             .setTabListener(this));
+
+
     }
 
     @Override

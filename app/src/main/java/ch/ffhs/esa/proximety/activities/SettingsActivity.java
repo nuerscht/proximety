@@ -17,5 +17,9 @@ public class SettingsActivity extends PreferenceActivity {
 		super.onCreate(bundle);
 		
 		this.addPreferencesFromResource(R.xml.proximety_settings);
+
+        final android.app.ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 	}
 }
