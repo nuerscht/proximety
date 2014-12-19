@@ -35,7 +35,7 @@
         android:layout_alignLeft="@+id/inputName"
         android:layout_below="@+id/inputName"
         android:layout_marginTop="20dp"
-        android:text="@string/password" />
+        android:text="@string/name" />
 
     <EditText
         android:id="@+id/inputEmail"
@@ -62,7 +62,7 @@
         android:layout_alignLeft="@+id/textPassword"
         android:layout_below="@+id/textPassword"
         android:ems="10"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/textPasswordConfirm"
@@ -80,7 +80,7 @@
         android:layout_alignLeft="@+id/textPasswordConfirm"
         android:layout_below="@+id/textPasswordConfirm"
         android:ems="10"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/buttonRegister"
