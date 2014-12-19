@@ -68,6 +68,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ch.ffhs.esa.proximety.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.OpenRequestsActivity"
+            android:label="@string/title_activity_open_request"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
     </application>
 
 </manifest>

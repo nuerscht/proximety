@@ -33,6 +33,7 @@
     <string name="friend_delete">Freund entfernen</string>
     <string name="friend_dummy_name">Hans Landolt</string>
     <string name="details">Details</string>
-
+    <string name="search_title">Suche</string>
+    <string name="title_activity_open_request">Anfragen</string>
 
 </resources>

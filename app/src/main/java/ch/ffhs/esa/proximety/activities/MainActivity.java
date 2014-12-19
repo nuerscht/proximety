@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity {
                 Toast.makeText(getApplicationContext(), "Activity not here yet!", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                Toast.makeText(getApplicationContext(), "Activity not here either!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,OpenRequestsActivity.class));
                 break;
             case 2:
                 startActivity(new Intent(this, SettingsActivity.class));
