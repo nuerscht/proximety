@@ -45,7 +45,7 @@
         android:layout_alignLeft="@+id/textPassword"
         android:layout_below="@+id/textPassword"
         android:ems="10"
-        android:inputType="numberPassword" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/buttonLogin"

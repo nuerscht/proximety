@@ -1,5 +1,7 @@
 package ch.ffhs.esa.proximety.service.binder.friend;
 
+import android.content.Context;
+
 import java.util.List;
 
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
@@ -8,6 +10,10 @@ import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
  * Created by boe on 15.12.2014.
  */
 public class FriendServiceBinder extends ServiceBinder {
+
+    public FriendServiceBinder(Context context) {
+        super(context);
+    }
 
     public void sendRequest(int friendId, String token) {
 
