@@ -72,17 +72,17 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 	}

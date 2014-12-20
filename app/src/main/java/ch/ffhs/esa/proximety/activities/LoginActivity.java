@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
@@ -46,7 +47,7 @@ public class LoginActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-    private void onLoginSuccess(JsonTestValidate jsonTestValidate) {
+    private void onLoginSuccess() {
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
@@ -64,7 +65,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 if (statusCode == 200) {
-                    onLoginSuccess((JsonTestValidate) response);
+                    onLoginSuccess();
                 } else {
                     Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
                 }
@@ -72,17 +73,17 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 	}
