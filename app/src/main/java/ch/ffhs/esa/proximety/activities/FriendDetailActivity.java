@@ -1,5 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,12 +14,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
+import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class FriendDetailActivity extends FragmentActivity implements ActionBar.TabListener {
+public class FriendDetailActivity extends FragmentActivity implements ActionBar.TabListener, OnMapReadyCallback {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -34,6 +53,7 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    Friend friend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +62,8 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
 
         //Todo: Get Data with given user id
         //Toast.makeText(getApplicationContext(), getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID), Toast.LENGTH_SHORT).show();
+
+
 
         // Set up the action bar.
         final android.app.ActionBar actionBar = getActionBar();
@@ -77,6 +99,62 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
                             .setTabListener(this));
 
 
+        String friendId = getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID);
+
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+
+        fsb.getFriendDetails(friendId, new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                if(statusCode == 200){
+                    JSONArray resp = (JSONArray) response;
+                    try {
+                        JSONObject singleRow = resp.getJSONObject(0);
+                        onFriendDetailsLoaded(singleRow);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+    }
+
+    private void onFriendDetailsLoaded(JSONObject response) {
+
+        TextView name = (TextView) findViewById(R.id.text_friend_name);
+        TextView distanceView = (TextView) findViewById(R.id.text_distance_number);
+        MapView map = (MapView) findViewById(R.id.main_map_view);
+
+        Gson gson = new Gson();
+        friend = gson.fromJson(response.toString(), Friend.class);
+
+        name.setText(friend.name);
+
+        if(friend.isLocationSet()) {
+            Location friendLocation = new Location("Friend location");
+            friendLocation.setLatitude(friend.latitude);
+            friendLocation.setLongitude(friend.longitude);
+
+            Location dummyLocation = new Location("My Dummy Location (Sydney)");
+            dummyLocation.setLatitude(-33.867);
+            dummyLocation.setLongitude(151.206);
+
+            Float distance = friendLocation.distanceTo(dummyLocation);
+
+            distanceView.setText(distance.toString() + " m");
+
+            // Get the map and update location there too
+            map.getMapAsync(this);
+
+        } else {
+            distanceView.setText(getText(R.string.na));
+        }
+
     }
 
     @Override
@@ -95,6 +173,28 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
     }
 
     /**
+     * Callback for the friend loading (basic setup is done inside fragment)
+     *
+     * @param googleMap The map you get to use
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if(friend.isLocationSet()){
+            LatLng friendLocation = new LatLng(friend.latitude, friend.longitude);
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(friendLocation, 13));
+
+            googleMap.addMarker(new MarkerOptions().title(friend.name)
+                    .snippet(getText(R.string.friend_current_position).toString())
+                    .position(friendLocation));
+        }else{
+            // TODO: show current position
+        }
+
+
+    }
+
+    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -109,7 +209,7 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
             switch (position) {
                 case 1:
                     // Reusing the map fragment!?
-                    return new MainActivity.MapViewFragment();
+                    return new MapViewFragment();
                 default:
                     return new FriendDetailFragment();
             }
@@ -122,6 +222,52 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
 
     }
 
+
+    public static class MapViewFragment extends Fragment implements
+            OnMapReadyCallback {
+
+        MapView mapView;
+        GoogleMap map;
+
+        @Override
+        public void onResume() {
+            if (mapView != null) {
+                mapView.onResume();
+            }
+
+            super.onResume();
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_friend_map,
+                    container, false);
+
+            // Gets the MapView from the XML layout and creates it
+            mapView = (MapView) rootView.findViewById(R.id.friend_map);
+            mapView.onCreate(savedInstanceState);
+
+            mapView.getMapAsync(this);
+
+            return rootView;
+        }
+
+        @Override
+        public void onMapReady(GoogleMap gMap) {
+            map = gMap;
+
+            // somehow needed but doc says no:
+            // http://developer.android.com/reference/com/google/android/gms/maps/MapsInitializer.html
+            MapsInitializer.initialize(getActivity());
+
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.getUiSettings().setZoomControlsEnabled(true);
+            map.setMyLocationEnabled(true);
+
+
+        }
+    }
 
     public static class FriendDetailFragment extends Fragment {
 

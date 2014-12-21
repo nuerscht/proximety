@@ -15,7 +15,11 @@ public class Friend {
     @SerializedName("friends")
     public String[] friends;
     @SerializedName("latitude")
-    public String latitude;
+    public Double latitude;
     @SerializedName("longitude")
-    public String longitude;
+    public Double longitude;
+
+    public Boolean isLocationSet(){
+        return latitude != null && longitude != null;
+    }
 }

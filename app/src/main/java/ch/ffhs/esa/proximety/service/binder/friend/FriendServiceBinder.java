@@ -133,9 +133,37 @@ public class FriendServiceBinder extends ServiceBinder {
     public void getListOfFriends(final ResponseHandler responseHandler) {
 
         RequestParams params = new RequestParams();
-        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, "7b2868f754193e2f8c1674cb83162a8445002756");
+        // params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
 
         RestClient.get(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                responseHandler.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    public void getFriendDetails(String friendId, final ResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+
+        RestClient.get(getApplicationContext(), "api/friend/" + friendId, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 responseHandler.onSuccess(statusCode, headers, response);
