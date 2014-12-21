@@ -37,9 +37,11 @@ import ch.ffhs.esa.proximety.async.GravatarImage;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.helper.Gravatar;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.location.LocationServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -214,7 +216,14 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        //todo send location to server
+        //todo 404 error on posting location
+        /*LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
+        lsb.updateLocation(location.getLatitude(), location.getLongitude(), new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                Log.i(TAG, ((Message)response).message);
+            }
+        });*/
     }
 
     @Override

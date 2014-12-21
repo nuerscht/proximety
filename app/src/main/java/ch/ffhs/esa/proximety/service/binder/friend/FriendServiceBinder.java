@@ -76,11 +76,9 @@ public class FriendServiceBinder extends ServiceBinder {
     }
 
     public void getListOfFriends(final ResponseHandler responseHandler) {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
 
         RequestParams params = new RequestParams();
-        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, token);
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
 
         RestClient.get(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
             @Override
