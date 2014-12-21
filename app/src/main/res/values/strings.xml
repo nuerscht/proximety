@@ -39,5 +39,6 @@
     <string name="logout">Abmelden</string>
     <string name="friend_add_info">Falls diese Person noch kein Benutzer von Proximety ist, wird ihr eine Email gesendet.</string>
     <string name="action_invite">Einladen</string>
+    <string name="friend_add_success">Die Einladung wurde erfolgreich versendet.</string>
 
 </resources>

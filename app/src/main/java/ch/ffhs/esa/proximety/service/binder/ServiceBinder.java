@@ -1,6 +1,9 @@
 package ch.ffhs.esa.proximety.service.binder;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
  * Created by boe on 18.12.2014.
@@ -16,25 +19,8 @@ public class ServiceBinder {
         return context;
     }
 
-    /*public void get(final ResponseHandler responseHandler) {
-
-        RestClient.get("", null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Gson gson = new Gson();
-                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), JsonTestValidate.class));
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Gson gson = new Gson();
-                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), JsonTestValidate.class));
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                responseHandler.onError(statusCode, headers, throwable, errorResponse);
-            }
-        });
-    }*/
+    protected String getToken() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
+    }
 }
