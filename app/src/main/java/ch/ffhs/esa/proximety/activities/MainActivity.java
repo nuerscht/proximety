@@ -8,6 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +37,13 @@ import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -46,7 +57,7 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 /*
@@ -55,7 +66,11 @@ import java.util.List;
  * Tabbing has been built according to the sample app at 
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
+    protected static final String TAG = "location-updates";
+    //300000 = 5 Minutes
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
 	AppSectionsPagerAdapter sectionsPagerAdapter;
 	ViewPager viewPager;
@@ -64,6 +79,9 @@ public class MainActivity extends FragmentActivity {
 
     //Drawer Navigation
     DrawerNavActivityDelegate drawerDelegate;
+
+    protected GoogleApiClient mGoogleApiClient;
+    protected LocationRequest mLocationRequest;
 
     public MainActivity() {
         drawerDelegate = new DrawerNavActivityDelegate(this);
@@ -137,6 +155,66 @@ public class MainActivity extends FragmentActivity {
 		actionBar.addTab(actionBar.newTab()
 				.setText(getResources().getText(R.string.map))
 				.setTabListener(tabListener));
+
+        buildGoogleApiClient();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        createLocationRequest();
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+
+        // Sets the desired interval for active location updates. This interval is
+        // inexact. You may not receive updates at all if no location sources are available, or
+        // you may receive them slower than requested. You may also receive updates faster than
+        // requested if other applications are requesting location at a faster interval.
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        // Sets the fastest rate for active location updates. This interval is exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    protected void startLocationUpdates() {
+        // The final argument to {@code requestLocationUpdates()} is a LocationListener
+        // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //todo send location to server
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
