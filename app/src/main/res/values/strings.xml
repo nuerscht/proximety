@@ -37,5 +37,7 @@
     <string name="title_activity_open_request">Anfragen</string>
     <string name="unknown_error_msg">Es ist ein Fehler aufgetreten</string>
     <string name="logout">Abmelden</string>
+    <string name="friend_add_info">Falls diese Person noch kein Benutzer von Proximety ist, wird ihr eine Email gesendet.</string>
+    <string name="action_invite">Einladen</string>
 
 </resources>

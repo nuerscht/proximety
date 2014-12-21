@@ -139,7 +139,7 @@ public class MainActivity extends FragmentActivity {
     private void selectItem(int position) {
         switch (position) {
             case 0:
-                Toast.makeText(getApplicationContext(), "Activity not here yet!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, FriendAddActivity.class));
                 break;
             case 1:
                 startActivity(new Intent(this, OpenRequestsActivity.class));

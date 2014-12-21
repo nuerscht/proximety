@@ -73,6 +73,10 @@
             android:label="@string/title_activity_open_request"
             android:parentActivityName=".activities.MainActivity">
         </activity>
+        <activity android:name=".activities.FriendAddActivity"
+            android:label="Freund hinzufügen"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
     </application>
 
 </manifest>
