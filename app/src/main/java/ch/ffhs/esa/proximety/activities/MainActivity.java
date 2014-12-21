@@ -2,7 +2,9 @@ package ch.ffhs.esa.proximety.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -27,12 +29,10 @@ import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
-import ch.ffhs.esa.proximety.domain.Token;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-import com.google.android.gms.common.data.Freezable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -357,6 +357,31 @@ public class MainActivity extends FragmentActivity {
             FriendList friendList = new FriendList(inflater, friends, places);
             ListView listView = (ListView)rootView.findViewById(R.id.listview);
             listView.setAdapter(friendList);
+
+            if (friendListJson.length() == 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setPositiveButton(R.string.welcome_go, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(), FriendAddActivity.class);
+
+                        startActivity(intent);
+
+                        getActivity().finish();
+                    }
+                });
+
+                builder.setMessage(getText(R.string.welcome_message)).setTitle(getText(R.string.welcome_message_title));
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
         }
 	}
 

@@ -40,5 +40,9 @@
     <string name="friend_add_info">Falls diese Person noch kein Benutzer von Proximety ist, wird ihr eine Email gesendet.</string>
     <string name="action_invite">Einladen</string>
     <string name="friend_add_success">Die Einladung wurde erfolgreich versendet.</string>
+    <string name="welcome_message_title">Willkommen bei Proximety</string>
+    <string name="welcome_message">Möchtest Du einen Freund hinzufügen und mit Proximety Alarmen beginnen?</string>
+    <string name="welcome_go">Loslegen</string>
+    <string name="cancel">Abbrechen</string>
 
 </resources>
