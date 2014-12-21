@@ -2,9 +2,18 @@ package ch.ffhs.esa.proximety.activities;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +33,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.async.GravatarImage;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
+import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.helper.Gravatar;
+import ch.ffhs.esa.proximety.list.FriendList;
+import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -32,8 +56,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
-import java.util.ArrayList;
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 /*
@@ -42,7 +71,11 @@ import java.util.List;
  * Tabbing has been built according to the sample app at 
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
+    protected static final String TAG = "location-updates";
+    //300000 = 5 Minutes
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
 	AppSectionsPagerAdapter sectionsPagerAdapter;
 	ViewPager viewPager;
@@ -51,6 +84,9 @@ public class MainActivity extends FragmentActivity {
 
     //Drawer Navigation
     DrawerNavActivityDelegate drawerDelegate;
+
+    protected GoogleApiClient mGoogleApiClient;
+    protected LocationRequest mLocationRequest;
 
     public MainActivity() {
         drawerDelegate = new DrawerNavActivityDelegate(this);
@@ -124,6 +160,66 @@ public class MainActivity extends FragmentActivity {
 		actionBar.addTab(actionBar.newTab()
 				.setText(getResources().getText(R.string.map))
 				.setTabListener(tabListener));
+
+        buildGoogleApiClient();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        createLocationRequest();
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+
+        // Sets the desired interval for active location updates. This interval is
+        // inexact. You may not receive updates at all if no location sources are available, or
+        // you may receive them slower than requested. You may also receive updates faster than
+        // requested if other applications are requesting location at a faster interval.
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        // Sets the fastest rate for active location updates. This interval is exact, and your
+        // application will never receive updates faster than this value.
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        startLocationUpdates();
+    }
+
+    protected void startLocationUpdates() {
+        // The final argument to {@code requestLocationUpdates()} is a LocationListener
+        // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //todo send location to server
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + connectionResult.getErrorCode());
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -137,10 +233,10 @@ public class MainActivity extends FragmentActivity {
     private void selectItem(int position) {
         switch (position) {
             case 0:
-                Toast.makeText(getApplicationContext(), "Activity not here yet!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, FriendAddActivity.class));
                 break;
             case 1:
-                startActivity(new Intent(this,OpenRequestsActivity.class));
+                startActivity(new Intent(this, OpenRequestsActivity.class));
                 break;
             case 2:
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -151,6 +247,9 @@ public class MainActivity extends FragmentActivity {
             case 4:
                 Toast.makeText(getApplicationContext(), "About what?", Toast.LENGTH_SHORT).show();
                 break;
+            case 5:
+                logout();
+                break;
             default:
                 Toast.makeText(getApplicationContext(), "Invalid menu option selected!", Toast.LENGTH_SHORT).show();
         }
@@ -158,6 +257,19 @@ public class MainActivity extends FragmentActivity {
         // Highlight the selected item, update the title, and close the drawer
         drawerList.setItemChecked(position, true);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    private void logout() {
+        //clear application session data
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        //go to initial screen
+        Intent intent = new Intent(this, InitialScreenActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 	@Override
@@ -289,14 +401,98 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public static class ListViewFragment extends Fragment {
-
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+		public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_section_list,
+            final View rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
+
+            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext());
+            fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, Object response) {
+                    if (statusCode == 200) {
+                        onListLoadSuccess(inflater, rootView, (JSONArray)response);
+                    } else {
+                        Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
 			return rootView;
 		}
-	}
+
+        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
+            String[] friends = new String[friendListJson.length()];
+            String[] places = new String[friendListJson.length()];
+            final Bitmap[] images = new Bitmap[friendListJson.length()];
+            final String[] ids = new String[friendListJson.length()];
+            final FriendList friendList = new FriendList(inflater, friends, places, images);
+
+            Gson gson = new Gson();
+            for(int i = 0; i < friendListJson.length(); i++) {
+                try {
+                    Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
+                    ids[i] = friend.id;
+                    friends[i] = friend.name;
+                    places[i] = "";
+                    images[i] = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder_friend);
+
+                    Gravatar gravatar = new Gravatar(friend.email, i);
+
+                    new GravatarImage() {
+                        @Override
+                        protected void onPostExecute(Gravatar gravatar) {
+                            if (gravatar.getImage() != null) {
+                                images[gravatar.getPosition()] = gravatar.getImage();
+                                //Handle refresh data
+                                friendList.refresh();
+                            }
+                        }
+                    }.execute(gravatar);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            friendList.refresh();
+            //List view
+            final ListView listView = (ListView)rootView.findViewById(R.id.listview);
+            listView.setAdapter(friendList);
+            listView.setClickable(true);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Intent intent = new Intent(getActivity(), FriendDetailActivity.class);
+                    intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, ids[position]);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
+
+            if (friendListJson.length() == 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setPositiveButton(R.string.welcome_go, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(), FriendAddActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
+
+                builder.setMessage(getText(R.string.welcome_message)).setTitle(getText(R.string.welcome_message_title));
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+    }
 
 }

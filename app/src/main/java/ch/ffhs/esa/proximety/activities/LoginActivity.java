@@ -2,6 +2,7 @@ package ch.ffhs.esa.proximety.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,23 +11,44 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
-import ch.ffhs.esa.proximety.domain.test.JsonTestValidate;
-import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
+import ch.ffhs.esa.proximety.domain.Token;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 public class LoginActivity extends Activity {
+    private static String SESSION_INPUT_EMAIL = "input_email";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 	}
+
+    @Override
+    protected void onPause() {
+        //store form values
+        SharedPreferences sharedPreferences = getSharedPreferences(this.getClass().getName(), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        EditText email = (EditText)findViewById(R.id.inputEmail);
+        editor.putString(SESSION_INPUT_EMAIL, email.getText().toString());
+        editor.commit();
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //restore form values
+        SharedPreferences sharedPreferences = getSharedPreferences(this.getClass().getName(), MODE_PRIVATE);
+        EditText email = (EditText) findViewById(R.id.inputEmail);
+        email.setText(sharedPreferences.getString(SESSION_INPUT_EMAIL, ""));
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,7 +69,14 @@ public class LoginActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-    private void onLoginSuccess() {
+    private void onLoginSuccess(Token token) {
+        //save token
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, token.token);
+        editor.commit();
+
         Intent intent = new Intent(this, MainActivity.class);
 
         startActivity(intent);
@@ -61,29 +90,14 @@ public class LoginActivity extends Activity {
 
         EditText user = (EditText)findViewById(R.id.inputEmail);
         EditText password = (EditText)findViewById(R.id.inputPassword);
-        usb.login(user.getText().toString(), password.getText().toString(), new ResponseHandler() {
+        usb.login(user.getText().toString(), password.getText().toString(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 if (statusCode == 200) {
-                    onLoginSuccess();
+                    onLoginSuccess((Token)response);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Ein Fehler ist aufgetreten", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 	}

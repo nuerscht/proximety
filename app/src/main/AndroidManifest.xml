@@ -49,11 +49,13 @@
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".activities.InitialScreenActivity">
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".activities.InitialScreenActivity">
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
@@ -71,6 +73,10 @@
         <activity
             android:name=".activities.OpenRequestsActivity"
             android:label="@string/title_activity_open_request"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
+        <activity android:name=".activities.FriendAddActivity"
+            android:label="Freund hinzufügen"
             android:parentActivityName=".activities.MainActivity">
         </activity>
     </application>
