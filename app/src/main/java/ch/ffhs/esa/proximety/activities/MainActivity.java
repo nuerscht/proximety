@@ -342,11 +342,13 @@ public class MainActivity extends FragmentActivity {
         private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
+            final String[] ids = new String[friendListJson.length()];
 
             Gson gson = new Gson();
             for(int i = 0; i < friendListJson.length(); i++) {
                 try {
                     Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
+                    ids[i] = friend.id;
                     friends[i] = friend.name;
                     places[i] = "";
                 } catch (JSONException e) {
@@ -355,8 +357,18 @@ public class MainActivity extends FragmentActivity {
             }
             //List view
             FriendList friendList = new FriendList(inflater, friends, places);
-            ListView listView = (ListView)rootView.findViewById(R.id.listview);
+            final ListView listView = (ListView)rootView.findViewById(R.id.listview);
             listView.setAdapter(friendList);
+            listView.setClickable(true);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    Intent intent = new Intent(getActivity(), FriendDetailActivity.class);
+                    intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, ids[position]);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
 
             if (friendListJson.length() == 0) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -371,9 +383,7 @@ public class MainActivity extends FragmentActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getActivity(), FriendAddActivity.class);
-
                         startActivity(intent);
-
                         getActivity().finish();
                     }
                 });

@@ -13,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.widget.Toast;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 public class FriendDetailActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -37,6 +39,9 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_detail);
+
+        //Todo: Get Data with given user id
+        //Toast.makeText(getApplicationContext(), getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID), Toast.LENGTH_SHORT).show();
 
         // Set up the action bar.
         final android.app.ActionBar actionBar = getActionBar();
