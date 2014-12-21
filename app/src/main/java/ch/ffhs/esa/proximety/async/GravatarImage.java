@@ -23,7 +23,8 @@ public abstract class GravatarImage extends AsyncTask<Gravatar, Void, Gravatar> 
         Gravatar gravatar = gravatars[0];
         Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeStream((InputStream) new URL(GRAVATAR_BASE_URL.concat(md5Hex(gravatar.getEmail()))).getContent());
+            if (gravatar.getEmail() != null && !gravatar.getEmail().isEmpty())
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(GRAVATAR_BASE_URL.concat(md5Hex(gravatar.getEmail()))).getContent());
         } catch (Exception e) {
             e.printStackTrace();
         }

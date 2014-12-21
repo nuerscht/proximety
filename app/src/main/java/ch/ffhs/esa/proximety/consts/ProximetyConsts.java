@@ -16,6 +16,7 @@ public class ProximetyConsts {
     public static String SERVICE_PARAM_PASSWORD_CONFIRM = "password_confirm";
     public static String SERVICE_PARAM_LATITUDE = "latitude";
     public static String SERVICE_PARAM_LONGITUDE = "longitude";
+    public static String SERVICE_PARAM_REQUEST_ID = "request_id";
 
     public static String FRIENDS_DETAIL_FRIEND_ID = "FriendsDetailFriendId";
 }

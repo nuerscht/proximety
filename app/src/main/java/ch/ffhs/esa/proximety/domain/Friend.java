@@ -14,4 +14,8 @@ public class Friend {
     public String email;
     @SerializedName("friends")
     public String[] friends;
+    @SerializedName("latitude")
+    public String latitude;
+    @SerializedName("longitude")
+    public String longitude;
 }

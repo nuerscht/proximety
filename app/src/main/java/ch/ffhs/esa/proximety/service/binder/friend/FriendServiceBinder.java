@@ -16,7 +16,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
+import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.FriendRequest;
+import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 import ch.ffhs.esa.proximety.service.client.RestClient;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
@@ -63,16 +65,69 @@ public class FriendServiceBinder extends ServiceBinder {
         });
     }
 
-    public void confirmRequest(int requestId, String token) {
+    public void confirmRequest(String requestId, final ResponseHandler responseHandler) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_REQUEST_ID, requestId);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        RestClient.put(getApplicationContext(), "api/friend/request", jsonObj, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Friend.class));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 
-    public void declineRequest(int requestId, String token) {
+    public void declineRequest(String requestId, final ResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        params.put(ProximetyConsts.SERVICE_PARAM_REQUEST_ID, requestId);
 
+        RestClient.delete(getApplicationContext(), "api/friend/request", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Message.class));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 
-    public void deleteFriend(int friendId, String token) {
-
+    public void deleteFriend() {
     }
 
     public void getListOfFriends(final ResponseHandler responseHandler) {
@@ -100,14 +155,39 @@ public class FriendServiceBinder extends ServiceBinder {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
-        });}
+        });
+    }
 
     public List<String> search(String searchText, String token) {
         return null;
     }
 
-    public void queryOpenRequests(String token) {
+    public void queryOpenRequests(final ResponseHandler responseHandler) {
 
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+
+        RestClient.get(getApplicationContext(), "api/friend/request", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                responseHandler.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 
     private void invokeWebService() {

@@ -6,24 +6,24 @@
 
     <ImageView
         android:id="@+id/open_request_personImg"
-        android:layout_width="2dp"
+        android:layout_width="20dp"
         style="@style/open_request_item_list_alignment" />
 
     <TextView
         android:id="@+id/open_request_title"
-        android:layout_width="3dp"
+        android:layout_width="30dp"
         style="@style/open_request_item_list_alignment" />
 
     <ImageButton
         android:background="@drawable/ic_action_accept"
         android:id="@+id/open_request_acceptImg"
-        android:layout_width="1dp"
+        android:layout_width="10dp"
         style="@style/open_request_item_list_alignment" />
 
     <ImageButton
         android:background="@drawable/ic_action_cancel"
         android:id="@+id/open_request_declineImg"
-        android:layout_width="1dp"
+        android:layout_width="10dp"
         style="@style/open_request_item_list_alignment" />
 
 </LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="match_parent">
+    <TableRow android:layout_width="fill_parent">
+            <ImageView
+                android:id="@+id/openrequest_image"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/placeholder_friend" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/openrequest_name"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_height="38dp"
+                android:layout_marginLeft="5dp" />
+
+            <ImageButton
+                android:id="@+id/openrequest_accept"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/ic_action_accept"
+                android:onClick="onButtonRequestAccept" />
+
+            <ImageButton
+                android:id="@+id/openrequest_cancel"
+                android:src="@drawable/ic_action_cancel"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:onClick="onButtonRequestCancel" />
+    </TableRow>
+</TableLayout>
