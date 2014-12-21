@@ -79,6 +79,7 @@ public class FriendServiceBinder extends ServiceBinder {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
 
+        token = "7b2868f754193e2f8c1674cb83162a8445002756";
         RequestParams params = new RequestParams();
         params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, token);
 

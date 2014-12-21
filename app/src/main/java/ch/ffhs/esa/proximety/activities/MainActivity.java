@@ -8,9 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,9 +33,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.async.GravatarImage;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.helper.Gravatar;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
@@ -420,7 +425,9 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
         private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
+            final Bitmap[] images = new Bitmap[friendListJson.length()];
             final String[] ids = new String[friendListJson.length()];
+            final FriendList friendList = new FriendList(inflater, friends, places, images);
 
             Gson gson = new Gson();
             for(int i = 0; i < friendListJson.length(); i++) {
@@ -429,12 +436,27 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
                     ids[i] = friend.id;
                     friends[i] = friend.name;
                     places[i] = "";
+                    images[i] = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder_friend);
+
+                    Gravatar gravatar = new Gravatar(friend.email, i);
+
+                    new GravatarImage() {
+                        @Override
+                        protected void onPostExecute(Gravatar gravatar) {
+                            if (gravatar.getImage() != null) {
+                                images[gravatar.getPosition()] = gravatar.getImage();
+                                //Handle refresh data
+                                friendList.refresh();
+                            }
+                        }
+                    }.execute(gravatar);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
+            friendList.refresh();
             //List view
-            FriendList friendList = new FriendList(inflater, friends, places);
             final ListView listView = (ListView)rootView.findViewById(R.id.listview);
             listView.setAdapter(friendList);
             listView.setClickable(true);
@@ -471,6 +493,6 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
                 dialog.show();
             }
         }
-	}
+    }
 
 }
