@@ -44,5 +44,7 @@
     <string name="welcome_message">Möchtest Du einen Freund hinzufügen und mit Proximety Alarmen beginnen?</string>
     <string name="welcome_go">Loslegen</string>
     <string name="cancel">Abbrechen</string>
+    <string name="friend_current_position">Aktuelle Position des Freundes</string>
+    <string name="na">N/A</string>
 
 </resources>
