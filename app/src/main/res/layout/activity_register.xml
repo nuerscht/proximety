@@ -30,7 +30,7 @@
         android:layout_alignLeft="@+id/inputName"
         android:layout_below="@+id/inputName"
         android:layout_marginTop="20dp"
-        android:text="@string/name" />
+        android:text="@string/email" />
 
     <EditText
         android:id="@+id/inputEmail"

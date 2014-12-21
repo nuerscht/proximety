@@ -36,5 +36,6 @@
     <string name="search_title">Suche</string>
     <string name="title_activity_open_request">Anfragen</string>
     <string name="unknown_error_msg">Es ist ein Fehler aufgetreten</string>
+    <string name="logout">Abmelden</string>
 
 </resources>

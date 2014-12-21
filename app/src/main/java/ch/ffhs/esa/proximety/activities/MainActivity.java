@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -140,7 +142,7 @@ public class MainActivity extends FragmentActivity {
                 Toast.makeText(getApplicationContext(), "Activity not here yet!", Toast.LENGTH_SHORT).show();
                 break;
             case 1:
-                startActivity(new Intent(this,OpenRequestsActivity.class));
+                startActivity(new Intent(this, OpenRequestsActivity.class));
                 break;
             case 2:
                 startActivity(new Intent(this, SettingsActivity.class));
@@ -151,6 +153,9 @@ public class MainActivity extends FragmentActivity {
             case 4:
                 Toast.makeText(getApplicationContext(), "About what?", Toast.LENGTH_SHORT).show();
                 break;
+            case 5:
+                logout();
+                break;
             default:
                 Toast.makeText(getApplicationContext(), "Invalid menu option selected!", Toast.LENGTH_SHORT).show();
         }
@@ -158,6 +163,19 @@ public class MainActivity extends FragmentActivity {
         // Highlight the selected item, update the title, and close the drawer
         drawerList.setItemChecked(position, true);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    private void logout() {
+        //clear application session data
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        //go to initial screen
+        Intent intent = new Intent(this, InitialScreenActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 	@Override

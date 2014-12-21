@@ -2,18 +2,6 @@ package ch.ffhs.esa.proximety.service.binder;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import ch.ffhs.esa.proximety.domain.test.JsonTestValidate;
-import ch.ffhs.esa.proximety.service.client.RestClient;
-import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
-
 /**
  * Created by boe on 18.12.2014.
  */
@@ -28,7 +16,7 @@ public class ServiceBinder {
         return context;
     }
 
-    public void get(final ResponseHandler responseHandler) {
+    /*public void get(final ResponseHandler responseHandler) {
 
         RestClient.get("", null, new JsonHttpResponseHandler() {
             @Override
@@ -48,5 +36,5 @@ public class ServiceBinder {
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
         });
-    }
+    }*/
 }

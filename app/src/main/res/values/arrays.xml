@@ -6,5 +6,6 @@
         <item>@string/action_settings</item>
         <item>@string/help</item>
         <item>@string/about</item>
+        <item>@string/logout</item>
     </string-array>
 </resources>
