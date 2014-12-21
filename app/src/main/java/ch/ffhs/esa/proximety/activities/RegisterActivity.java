@@ -10,11 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
-import ch.ffhs.esa.proximety.domain.test.JsonTestValidate;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
@@ -64,25 +61,14 @@ public class RegisterActivity extends Activity {
         usb.signup(name.getText().toString(),
                 user.getText().toString(),
                 password.getText().toString(),
-                passwordConfirm.getText().toString(), new ResponseHandler() {
+                passwordConfirm.getText().toString(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
-                onLoginSuccess();
-            }
-
-            @Override
-            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Toast.makeText(getApplicationContext(), getErrorMessage(errorResponse), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                if (statusCode == 200) {
+                    onLoginSuccess();
+                } else {
+                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 	}
