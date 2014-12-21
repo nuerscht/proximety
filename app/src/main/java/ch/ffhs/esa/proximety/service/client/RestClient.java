@@ -1,6 +1,7 @@
 package ch.ffhs.esa.proximety.service.client;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -23,8 +24,8 @@ public class RestClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.get(getAbsoluteUrl(url), params, responseHandler);
+    public static void get(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        client.get(context, getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void post(Context context, String url, JSONObject jsonObject, AsyncHttpResponseHandler responseHandler) {

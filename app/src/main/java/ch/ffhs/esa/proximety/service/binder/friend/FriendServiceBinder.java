@@ -1,9 +1,12 @@
 package ch.ffhs.esa.proximety.service.binder.friend;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -12,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.FriendRequest;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 import ch.ffhs.esa.proximety.service.client.RestClient;
@@ -70,6 +74,35 @@ public class FriendServiceBinder extends ServiceBinder {
     public void deleteFriend(int friendId, String token) {
 
     }
+
+    public void getListOfFriends(final ResponseHandler responseHandler) {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
+
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, token);
+
+        RestClient.get(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                responseHandler.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });}
 
     public List<String> search(String searchText, String token) {
         return null;

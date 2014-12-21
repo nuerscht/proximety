@@ -26,7 +26,13 @@ import android.widget.Toast;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
+import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.domain.Token;
+import ch.ffhs.esa.proximety.list.FriendList;
+import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
+import com.google.android.gms.common.data.Freezable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -34,6 +40,11 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -307,14 +318,46 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public static class ListViewFragment extends Fragment {
-
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+		public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_section_list,
+            final View rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
+
+            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext());
+            fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, Object response) {
+                    if (statusCode == 200) {
+                        onListLoadSuccess(inflater, rootView, (JSONArray)response);
+                    } else {
+                        Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
 			return rootView;
 		}
+
+        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
+            String[] friends = new String[friendListJson.length()];
+            String[] places = new String[friendListJson.length()];
+
+            Gson gson = new Gson();
+            for(int i = 0; i < friendListJson.length(); i++) {
+                try {
+                    Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
+                    friends[i] = friend.name;
+                    places[i] = "";
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            //List view
+            FriendList friendList = new FriendList(inflater, friends, places);
+            ListView listView = (ListView)rootView.findViewById(R.id.listview);
+            listView.setAdapter(friendList);
+        }
 	}
 
 }
