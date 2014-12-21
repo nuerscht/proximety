@@ -33,8 +33,8 @@ public class FriendServiceBinder extends ServiceBinder {
     public void sendRequest(String email, final ResponseHandler responseHandler) {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("email", email);
-            jsonObj.put("token", getToken());
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_EMAIL, email);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
         } catch (JSONException e) {
             e.printStackTrace();
         }

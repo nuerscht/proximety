@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.Token;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
@@ -27,8 +28,8 @@ public class UserServiceBinder extends ServiceBinder {
     public void login(String email, String password, final ResponseHandler responseHandler) {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("email", email);
-            jsonObj.put("password", password);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_EMAIL, email);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_PASSWORD, password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,10 +61,10 @@ public class UserServiceBinder extends ServiceBinder {
     public void signup(String name, String email, String password, String passwordConfirm, final ResponseHandler responseHandler) {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("name", name);
-            jsonObj.put("email", email);
-            jsonObj.put("password", password);
-            jsonObj.put("password_confirm", passwordConfirm);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_NAME, name);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_EMAIL, email);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_PASSWORD, password);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_PASSWORD_CONFIRM, passwordConfirm);
         } catch (JSONException e) {
             e.printStackTrace();
         }

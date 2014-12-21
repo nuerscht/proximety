@@ -10,4 +10,8 @@ public class ProximetyConsts {
     public static String JSON_RETURN_MESSAGE = "msg";
 
     public static String SERVICE_PARAM_TOKEN = "token";
+    public static String SERVICE_PARAM_EMAIL = "email";
+    public static String SERVICE_PARAM_NAME = "name";
+    public static String SERVICE_PARAM_PASSWORD = "password";
+    public static String SERVICE_PARAM_PASSWORD_CONFIRM = "password_confirm";
 }
