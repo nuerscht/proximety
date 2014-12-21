@@ -1,33 +1,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/actionbar_extended"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_friend"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/primary"
-        />
+        android:minHeight="56dp"
+        android:background="@color/primary" >
 
-    <TextView
-        android:id="@+id/text_friend_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:textAllCaps="true"
-        android:textSize="30sp"
-        android:text="@string/friend_dummy_name"
+        <!-- layout_centerHorizontal somehow does not work inside toolbar -->
+        <TextView
+            android:id="@+id/text_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:textAllCaps="true"
+            android:textSize="30sp"
+            android:text="@string/friend_dummy_name"
+            android:textColor="@color/primary_text" />
 
-        android:textColor="@color/primary_text"
-        />
+        </android.support.v7.widget.Toolbar>
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/actionbar_extended"
+        android:layout_below="@+id/toolbar_friend"
         tools:context="ch.ffhs.esa.proximety.activities.FriendDetailActivity" />
 
 </RelativeLayout>

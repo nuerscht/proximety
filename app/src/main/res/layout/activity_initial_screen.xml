@@ -30,7 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onRegisterButtonClick"
-            android:text="@string/action_register" />
+            android:text="@string/action_register"
+            android:backgroundTint="@color/primary"
+            android:backgroundTintMode="multiply" />
         
         <Button
             android:id="@+id/button2"
