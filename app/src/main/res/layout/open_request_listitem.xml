@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/open_request_personImg"
+        android:layout_width="2dp"
+        style="@style/open_request_item_list_alignment" />
+
+    <TextView
+        android:id="@+id/open_request_title"
+        android:layout_width="3dp"
+        style="@style/open_request_item_list_alignment" />
+
+    <ImageButton
+        android:background="@drawable/ic_action_accept"
+        android:id="@+id/open_request_acceptImg"
+        android:layout_width="1dp"
+        style="@style/open_request_item_list_alignment" />
+
+    <ImageButton
+        android:background="@drawable/ic_action_cancel"
+        android:id="@+id/open_request_declineImg"
+        android:layout_width="1dp"
+        style="@style/open_request_item_list_alignment" />
+
+</LinearLayout>

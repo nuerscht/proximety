@@ -26,4 +26,9 @@
         <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
     </style>
 
+    <style name="open_request_item_list_alignment">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
 </resources>
