@@ -5,14 +5,12 @@ Unit-Tests können für kritische oder komplexe Komponenten verwendet werden sin
 Im Allgemeinen wollen wir uns auf die System und UI Tests fokussieren um den Aufwand des Projekts im Rahmen zu halten.
 
 \medskip
-Manuelle Tests sind zwar üblicherweise einfach zu erstellen, müssen oder sollten aber bei jeder Änderung des Projekts wiederholt werden. Dies führt schnell zu viel Aufwand, darum sollen alle Tests so weit als möglich automatisiert werden.
+Manuelle Tests sind zwar üblicherweise einfach zu erstellen, müssen oder sollten aber bei jeder Änderung des Projekts wiederholt werden. Dies führt schnell zu viel Aufwand. 
+Automatisierte Tests hingegen sind in der Konzeption oft aufwändiger, sparen dafür aber bei der Ausführung Zeit, solange sie nicht angepasst werden müssen.
 
 \medskip
-Als Richtlinie sollen alle definierten Use Cases mit mindestens einem Test Case abgedeckt werden. Um die ortsabhängigen Fälle zu prüfen soll die Android Mock Location Funktionalität verwendet werden (siehe Resourcen Abschnitt~\ref{sec:test_resources})
-Des weitern soll die Validierung bei allen Eingabemöglichkeiten mit positiven sowie negativen Tests geprüft werden.
-
-\medskip
-Die Kommunikation zum Server wird mit Service Mocks auf der Server Seite geprüft.
+Als Richtlinie sollen alle definierten Use Cases mit mindestens einem Test Case abgedeckt werden. 
+Um die ortsabhängigen Fälle zu prüfen soll die Android Mock Location Funktionalität verwendet werden (siehe Resourcen Abschnitt~\ref{sec:test_resources})
 
 \subsection{Test Resourcen}
 \label{sec:test_resources}
@@ -22,16 +20,16 @@ Fake/Mock Locations: \url{http://developer.android.com/training/location/locatio
 
 \medskip
 
-Als Test-Geräte wird der Android Emulator (Android 4.4) sowie die vorhandenen Geräte der Projektmitglieder verwendet. 
+Als Test-Geräte wird der Android Emulator (Android 4.4/5.0) sowie die vorhandenen Geräte der Projektmitglieder verwendet. 
 
 \medskip
 Folgende Umgebungen sind verfügbar. Eine Abkürzung für spätere referenzierung wird jeweils gegeben:
 
 \begin{itemize}
 \item Android Emulator (Android 4.4) [AE-44]
-\item Google/LG Nexus 5 (Android 5.0) [N5-50]
 \item Samsung Galaxy Note 4 (Android 4.4) [Note-44]
-\item Samsung Galaxy Nexus (Android 4.3) [GN-43]
+\item Android Emulator (Android 5.0) [AE-50]
+\item Google/LG Nexus 5 (Android 5.0) [N5-50]
 \end{itemize}
 
 \subsection{Test Fälle}
