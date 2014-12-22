@@ -35,8 +35,7 @@ Folgende Umgebungen sind verfügbar. Eine Abkürzung für spätere referenzierun
 \end{itemize}
 
 \subsection{Test Fälle}
-Hier werden eventuelle manuelle Tests beschrieben sowie automatische referenziert. 
-
+Referenzen zu automatisierten Test Fällen
 \begin{center}
 	\begin{tabular}{ | l | l | l | l | }
 	\hline
@@ -47,15 +46,233 @@ Hier werden eventuelle manuelle Tests beschrieben sowie automatische referenzier
 	\end{tabular}
 \end{center}
 
-\subsection{Test Resulate}
-Hier werden die Resulatate der Ausführungen mit der verwendeten Umgebung aufgeführt werden.
+Manuelle Test Fälle:
 
 \begin{center}
 	\begin{tabular}{ | l | l | l | l | }
 	\hline
-	Name / Id & Umgebung & Resultat (OK/NOK) & Bemerkungen \\
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC01 & Login / Registrieren & Hoch & UC01 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Ausgeloggt} & \mc{Account erstellt und eingeloggt} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ App starten } & \mc{} \\
+	  \mc{ Registrieren drücken } & \mc{ Registrier Formular erscheint } \\
+	  \mc{ Namen, E-Mail und Passwort eingeben (2x) } & \mc{} \\
+	  \mc{ Registrieren drücken } & \mc{ Login Formular erscheint } \\
+	  \mc{ Vorher definiertes Passwort eingeben } & \mc{ Login erfolgreich, Popup erscheint um Freunde hinzuzufügen } \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
 	\hline
-	 & & & \\
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC02 & Freundschafts Anfrage & Hoch & UC02 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
+	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
+	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
+	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
+	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
+	  \mc{ Anfrage bestätigen } & \mc{ Zurück auf Hauptbildschirm, Freund wird angezeigt } \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC03 & Freundschaftsanfrage (Ablehnen) & Mittel & UC02 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
+	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
+	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
+	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
+	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
+	  \mc{ Anfrage ablehnen } & \mc{ Zurück auf Hauptbildschirm, Freund wird angezeigt } \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC04 & Freundschaftsanfrage (Annehmen) & Hoch & UC02 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
+	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
+	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
+	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
+	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
+	  \mc{ Anfrage annehmen } & \mc{ Zurück auf Hauptbildschirm, Freund wird nicht angezeigt } \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC05 & Freundschaft Auflösen & Hoch & UC03 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, mind 1 Freund} & \mc{Freundschaft aufgelöst} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Freund aus Liste auswählen } & \mc{Freund Details werden angezeigt} \\
+	  \mc{ Reiter Details "Freund entfernen" auswählen } & \mc{Benachrichtigung, zurück auf Hauptbildschirm, Freund erscheint nicht mehr in der Liste} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC06 & Aktuelle Position Abfragen & Hoch & UC04 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, mind 1 Freund} & \mc{Position des Freundes bekannt} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Freund aus Liste auswählen } & \mc{Freund Details werden angezeigt} \\
+	  \mc{ Reiter Details Distanz } & \mc{Aktuelle geschätze Distanz wird angezeigt} \\
+	  \mc{ Reiter Karte auswählen } & \mc{Aktuelle Position wird auf der Karte angezeigt} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC07 & Proximety Alarm & Hoch & UC05, UC08 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, mind 1 Freund, Freund hat bekannte Position} & \mc{Proximety Alarm ausgelöst} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Android Mock Location far far away (muss mer no gugge wie da gnau gaht...) } & \mc{Kein Alarm} \\
+	  \mc{ Distanz für Alarm 10 km einstellen } & \mc{} \\
+	  \mc{ Android Mock Location close ~8 km } & \mc{Alarm} \\
+	  \mc{ Android Mock Location far away } & \mc{Kein Alarm} \\
+	  \mc{ Distanz für Alarm reduzieren auf 3 km } & \mc{} \\
+	  \mc{ Android Mock Location very close } & \mc{Alarm} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC08 & Freund kontaktieren & Tief & UC06 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, mind 1 Freund} & \mc{E-Mail an Freund gesendet} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Freund aus Liste auswählen } & \mc{Freund Details werden angezeigt} \\
+	  \mc{ Kontakt Icon auswählen } & \mc{Externe Applikation für E-Mail wird gestartet (Bsp. GMail), E-Mail von Freund eingetragen} \\
+	  \mc{ Nachricht schreiben und absenden } & \mc{Freund erhält geschrieben Nachricht} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC09 & Freund-Spezifische Einstellungen & Mittel & UC07 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt, mind 1 Freund} & \mc{Einstellungen angepasst} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Freund aus Liste auswählen } & \mc{Freund Details werden angezeigt} \\
+	  \mc{ Alarm abschalten } & \mc{} \\
+	  \mc{ TC07 ausführen } & \mc{Es wird kein Alarm ausgelöst} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | }
+	\hline
+	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
+	  \hline
+	  TC10 & Allgemeine Einstellungen & Mittel & UC08 \\
+	  \hline
+	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
+	  \hline
+	  \mc{Eingeloggt} & \mc{Einstellungen angepasst} \\
+	  \hline
+	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
+	  \hline
+	  \mc{ Drawer Menu öffnen -> "Einstellungen" auswählen } & \mc{Einstellungen erscheinen} \\
+	  \mc{ Distanz auf 11 km ändern } & \mc{} \\
+	  \mc{ Allg-Alarm ausschalten } & \mc{} \\
+	  \mc{ Ausloggen, App schliessen } & \mc{} \\
+	  \mc{ App starten, Einloggen } & \mc{Hauptbildschirm erscheint} \\
+	  \mc{ Drawer Menu öffnen -> "Einstellungen" auswählen } & \mc{Einstellungen gespeichert, wie in Schritt 2,3} \\
+	  \hline
+	\end{tabular}
+\end{center}
+
+\subsection{Test Resulate}
+Hier werden die Resulatate der Ausführungen mit der verwendeten Umgebung aufgeführt werden.
+
+\begin{center}
+	\begin{tabular}{ | l | l | l | l | l | }
+	\hline
+	Name / Id & Datum & Umgebung & Resultat (OK/NOK) & Bemerkungen \\
+	\hline
+	 & & & & \\
 	\hline
 	\end{tabular}
 \end{center}
