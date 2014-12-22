@@ -1,5 +1,7 @@
 package ch.ffhs.esa.proximety.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -130,13 +132,31 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
     }
 
     public void onButtonDeleteFriendClick(View button) {
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
-        fsb.deleteFriend(friend.id, new ResponseHandler(getApplicationContext()) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, Object response) {
-                onFriendDeleteSuccess();
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
+
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                fsb.deleteFriend(friend.id, new ResponseHandler(getApplicationContext()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, Object response) {
+                        onFriendDeleteSuccess();
+                    }
+                });
+            }
+        });
+
+        builder.setMessage(getText(R.string.friend_delete_info)).setTitle(getText(R.string.friend_delete));
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     private void onFriendDetailsLoaded(JSONObject response) {

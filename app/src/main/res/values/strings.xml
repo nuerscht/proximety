@@ -47,5 +47,13 @@
     <string name="friend_current_position">Aktuelle Position des Freundes</string>
     <string name="na">N/A</string>
     <string name="network_not_available">Keine Internetverbindung vorhanden</string>
+    <string name="friend_delete_info">Wollen Sie diesen Freund wirklich löschen?</string>
+    <string name="delete">Löschen</string>
+    <string name="friend_refuse">Anfrage ablehnen</string>
+    <string name="friend_refuse_info">Wollen Sie diese Anfrage wirklich ablehnen?</string>
+    <string name="refuse">Ablehnen</string>
+    <string name="friend_accept">Anfrage annehmen</string>
+    <string name="friend_accept_info">Wollen Sie diese Anfrage wirklich akzeptieren?</string>
+    <string name="accept">Akzeptieren</string>
 
 </resources>

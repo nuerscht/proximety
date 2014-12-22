@@ -1,6 +1,8 @@
 package ch.ffhs.esa.proximety.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -56,40 +58,76 @@ public class OpenRequestsActivity extends Activity {
         });
     }
 
-    public void onButtonRequestAccept(View button) {
-        String id = ids[(int)button.getTag()];
-
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
-        fsb.confirmRequest(id, new ResponseHandler(getApplicationContext()) {
+    public void onButtonRequestAccept(final View button) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, Object response) {
-                if (statusCode == 200) {
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
+
+        builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String id = ids[(int)button.getTag()];
+
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                fsb.confirmRequest(id, new ResponseHandler(getApplicationContext()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, Object response) {
+                        if (statusCode == 200) {
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        builder.setMessage(getText(R.string.friend_accept_info)).setTitle(getText(R.string.friend_accept));
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        String id = ids[(int)button.getTag()];
     }
 
-    public void onButtonRequestCancel(View button) {
-        String id = ids[(int)button.getTag()];
-
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
-        fsb.declineRequest(id, new ResponseHandler(getApplicationContext()) {
+    public void onButtonRequestCancel(final View button) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, Object response) {
-                if (statusCode == 200) {
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
+
+        builder.setPositiveButton(R.string.refuse, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String id = ids[(int)button.getTag()];
+
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                fsb.declineRequest(id, new ResponseHandler(getApplicationContext()) {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, Object response) {
+                        if (statusCode == 200) {
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        builder.setMessage(getText(R.string.friend_refuse_info)).setTitle(getText(R.string.friend_refuse));
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void onListLoadSuccess(JSONArray openRequests) {
