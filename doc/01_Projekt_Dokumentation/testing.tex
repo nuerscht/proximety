@@ -16,7 +16,10 @@ Um die ortsabhängigen Fälle zu prüfen soll die Android Mock Location Funktion
 \label{sec:test_resources}
 Android UI Automation: \url{http://developer.android.com/tools/testing/testing_ui.html}
 
-Fake/Mock Locations: \url{http://developer.android.com/training/location/location-testing.html}
+Mock Locations in Android: \url{http://developer.android.com/training/location/location-testing.html}
+
+Um die Position auf dem zu testenden Gerät zu setzten wird eine zusätzliche App benötigt. Es bietet sich an, eine bereits verfügbar aus dem Google Play Store zu verwenden:
+Fake GPS Location Spoofer Free: \url{https://play.google.com/store/apps/details?id=com.incorporateapps.fakegps.fre}
 
 \medskip
 
@@ -168,16 +171,19 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Angemeldet, mind 1 Freund, Freund hat bekannte Position} & \mc{Proximety Alarm ausgelöst} \\
+	  \mc{Angemeldet, mind 1 Freund, Freund hat bekannte Position, Mock Location App installiert (siehe Resourcen sowie Anweisungen der App)} & \mc{Proximety Alarm ausgelöst} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
-	  \mc{ Android Mock Location far far away (muss mer no gugge wie da gnau gaht...) } & \mc{Kein Alarm} \\
+	  \mc{ Mock Location mit zusätzlicher App auf entfernten Ort setzten (Bsp. Sydney) } & \mc{Kein Alarm} \\
+	  \mc{ Proximety Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{} \\
 	  \mc{ Distanz für Alarm 10 km einstellen } & \mc{} \\
-	  \mc{ Android Mock Location close ~8 km } & \mc{Alarm} \\
-	  \mc{ Android Mock Location far away } & \mc{Kein Alarm} \\
+	  \mc{ Mock Location auf Ort in der nähe des Freundes setzten (~ 8km) } & \mc{(Warten) Proximety Alarm Notification wird angezeigt} \\
+	  \mc{ Klick auf die Notification } & \mc{Detail Ansicht des Freundes wird geöffnet} \\
+	  \mc{ Mock Location mit zusätzlicher App auf entfernten Ort setzten (Bsp. Hamburg) } & \mc{Kein Alarm} \\
+	  \mc{ Proximety Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{} \\
 	  \mc{ Distanz für Alarm reduzieren auf 3 km } & \mc{} \\
-	  \mc{ Android Mock Location very close } & \mc{Alarm} \\
+	  \mc{ Mock Location auf Ort in der nähe des Freundes setzten < 2km } & \mc{(Warten) Proximety Alarm Notification wird angezeigt} \\
 	  \hline
 	\end{tabular}
 \end{center}
