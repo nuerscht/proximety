@@ -239,4 +239,37 @@ public class FriendServiceBinder extends ServiceBinder {
             }
         });
     }
+
+    public void updateSettings(String friendId, boolean active, final ResponseHandler responseHandler) {
+
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        if (active)
+            params.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 1);
+        else
+            params.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 0);
+
+        RestClient.put(getApplicationContext(), "api/friend/".concat(friendId).concat("/alarm"), params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Message.class));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
 }

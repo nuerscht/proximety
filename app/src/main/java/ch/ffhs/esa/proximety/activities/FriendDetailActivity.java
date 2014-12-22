@@ -19,6 +19,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -129,6 +130,16 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void onToggleButtonClick(View button) {
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+        fsb.updateSettings(friend.id, ((ToggleButton)button).isChecked(), new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                Toast.makeText(getApplicationContext(), R.string.setting_saved, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onButtonDeleteFriendClick(View button) {

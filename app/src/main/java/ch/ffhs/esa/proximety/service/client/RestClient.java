@@ -37,6 +37,14 @@ public class RestClient {
         }
     }
 
+    public static void put(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        if (isOnline(context)) {
+            getClient().put(context, getAbsoluteUrl(url), params, responseHandler);
+        } else {
+            Toast.makeText(context, context.getText(R.string.network_not_available), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public static void put(Context context, String url, JSONObject jsonObject, AsyncHttpResponseHandler responseHandler) {
         if (isOnline(context)) {
             StringEntity entity = null;
