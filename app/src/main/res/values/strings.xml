@@ -46,5 +46,6 @@
     <string name="cancel">Abbrechen</string>
     <string name="friend_current_position">Aktuelle Position des Freundes</string>
     <string name="na">N/A</string>
+    <string name="network_not_available">Keine Internetverbindung vorhanden</string>
 
 </resources>

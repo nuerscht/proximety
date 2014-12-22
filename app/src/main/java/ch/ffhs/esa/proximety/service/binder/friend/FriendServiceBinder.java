@@ -133,8 +133,8 @@ public class FriendServiceBinder extends ServiceBinder {
     public void getListOfFriends(final ResponseHandler responseHandler) {
 
         RequestParams params = new RequestParams();
-        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, "7b2868f754193e2f8c1674cb83162a8445002756");
-        // params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        //params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, "7b2868f754193e2f8c1674cb83162a8445002756");
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
 
         RestClient.get(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
             @Override

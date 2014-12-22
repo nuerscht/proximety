@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import ch.ffhs.esa.proximety.R;
 
 /**
@@ -18,14 +20,16 @@ public class FriendList extends ArrayAdapter<String> {
     private final LayoutInflater inflater;
     private final String[] friends;
     private final String[] places;
+    private final String[] distance;
     private final Bitmap[] images;
 
-    public FriendList(LayoutInflater inflater, String[] friends, String[] places, Bitmap[] images) {
+    public FriendList(LayoutInflater inflater, String[] friends, String[] places, String[] distance, Bitmap[] images) {
         super(inflater.getContext(), R.layout.list_friend, friends);
         this.inflater = inflater;
         this.friends = friends;
         this.places = places;
         this.images = images;
+        this.distance = distance;
     }
 
     @Override
@@ -34,9 +38,11 @@ public class FriendList extends ArrayAdapter<String> {
         TextView friendNameView = (TextView) rowView.findViewById(R.id.friend_name);
         TextView friendPlaceView = (TextView) rowView.findViewById(R.id.friend_place);
         ImageView friendImageView = (ImageView) rowView.findViewById(R.id.friend_image);
+        TextView friendDistanceView = (TextView) rowView.findViewById(R.id.friend_distance);
         friendNameView.setText(friends[position]);
         friendPlaceView.setText(places[position]);
         friendImageView.setImageBitmap(images[position]);
+        friendDistanceView.setText(distance[position]);
         return rowView;
     }
 

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.domain.Token;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 import ch.ffhs.esa.proximety.service.client.RestClient;
@@ -74,6 +75,39 @@ public class UserServiceBinder extends ServiceBinder {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Gson gson = new Gson();
                 responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Friend.class));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    public void setClientId(String regid, final ResponseHandler responseHandler) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_ID, regid);
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RestClient.post(getApplicationContext(), "api/user/client-id", jsonObj, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Message.class));
             }
 
             @Override

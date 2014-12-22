@@ -13,7 +13,10 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,9 +41,12 @@ import ch.ffhs.esa.proximety.async.GravatarImage;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.helper.Gravatar;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.location.LocationServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -66,6 +72,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 /*
  * Main view of the app using tabs and fragments
@@ -74,7 +81,7 @@ import java.io.IOException;
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
 public class MainActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
-    protected static final String TAG = "location-updates";
+    protected static final String TAG = MainActivity.class.getName();
     //300000 = 5 Minutes
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
@@ -96,6 +103,8 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
     protected GoogleApiClient mGoogleApiClient;
     protected LocationRequest mLocationRequest;
+
+    static MapViewFragment mapViewFragment;
 
     GoogleCloudMessaging gcm;
     String regid;
@@ -238,6 +247,14 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
      */
     private void sendRegistrationIdToBackend() {
         Log.i(TAG, "sendRegistrationIdToBackend" + regid);
+
+        UserServiceBinder usb = new UserServiceBinder(getApplicationContext());
+        usb.setClientId(regid, new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                Log.i(TAG, ((Message)response).message);
+            }
+        });
     }
 
     private void storeRegistrationId(Context context, String regId) {
@@ -358,14 +375,22 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        //todo 404 error on posting location
-        /*LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
+        Log.i(TAG, "Location update: lat " + location.getLatitude() + "/long " + location.getLongitude());
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, (float) location.getLatitude());
+        editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, (float) location.getLongitude());
+        editor.commit();
+
+        LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
         lsb.updateLocation(location.getLatitude(), location.getLongitude(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 Log.i(TAG, ((Message)response).message);
             }
-        });*/
+        });
     }
 
     @Override
@@ -483,7 +508,9 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			switch (i) {
 			case 1:
 				// "second" the map view
-				return new MapViewFragment();
+                if (mapViewFragment == null)
+                    mapViewFragment = new MapViewFragment();
+				return mapViewFragment;
 
 			default:
 				// The standard list view.
@@ -539,15 +566,17 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			map.getUiSettings().setMyLocationButtonEnabled(true);
 			map.getUiSettings().setZoomControlsEnabled(true);
 			map.setMyLocationEnabled(true);
-
-			LatLng sydney = new LatLng(-33.867, 151.206);
-
-			map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-
-			map.addMarker(new MarkerOptions().title("Sydney")
-					.snippet("The most populous city in Australia.")
-					.position(sydney));
 		}
+
+        public void setMapMarker (double latitude, double longitude, String title, String address) {
+            LatLng place = new LatLng(latitude, longitude);
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 13));
+
+            map.addMarker(new MarkerOptions().title(title)
+                    .snippet(address)
+                    .position(place));
+        }
 	}
 
 	public static class ListViewFragment extends Fragment {
@@ -572,20 +601,73 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			return rootView;
 		}
 
+        private String convertDistance(float distance) {
+            if (distance < 1000) {
+
+                return Integer.toString(Math.round(distance)).concat(" m");
+            } else {
+                distance = distance / 100;
+                distance = Math.round(distance);
+                distance = (float) (distance / 10.0);
+                return Float.toString(distance).concat(" km");
+            }
+        }
+
         private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
+            String[] distance = new String[friendListJson.length()];
             final Bitmap[] images = new Bitmap[friendListJson.length()];
             final String[] ids = new String[friendListJson.length()];
-            final FriendList friendList = new FriendList(inflater, friends, places, images);
+            final FriendList friendList = new FriendList(inflater, friends, places, distance, images);
+
+            //Create own location
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+            Location locationOwn = new Location("");
+            locationOwn.setLatitude(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0));
+            locationOwn.setLongitude(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, 0));
 
             Gson gson = new Gson();
+            Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
             for(int i = 0; i < friendListJson.length(); i++) {
                 try {
                     Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
                     ids[i] = friend.id;
                     friends[i] = friend.name;
-                    places[i] = "";
+                    if (friend.isLocationSet()) {
+                        try {
+                            List<Address> addressList = geocoder.getFromLocation(friend.latitude, friend.longitude, 1);
+                            Address address = addressList.get(0);
+                            places[i] = "";
+                            for (int j = 0; j < address.getMaxAddressLineIndex(); j++) {
+                                if (j != 0)
+                                    places[i] = places[i].concat(", ");
+
+                                places[i] = places[i].concat(address.getAddressLine(j).toString());
+                            }
+
+                            if (!address.getCountryName().isEmpty())
+                                places[i] = places[i].concat(", ").concat(address.getCountryName());
+
+                            //Get Distance
+                            Location locationFriend = new Location("");
+                            locationFriend.setLatitude(friend.latitude);
+                            locationFriend.setLongitude(friend.longitude);
+
+                            distance[i] = convertDistance(locationOwn.distanceTo(locationFriend));
+
+
+                            //place marker in map
+                            if (mapViewFragment != null)
+                                mapViewFragment.setMapMarker(friend.latitude, friend.longitude, friend.name, places[i]);
+                        } catch (IOException e) {
+                            places[i] = "";
+                            distance[i] = ((String)getText(R.string.na)).concat(" m");
+                        }
+                    } else {
+                        places[i] = "";
+                        distance[i] = ((String)getText(R.string.na)).concat(" m");
+                    }
                     images[i] = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder_friend);
 
                     Gravatar gravatar = new Gravatar(friend.email, i);
