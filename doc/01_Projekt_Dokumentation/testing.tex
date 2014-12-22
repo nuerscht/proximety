@@ -57,7 +57,7 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Ausgeloggt} & \mc{Account erstellt und eingeloggt} \\
+	  \mc{Abgemeldet} & \mc{Account erstellt und angemeldet} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
@@ -75,46 +75,29 @@ Manuelle Test Fälle:
 	\hline
 	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
 	  \hline
-	  TC02 & Freundschafts Anfrage & Hoch & UC02 \\
+	  TC02 & Freundschaftsanfrage (Ablehnen) & Mittel & UC02 \\
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
+	  \mc{Abgemeldet, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
-	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
+	  \mc{ Drawer Menu öffnen -> ``Freund hinzufügen`` auswählen } & \mc{Formular erscheint} \\
 	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
-	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
-	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
-	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
-	  \mc{ Anfrage bestätigen } & \mc{ Zurück auf Hauptbildschirm, Freund wird angezeigt } \\
+	  \mc{ Drawer Menu öffnen -> ``Abmelden`` auswählen } & \mc{ Register/Login erscheint } \\
+	  \mc{ Mit ``Freund`` anmelden } & \mc{ Main Screen } \\
+	  \mc{ Drawer Menu öffnen -> ``Offene Anfragen`` auswählen } & \mc{ Liste mit Anfragen erscheint } \\
+	  \mc{ Anfrage ablehnen } & \mc{ Zurück auf Hauptbildschirm, Freund wird nicht angezeigt } \\
 	  \hline
 	\end{tabular}
 \end{center}
 
-\begin{center}
-	\begin{tabular}{ | l | l | l | l | }
-	\hline
-	  \textbf{ID} & \textbf{Name} & \textbf{Priorität} & \textbf{Abdeckung} \\
-	  \hline
-	  TC03 & Freundschaftsanfrage (Ablehnen) & Mittel & UC02 \\
-	  \hline
-	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
-	  \hline
-	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
-	  \hline
-	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
-	  \hline
-	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
-	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
-	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
-	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
-	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
-	  \mc{ Anfrage ablehnen } & \mc{ Zurück auf Hauptbildschirm, Freund wird angezeigt } \\
-	  \hline
-	\end{tabular}
-\end{center}
+
+
+
+
+
 
 \begin{center}
 	\begin{tabular}{ | l | l | l | l | }
@@ -125,16 +108,16 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
+	  \mc{Angemeldet, 2. Account bereit (Freund)} & \mc{Anfrage versendet und bestätigt} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
-	  \mc{ Drawer Menu öffnen -> "Freund hinzufügen" auswählen } & \mc{Formular erscheint} \\
+	  \mc{ Drawer Menu öffnen -> ``Freund hinzufügen`` auswählen } & \mc{Formular erscheint} \\
 	  \mc{ E-Mail des Freundes eingeben, Einladen auswählen } & \mc{Einladung versendet, zurück auf Hauptbildschirm} \\
-	  \mc{ Drawer Menu öffnen -> "Ausloggen" auswählen } & \mc{ Register/Login erscheint } \\
-	  \mc{ Mit "Freund" einloggen } & \mc{ Main Screen } \\
-	  \mc{ Drawer Menu öffnen -> "Offene Anfragen" auswählen } & \mc{ Liste mit Anfragen erscheint } \\
-	  \mc{ Anfrage annehmen } & \mc{ Zurück auf Hauptbildschirm, Freund wird nicht angezeigt } \\
+	  \mc{ Drawer Menu öffnen -> ``Abmelden`` auswählen } & \mc{ Register/Login erscheint } \\
+	  \mc{ Mit ``Freund`` einloggen } & \mc{ Main Screen } \\
+	  \mc{ Drawer Menu öffnen -> ``Offene Anfragen`` auswählen } & \mc{ Liste mit Anfragen erscheint } \\
+	  \mc{ Anfrage ablehnen } & \mc{ Zurück auf Hauptbildschirm, Freund wird nicht angezeigt } \\
 	  \hline
 	\end{tabular}
 \end{center}
@@ -148,12 +131,12 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, mind 1 Freund} & \mc{Freundschaft aufgelöst} \\
+	  \mc{Angemeldet, mind 1 Freund} & \mc{Freundschaft aufgelöst} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
 	  \mc{ Freund aus Liste auswählen } & \mc{Freund Details werden angezeigt} \\
-	  \mc{ Reiter Details "Freund entfernen" auswählen } & \mc{Benachrichtigung, zurück auf Hauptbildschirm, Freund erscheint nicht mehr in der Liste} \\
+	  \mc{ Reiter Details ``Freund entfernen`` auswählen } & \mc{Benachrichtigung, zurück auf Hauptbildschirm, Freund erscheint nicht mehr in der Liste} \\
 	  \hline
 	\end{tabular}
 \end{center}
@@ -167,7 +150,7 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, mind 1 Freund} & \mc{Position des Freundes bekannt} \\
+	  \mc{Angemeldet, mind 1 Freund} & \mc{Position des Freundes bekannt} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
@@ -187,7 +170,7 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, mind 1 Freund, Freund hat bekannte Position} & \mc{Proximety Alarm ausgelöst} \\
+	  \mc{Angemeldet, mind 1 Freund, Freund hat bekannte Position} & \mc{Proximety Alarm ausgelöst} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
@@ -210,7 +193,7 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, mind 1 Freund} & \mc{E-Mail an Freund gesendet} \\
+	  \mc{Angemeldet, mind 1 Freund} & \mc{E-Mail an Freund gesendet} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
@@ -230,7 +213,7 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt, mind 1 Freund} & \mc{Einstellungen angepasst} \\
+	  \mc{Angemeldet, mind 1 Freund} & \mc{Einstellungen angepasst} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
@@ -250,16 +233,16 @@ Manuelle Test Fälle:
 	  \hline
 	  \mc{\textbf{Vorbedingung}} & \mc{\textbf{Nachbedingung}} \\
 	  \hline
-	  \mc{Eingeloggt} & \mc{Einstellungen angepasst} \\
+	  \mc{Angemeldet} & \mc{Einstellungen angepasst} \\
 	  \hline
 	  \mc{\textbf{Schritte}} & \mc{\textbf{Erwartet}} \\
 	  \hline
-	  \mc{ Drawer Menu öffnen -> "Einstellungen" auswählen } & \mc{Einstellungen erscheinen} \\
+	  \mc{ Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{Einstellungen erscheinen} \\
 	  \mc{ Distanz auf 11 km ändern } & \mc{} \\
 	  \mc{ Allg-Alarm ausschalten } & \mc{} \\
-	  \mc{ Ausloggen, App schliessen } & \mc{} \\
-	  \mc{ App starten, Einloggen } & \mc{Hauptbildschirm erscheint} \\
-	  \mc{ Drawer Menu öffnen -> "Einstellungen" auswählen } & \mc{Einstellungen gespeichert, wie in Schritt 2,3} \\
+	  \mc{ Abmelden, App schliessen } & \mc{} \\
+	  \mc{ App starten, Anmelden } & \mc{Hauptbildschirm erscheint} \\
+	  \mc{ Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{Einstellungen gespeichert, wie in Schritt 2,3} \\
 	  \hline
 	\end{tabular}
 \end{center}
