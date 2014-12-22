@@ -239,15 +239,19 @@ public class FriendServiceBinder extends ServiceBinder {
     }
 
     public void updateSettings(String friendId, boolean active, final ResponseHandler responseHandler) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
 
-        RequestParams params = new RequestParams();
-        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
-        if (active)
-            params.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 1);
-        else
-            params.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 0);
+            if (active)
+                jsonObj.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 1);
+            else
+                jsonObj.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        RestClient.put(getApplicationContext(), "api/friend/".concat(friendId).concat("/alarm"), params, new JsonHttpResponseHandler() {
+        RestClient.put(getApplicationContext(), "api/friend/".concat(friendId).concat("/alarm"), jsonObj, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Gson gson = new Gson();
