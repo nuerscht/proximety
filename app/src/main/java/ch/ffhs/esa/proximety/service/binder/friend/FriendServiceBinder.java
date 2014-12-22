@@ -77,8 +77,7 @@ public class FriendServiceBinder extends ServiceBinder {
         RestClient.put(getApplicationContext(), "api/friend/request", jsonObj, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Gson gson = new Gson();
-                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Friend.class));
+                responseHandler.onSuccess(statusCode, headers, response);
             }
 
             @Override
@@ -106,8 +105,7 @@ public class FriendServiceBinder extends ServiceBinder {
         RestClient.delete(getApplicationContext(), "api/friend/request", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Gson gson = new Gson();
-                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Message.class));
+                responseHandler.onSuccess(statusCode, headers, response.toString());
             }
 
             @Override
