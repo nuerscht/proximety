@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -66,11 +68,14 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.proximety)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setContentTitle(getText(R.string.settings_proximity_alert))
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
-                        .setContentText(msg);
+                        .setContentText(msg)
+                .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
+                .setLights(Color.BLUE, 3000, 3000);
 
         mBuilder.setContentIntent(contentIntent);
         Notification notification = mBuilder.build();
