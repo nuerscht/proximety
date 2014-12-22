@@ -577,6 +577,10 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
                     .snippet(address)
                     .position(place));
         }
+
+        public void removeMarkers() {
+            map.clear();
+        }
 	}
 
 	public static class ListViewFragment extends Fragment {
@@ -629,6 +633,11 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
             Gson gson = new Gson();
             Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
+
+            //Remove all markers from map
+            if (mapViewFragment != null)
+                mapViewFragment.removeMarkers();
+
             for(int i = 0; i < friendListJson.length(); i++) {
                 try {
                     Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
