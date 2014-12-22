@@ -127,13 +127,39 @@ public class FriendServiceBinder extends ServiceBinder {
         });
     }
 
-    public void deleteFriend() {
+    public void deleteFriend(String friendId, final ResponseHandler responseHandler) {
+
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+        params.put(ProximetyConsts.SERVICE_PARAM_FRIEND_ID, friendId);
+
+        RestClient.delete(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), Message.class));
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 
     public void getListOfFriends(final ResponseHandler responseHandler) {
 
         RequestParams params = new RequestParams();
-        //params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, "7b2868f754193e2f8c1674cb83162a8445002756");
         params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
 
         RestClient.get(getApplicationContext(), "api/friend", params, new JsonHttpResponseHandler() {
@@ -186,10 +212,6 @@ public class FriendServiceBinder extends ServiceBinder {
         });
     }
 
-    public List<String> search(String searchText, String token) {
-        return null;
-    }
-
     public void queryOpenRequests(final ResponseHandler responseHandler) {
 
         RequestParams params = new RequestParams();
@@ -216,9 +238,5 @@ public class FriendServiceBinder extends ServiceBinder {
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
-    }
-
-    private void invokeWebService() {
-
     }
 }

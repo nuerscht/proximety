@@ -1,5 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
@@ -119,16 +121,29 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
                 }
             }
         });
+    }
 
+    private void onFriendDeleteSuccess() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-
+    public void onButtonDeleteFriendClick(View button) {
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+        fsb.deleteFriend(friend.id, new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                onFriendDeleteSuccess();
+            }
+        });
     }
 
     private void onFriendDetailsLoaded(JSONObject response) {
 
         TextView name = (TextView) findViewById(R.id.text_friend_name);
         TextView distanceView = (TextView) findViewById(R.id.text_distance_number);
-        MapView map = (MapView) findViewById(R.id.main_map_view);
+        MapView map = (MapView) findViewById(R.id.friend_map);
 
         Gson gson = new Gson();
         friend = gson.fromJson(response.toString(), Friend.class);
@@ -140,13 +155,11 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
             friendLocation.setLatitude(friend.latitude);
             friendLocation.setLongitude(friend.longitude);
 
-            Location dummyLocation = new Location("My Dummy Location (Sydney)");
-            dummyLocation.setLatitude(-33.867);
-            dummyLocation.setLongitude(151.206);
+            Location ownLocation = LocationHelper.getLocationOwn(this);
 
-            Float distance = friendLocation.distanceTo(dummyLocation);
+            Float distance = friendLocation.distanceTo(ownLocation);
 
-            distanceView.setText(distance.toString() + " m");
+            distanceView.setText(LocationHelper.convertDistance(distance));
 
             // Get the map and update location there too
             map.getMapAsync(this);
@@ -185,13 +198,11 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(friendLocation, 13));
 
             googleMap.addMarker(new MarkerOptions().title(friend.name)
-                    .snippet(getText(R.string.friend_current_position).toString())
+                    .snippet(LocationHelper.getAddressDescription(friend.latitude, friend.longitude, this))
                     .position(friendLocation));
         }else{
             // TODO: show current position
         }
-
-
     }
 
     /**

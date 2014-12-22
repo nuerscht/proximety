@@ -43,6 +43,7 @@ import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.helper.Gravatar;
+import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.binder.location.LocationServiceBinder;
@@ -605,18 +606,6 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 			return rootView;
 		}
 
-        private String convertDistance(float distance) {
-            if (distance < 1000) {
-
-                return Integer.toString(Math.round(distance)).concat(" m");
-            } else {
-                distance = distance / 100;
-                distance = Math.round(distance);
-                distance = (float) (distance / 10.0);
-                return Float.toString(distance).concat(" km");
-            }
-        }
-
         private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
@@ -626,13 +615,9 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
             final FriendList friendList = new FriendList(inflater, friends, places, distance, images);
 
             //Create own location
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
-            Location locationOwn = new Location("");
-            locationOwn.setLatitude(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0));
-            locationOwn.setLongitude(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, 0));
+            Location locationOwn = LocationHelper.getLocationOwn(getActivity());
 
             Gson gson = new Gson();
-            Geocoder geocoder = new Geocoder(getActivity().getApplicationContext());
 
             //Remove all markers from map
             if (mapViewFragment != null)
@@ -644,35 +629,18 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
                     ids[i] = friend.id;
                     friends[i] = friend.name;
                     if (friend.isLocationSet()) {
-                        try {
-                            List<Address> addressList = geocoder.getFromLocation(friend.latitude, friend.longitude, 1);
-                            Address address = addressList.get(0);
-                            places[i] = "";
-                            for (int j = 0; j < address.getMaxAddressLineIndex(); j++) {
-                                if (j != 0)
-                                    places[i] = places[i].concat(", ");
+                        places[i] = LocationHelper.getAddressDescription(friend.latitude, friend.longitude, getActivity());
 
-                                places[i] = places[i].concat(address.getAddressLine(j).toString());
-                            }
+                        //Get Distance
+                        Location locationFriend = new Location("");
+                        locationFriend.setLatitude(friend.latitude);
+                        locationFriend.setLongitude(friend.longitude);
 
-                            if (!address.getCountryName().isEmpty())
-                                places[i] = places[i].concat(", ").concat(address.getCountryName());
+                        distance[i] = LocationHelper.convertDistance(locationOwn.distanceTo(locationFriend));
 
-                            //Get Distance
-                            Location locationFriend = new Location("");
-                            locationFriend.setLatitude(friend.latitude);
-                            locationFriend.setLongitude(friend.longitude);
-
-                            distance[i] = convertDistance(locationOwn.distanceTo(locationFriend));
-
-
-                            //place marker in map
-                            if (mapViewFragment != null)
-                                mapViewFragment.setMapMarker(friend.latitude, friend.longitude, friend.name, places[i]);
-                        } catch (IOException e) {
-                            places[i] = "";
-                            distance[i] = ((String)getText(R.string.na)).concat(" m");
-                        }
+                        //place marker in map
+                        if (mapViewFragment != null)
+                            mapViewFragment.setMapMarker(friend.latitude, friend.longitude, friend.name, places[i]);
                     } else {
                         places[i] = "";
                         distance[i] = ((String)getText(R.string.na)).concat(" m");
