@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Proximety</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Einstellungen</string>
     <string name="action_register">Registrieren</string>
     <string name="action_login">Anmelden</string>
@@ -13,7 +12,6 @@
     <string name="email">E-Mail</string>
     <string name="password">Passwort</string>
     <string name="password_confirm">Passwort bestätigen</string>
-    <string name="list">Liste</string>
     <string name="map">Karte</string>
     <string name="friends">Freunde</string>
     <string name="friends_add">Freunde hinzufügen</string>
@@ -22,8 +20,6 @@
     <string name="about">Über</string>
     <string name="settings_general">Allgemeine Einstellungen</string>
     <string name="settings_proximity_alert">Proximety Alarm</string>
-    <string name="dummy_there_will_be_a_map">There will be a map here some time</string>
-    <string name="dummy_there_will_be_a_list">There will be a list here some time</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schliessen</string>
     <string name="title_activity_friend_detail">Freund Details</string>
@@ -44,7 +40,6 @@
     <string name="welcome_message">Möchtest Du einen Freund hinzufügen und mit Proximety Alarmen beginnen?</string>
     <string name="welcome_go">Loslegen</string>
     <string name="cancel">Abbrechen</string>
-    <string name="friend_current_position">Aktuelle Position des Freundes</string>
     <string name="na">N/A</string>
     <string name="network_not_available">Keine Internetverbindung vorhanden</string>
     <string name="friend_delete_info">Wollen Sie diesen Freund wirklich löschen?</string>

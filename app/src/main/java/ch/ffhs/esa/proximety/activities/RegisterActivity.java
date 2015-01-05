@@ -1,12 +1,9 @@
 package ch.ffhs.esa.proximety.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,13 +35,13 @@ public class RegisterActivity extends ActionBarActivity {
         EditText email = (EditText)findViewById(R.id.inputEmail);
         editorRegister.putString(SESSION_INPUT_NAME, user.getText().toString());
         editorRegister.putString(SESSION_INPUT_EMAIL, email.getText().toString());
-        editorRegister.commit();
+        editorRegister.apply();
 
         //save value for login
         SharedPreferences sharedPrefsLogin = getSharedPreferences(LoginActivity.class.getName(), MODE_PRIVATE);
         SharedPreferences.Editor editorLogin = sharedPrefsLogin.edit();
         editorLogin.putString(SESSION_INPUT_EMAIL, email.getText().toString());
-        editorLogin.commit();
+        editorLogin.apply();
 
         super.onPause();
     }
@@ -60,25 +57,6 @@ public class RegisterActivity extends ActionBarActivity {
         user.setText(sharedPreferences.getString(SESSION_INPUT_NAME, ""));
         email.setText(sharedPreferences.getString(SESSION_INPUT_EMAIL, ""));
     }
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.proximety_main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
     private void onLoginSuccess() {
         Intent intent = new Intent(this, LoginActivity.class);

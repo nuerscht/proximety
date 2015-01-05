@@ -15,9 +15,9 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -25,27 +25,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import ch.ffhs.esa.proximety.R;
-import ch.ffhs.esa.proximety.async.GravatarImage;
-import ch.ffhs.esa.proximety.consts.ProximetyConsts;
-import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
-import ch.ffhs.esa.proximety.domain.Friend;
-import ch.ffhs.esa.proximety.domain.Message;
-import ch.ffhs.esa.proximety.helper.Gravatar;
-import ch.ffhs.esa.proximety.helper.LocationHelper;
-import ch.ffhs.esa.proximety.list.FriendList;
-import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
-import ch.ffhs.esa.proximety.service.binder.location.LocationServiceBinder;
-import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
-import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -70,7 +55,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.List;
+
+import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.async.GravatarImage;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
+import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
+import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.domain.Message;
+import ch.ffhs.esa.proximety.helper.Gravatar;
+import ch.ffhs.esa.proximety.helper.LocationHelper;
+import ch.ffhs.esa.proximety.list.FriendList;
+import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.location.LocationServiceBinder;
+import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
+import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 /*
  * Main view of the app using tabs and fragments
@@ -262,7 +260,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -380,7 +378,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, (float) location.getLatitude());
         editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, (float) location.getLongitude());
-        editor.commit();
+        editor.apply();
 
         LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
         lsb.updateLocation(location.getLatitude(), location.getLongitude(), new ResponseHandler(getApplicationContext()) {
@@ -438,7 +436,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
 
         //go to initial screen
         Intent intent = new Intent(this, InitialScreenActivity.class);
@@ -466,29 +464,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 		// view
 		drawerDelegate.onPrepareOptionsMenu(menu);
 		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.proximety_main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			startActivity(new Intent(this, SettingsActivity.class));
-			return true;
-		}
-		if (drawerDelegate.onOptionsItemSelected(item)) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
