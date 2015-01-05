@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +31,7 @@ import ch.ffhs.esa.proximety.list.OpenRequestList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class OpenRequestsActivity extends Activity {
+public class OpenRequestsActivity extends ActionBarActivity {
 
     private final String LOG_TAG = "OpenRequetActivity";
 

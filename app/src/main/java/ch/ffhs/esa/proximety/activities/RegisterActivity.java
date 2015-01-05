@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,7 @@ import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends ActionBarActivity {
     private static String SESSION_INPUT_NAME  = "input_name";
     private static String SESSION_INPUT_EMAIL = "input_email";
 

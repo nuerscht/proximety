@@ -3,6 +3,7 @@ package ch.ffhs.esa.proximety.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,7 @@ import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 /**
  * Created by boe on 21.12.2014.
  */
-public class FriendAddActivity extends Activity {
+public class FriendAddActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

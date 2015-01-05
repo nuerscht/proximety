@@ -1,9 +1,7 @@
 package ch.ffhs.esa.proximety.activities;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
+
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,18 +11,17 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -81,7 +78,7 @@ import java.util.List;
  * Tabbing has been built according to the sample app at 
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
-public class MainActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
+public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
     protected static final String TAG = MainActivity.class.getName();
     //300000 = 5 Minutes
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
@@ -133,7 +130,7 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-		final ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getSupportActionBar();
 
 		// Create the adapter which returns the section pages fragments
 		sectionsPagerAdapter = new AppSectionsPagerAdapter(
@@ -147,17 +144,17 @@ public class MainActivity extends FragmentActivity implements ConnectionCallback
 
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 			@Override
-			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 				viewPager.setCurrentItem(tab.getPosition());
 			}
 
 			@Override
-			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
 				// empty for now
 			}
 
 			@Override
-			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 				// probably ignore this event
 			}
 

@@ -6,17 +6,15 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -42,7 +40,7 @@ import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class FriendDetailActivity extends FragmentActivity implements ActionBar.TabListener, OnMapReadyCallback {
+public class FriendDetailActivity extends ActionBarActivity implements ActionBar.TabListener, OnMapReadyCallback {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -68,10 +66,8 @@ public class FriendDetailActivity extends FragmentActivity implements ActionBar.
         //Todo: Get Data with given user id
         //Toast.makeText(getApplicationContext(), getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID), Toast.LENGTH_SHORT).show();
 
-
-
         // Set up the action bar.
-        final android.app.ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);

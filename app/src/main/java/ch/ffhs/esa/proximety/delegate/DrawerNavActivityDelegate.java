@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +23,9 @@ public class DrawerNavActivityDelegate {
     private CharSequence mTitle;
     private ListView mDrawerList;
 
-    private Activity activity;
+    private ActionBarActivity activity;
 
-    public DrawerNavActivityDelegate(Activity activity) {
+    public DrawerNavActivityDelegate(ActionBarActivity activity) {
         this.activity = activity;
     }
 
@@ -40,14 +41,14 @@ public class DrawerNavActivityDelegate {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                activity.getActionBar().setTitle(mTitle);
+                activity.getSupportActionBar().setTitle(mTitle);
                 activity.invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                activity.getActionBar().setTitle(mDrawerTitle);
+                activity.getSupportActionBar().setTitle(mDrawerTitle);
                 activity.invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -55,8 +56,8 @@ public class DrawerNavActivityDelegate {
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        activity.getActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     public void onPostCreate(Bundle savedInstanceState) {

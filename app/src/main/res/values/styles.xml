@@ -4,12 +4,19 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_accent</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
 
     <!-- Application theme. -->
@@ -29,6 +36,10 @@
     <style name="open_request_item_list_alignment">
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="ButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
+        <item name="android:background">@drawable/btn_custom</item>
     </style>
 
 </resources>
