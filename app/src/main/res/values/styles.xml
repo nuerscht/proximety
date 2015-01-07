@@ -16,7 +16,8 @@
         <item name="colorAccent">@color/primary_accent</item>
         <item name="android:textColorPrimary">@color/primary_text</item>
 
-        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <!-- Some how the custom button theme makes the buttons unusable on 4.x since using AppCompat.. worked before -->
+        <!-- <item name="android:buttonStyle">@style/ButtonStyle</item> -->
     </style>
 
     <!-- Application theme. -->
