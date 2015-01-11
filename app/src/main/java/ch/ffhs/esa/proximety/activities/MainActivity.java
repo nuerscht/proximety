@@ -28,6 +28,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -146,7 +147,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         //Workaround for Icon in Android older 5.0
-        actionBar.setDisplayShowHomeEnabled(false);
+        //actionBar.setDisplayShowHomeEnabled(false);
 
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 			@Override
@@ -333,6 +334,16 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (drawerDelegate.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected synchronized void buildGoogleApiClient() {
