@@ -19,12 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
@@ -219,17 +222,29 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
+        Location location = LocationHelper.getLocationOwn(this);
+        latLngBuilder.include(new LatLng(location.getLatitude(), location.getLongitude()));
+        googleMap.addMarker(new MarkerOptions().title("Me")
+                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
         if(friend.isLocationSet()){
+
             LatLng friendLocation = new LatLng(friend.latitude, friend.longitude);
+            latLngBuilder.include(friendLocation);
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(friendLocation, 13));
 
             googleMap.addMarker(new MarkerOptions().title(friend.name)
                     .snippet(LocationHelper.getAddressDescription(friend.latitude, friend.longitude, this))
                     .position(friendLocation));
-        }else{
-            // TODO: show current position
         }
+
+        //Move Camera on map
+        LatLngBounds latLngBounds = latLngBuilder.build();
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 200);
+        googleMap.moveCamera(cu);
     }
 
     /**

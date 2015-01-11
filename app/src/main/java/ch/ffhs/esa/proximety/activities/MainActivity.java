@@ -41,12 +41,17 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
@@ -513,6 +518,10 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
             }
         }
 
+        public void moveCamera(CameraUpdate cu) {
+            map.moveCamera(cu);
+        }
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -542,13 +551,16 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 		}
 
         public void setMapMarker (double latitude, double longitude, String title, String address) {
-            LatLng place = new LatLng(latitude, longitude);
+            setMapMarker(latitude, longitude, title, address, BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        }
 
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 13));
+        public void setMapMarker (double latitude, double longitude, String title, String address, BitmapDescriptor bitmapDescriptor) {
+            LatLng place = new LatLng(latitude, longitude);
 
             map.addMarker(new MarkerOptions().title(title)
                     .snippet(address)
-                    .position(place));
+                    .position(place)
+                    .icon(bitmapDescriptor));
         }
 
         public void removeMarkers() {
@@ -595,6 +607,12 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
             if (mapViewFragment != null)
                 mapViewFragment.removeMarkers();
 
+            LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
+            Location location = LocationHelper.getLocationOwn(getActivity());
+            latLngBuilder.include(new LatLng(location.getLatitude(), location.getLongitude()));
+            mapViewFragment.setMapMarker(location.getLatitude(), location.getLongitude(), "Me", "", BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
+
             for(int i = 0; i < friendListJson.length(); i++) {
                 try {
                     Friend friend = gson.fromJson(friendListJson.getJSONObject(i).toString(), Friend.class);
@@ -609,6 +627,9 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                         locationFriend.setLongitude(friend.longitude);
 
                         distance[i] = LocationHelper.convertDistance(locationOwn.distanceTo(locationFriend));
+
+                        //put marker into latlngbounds builder for final zoom
+                        latLngBuilder.include(new LatLng(friend.latitude, friend.longitude));
 
                         //place marker in map
                         if (mapViewFragment != null)
@@ -635,6 +656,11 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     e.printStackTrace();
                 }
             }
+
+            //Move Camera on map
+            LatLngBounds latLngBounds = latLngBuilder.build();
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(latLngBounds, 200);
+            mapViewFragment.moveCamera(cu);
 
             friendList.refresh();
             //List view
