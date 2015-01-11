@@ -93,10 +93,11 @@ public class GcmIntentService extends IntentService {
         try {
             SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
             String url = "http://maps.googleapis.com/maps/api/staticmap?size=400x150&markers=color:red%7Clabel:F%7C";
-            url.concat(friend_lat).concat(",").concat(friend_long);
-            url.concat("&markers=color:0x336699%7Clabel:M%7C");
-            url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0))).concat(",");
-            url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, 0)));
+            url = url.concat(friend_lat).concat(",").concat(friend_long);
+            url = url.concat("&markers=color:0x336699%7Clabel:M%7C");
+            url = url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0))).concat(",");
+            url = url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, 0)));
+            Log.i("location-updates", "url: " + url);
             mapPicture = BitmapFactory.decodeStream((InputStream) new URL(url).getContent());
         } catch (IOException e) {
             //Fehler muss nicht behandelt werden. Notification ist einfach ohne Map Picture
@@ -110,6 +111,7 @@ public class GcmIntentService extends IntentService {
                         .setContentTitle(getText(R.string.settings_proximity_alert))
                         .setStyle(new NotificationCompat.BigPictureStyle()
                                 .setBigContentTitle(getText(R.string.settings_proximity_alert))
+                                .setSummaryText(friend_name)
                                 .bigPicture(mapPicture))
                         .setContentText(friend_name)
                         .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
