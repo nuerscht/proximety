@@ -52,8 +52,8 @@ public class LocationHelper {
                 addressDescription = addressDescription.concat(address.getAddressLine(j).toString());
             }
 
-            if (!address.getCountryName().isEmpty())
-                addressDescription = addressDescription.concat(", ").concat(address.getCountryName());
+            /*if (!address.getCountryName().isEmpty())
+                addressDescription = addressDescription.concat(", ").concat(address.getCountryName());*/
 
             return addressDescription;
         } catch (IOException e) {

@@ -85,7 +85,7 @@ import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
  * Tabbing has been built according to the sample app at 
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
-public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener{
+public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
     protected static final String TAG = MainActivity.class.getName();
     //300000 = 5 Minutes
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
@@ -204,16 +204,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 
     @Override
     protected void onStop() {
-        if (gcm == null) {
-            gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
-        }
-
-        try {
-            gcm.unregister();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        mGoogleApiClient.disconnect();
         super.onStop();
     }
 
@@ -388,12 +379,15 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 
     @Override
     public void onConnected(Bundle bundle) {
+        Log.i(TAG, "onConnected");
         startLocationUpdates();
     }
 
     protected void startLocationUpdates() {
         // The final argument to {@code requestLocationUpdates()} is a LocationListener
         // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
+
+        Log.i(TAG, "startLocationUpdates");
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
     }
@@ -406,7 +400,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     @Override
     public void onLocationChanged(Location location) {
         Log.i(TAG, "Location update: lat " + location.getLatitude() + "/long " + location.getLongitude());
-
 
         SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -648,7 +641,11 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     ids[i] = friend.id;
                     friends[i] = friend.name;
                     if (friend.isLocationSet()) {
-                        places[i] = LocationHelper.getAddressDescription(friend.latitude, friend.longitude, getActivity());
+                        String address = LocationHelper.getAddressDescription(friend.latitude, friend.longitude, getActivity());
+                        if (address.length() > 35) {
+                            address = address.substring(0, 35).concat("...");
+                        }
+                        places[i] = address;
 
                         //Get Distance
                         Location locationFriend = new Location("");
