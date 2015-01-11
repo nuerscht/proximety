@@ -6,9 +6,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -22,6 +24,8 @@ import java.net.URL;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.activities.MainActivity;
 import ch.ffhs.esa.proximety.activities.OpenRequestsActivity;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
+import ch.ffhs.esa.proximety.helper.LocationHelper;
 
 /**
  * Created by Patrick Bösch.
@@ -50,10 +54,7 @@ public class GcmIntentService extends IntentService {
              * any message types you're not interested in, or that you don't
              * recognize.
              */
-            String type = extras.getString("type");
-            String message = extras.getString("message");
-
-            sendNotification(message, type);
+            sendNotification(extras);
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -62,18 +63,40 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String msg, String type) {
-        Log.i("location-updates", msg);
+    private void sendNotification(Bundle extras) {
+        String type = extras.getString("type");
+
         Log.i("location-updates", "type: " + type);
+        switch (type) {
+            case "alert":
+                sendNotificationAlert(extras);
+                break;
+            case "friend_request":
+                break;
+        }
+    }
+
+    private void sendNotificationAlert(Bundle extras) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), 0);
 
+
+        String friend_name = extras.getString("name");
+        String friend_lat  = extras.getString("latitude");
+        String friend_long  = extras.getString("longitude");
+
+
         Bitmap mapPicture = null;
         try {
-            String url = "http://maps.googleapis.com/maps/api/staticmap?size=400x150&markers=color:red%7Clabel:F%7C47.4741296,8.674765&markers=color:0x336699%7Clabel:M%7C47.4741296,8.675765";
+            SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
+            String url = "http://maps.googleapis.com/maps/api/staticmap?size=400x150&markers=color:red%7Clabel:F%7C";
+            url.concat(friend_lat).concat(",").concat(friend_long);
+            url.concat("&markers=color:0x336699%7Clabel:M%7C");
+            url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0))).concat(",");
+            url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, 0)));
             mapPicture = BitmapFactory.decodeStream((InputStream) new URL(url).getContent());
         } catch (IOException e) {
             //Fehler muss nicht behandelt werden. Notification ist einfach ohne Map Picture
@@ -88,9 +111,9 @@ public class GcmIntentService extends IntentService {
                         .setStyle(new NotificationCompat.BigPictureStyle()
                                 .setBigContentTitle(getText(R.string.settings_proximity_alert))
                                 .bigPicture(mapPicture))
-                        .setContentText(msg)
-                .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
-                .setLights(Color.BLUE, 3000, 3000);
+                        .setContentText(friend_name)
+                        .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
+                        .setLights(Color.BLUE, 3000, 3000);
 
         mBuilder.setContentIntent(contentIntent);
         Notification notification = mBuilder.build();
