@@ -1,5 +1,7 @@
 package ch.ffhs.esa.proximety.activities;
-
+/**
+ * @author boe, alo
+ */
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -466,9 +468,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content
-		// view
-		drawerDelegate.onPrepareOptionsMenu(menu);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -677,7 +676,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     Intent intent = new Intent(getActivity(), FriendDetailActivity.class);
                     intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, ids[position]);
                     startActivity(intent);
-                    getActivity().finish();
+                    //getActivity().finish();
                 }
             });
 

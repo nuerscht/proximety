@@ -5,7 +5,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ch.ffhs.esa.proximety.activities.FriendDetailActivity$PlaceholderFragment">
+    tools:context=".activities.FriendDetailActivity">
 
     <TextView
         android:id="@+id/text_infos"

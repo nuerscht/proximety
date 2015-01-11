@@ -1,5 +1,9 @@
 package ch.ffhs.esa.proximety.activities;
 
+/**
+ * @author alo
+ */
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;

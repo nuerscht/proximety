@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/inputEmail"
+        android:layout_alignStart="@+id/inputEmail"
         android:layout_marginTop="20dp"
         android:text="@string/email" />
 
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/inputEmail"
+        android:layout_alignStart="@+id/inputEmail"
         android:layout_below="@+id/inputEmail"
         android:layout_marginTop="20dp"
         android:text="@string/password" />
@@ -43,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textPassword"
+        android:layout_alignStart="@+id/textPassword"
         android:layout_below="@+id/textPassword"
         android:ems="10"
         android:inputType="textPassword" />

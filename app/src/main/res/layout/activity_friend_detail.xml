@@ -17,8 +17,6 @@
         android:layout_marginTop="25dp"
         android:textAllCaps="true"
         android:textSize="30sp"
-        android:text="@string/friend_dummy_name"
-
         android:textColor="@color/primary_text"
         />
 

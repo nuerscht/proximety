@@ -1,6 +1,7 @@
 <resources>
 
     <!--
+        @author alo
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
@@ -10,12 +11,16 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary_accent</item>
-        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text_dark</item>
+        <item name="android:editTextColor">@color/primary_text_dark</item>
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
 
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <!-- Some how the custom button theme makes the buttons unusable on 4.x since using AppCompat.. worked before -->
         <!--<item name="android:buttonStyle">@style/ButtonStyle</item>-->
     </style>
@@ -41,6 +46,21 @@
 
     <style name="ButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
         <item name="android:background">@drawable/btn_custom</item>
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:titleTextStyle">@style/ActionBarTitleTextStyle</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/ActionBarTitleTextStyle</item>
+    </style>
+
+    <style name="ActionBarTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="ActionBarTabTextStyle" parent="@style/Widget.AppCompat.ActionBar.TabText">
         <item name="android:textColor">@color/primary_text</item>
     </style>
 

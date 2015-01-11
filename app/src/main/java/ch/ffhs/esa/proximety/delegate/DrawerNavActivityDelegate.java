@@ -68,22 +68,4 @@ public class DrawerNavActivityDelegate {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /* Called whenever we call invalidateOptionsMenu() */
-    public void onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if  (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }

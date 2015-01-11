@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- @author alo -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- on 5.0 we want the new style button which has the correct color -->
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/primary_accent</item>
         <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
-
 </resources>
