@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by boe on 18.12.2014.
+ * Created by Patrick Bösch.
  */
 public class RestClient {
     private static final String BASE_URL = "http://api.proximety.ch/";

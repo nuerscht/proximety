@@ -14,7 +14,7 @@ import org.w3c.dom.Text;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by boe on 21.12.2014.
+ * Created by Patrick Bösch.
  */
 public class FriendList extends ArrayAdapter<String> {
     private final LayoutInflater inflater;

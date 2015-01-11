@@ -13,7 +13,7 @@ import android.widget.TextView;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by boe on 21.12.2014.
+ * Created by Patrick Bösch.
  */
 public class OpenRequestList extends ArrayAdapter<String> {
     private final LayoutInflater inflater;

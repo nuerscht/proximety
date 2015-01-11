@@ -14,7 +14,7 @@ import android.widget.ListView;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by boe on 15.12.2014.
+ * Created by Patrick Bösch.
  */
 public class DrawerNavActivityDelegate {
     private DrawerLayout mDrawerLayout;

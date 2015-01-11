@@ -1,7 +1,7 @@
 package ch.ffhs.esa.proximety.consts;
 
 /**
- * Created by boe on 21.12.2014.
+ * Created by Patrick Bösch.
  */
 public class ProximetyConsts {
     public static String PROXIMETY_SHARED_PREF = "ProximetySharedPref";

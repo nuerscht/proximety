@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 /**
- * Created by boe on 21.12.2014.
+ * Created by Patrick Bösch.
  */
 public class Gravatar {
     private String email;

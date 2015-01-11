@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import ch.ffhs.esa.proximety.helper.Gravatar;
 
 /**
- * Created by boe on 21.12.2014.
+ * Created by Patrick Bösch
  */
 public abstract class GravatarImage extends AsyncTask<Gravatar, Void, Gravatar> {
     private String GRAVATAR_BASE_URL = "http://www.gravatar.com/avatar/";

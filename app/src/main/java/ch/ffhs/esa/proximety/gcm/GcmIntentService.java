@@ -24,7 +24,7 @@ import ch.ffhs.esa.proximety.activities.MainActivity;
 import ch.ffhs.esa.proximety.activities.OpenRequestsActivity;
 
 /**
- * Created by boe on 22.12.2014.
+ * Created by Patrick Bösch.
  */
 public class GcmIntentService extends IntentService {
     public static final int NOTIFICATION_ID = 1;
