@@ -1,22 +1,31 @@
 package ch.ffhs.esa.proximety.service.binder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
- * Created by boe on 18.12.2014.
+ * Created by Patrick Bösch.
  */
 public class ServiceBinder {
     private Context context;
+    private Dialog loadingDialog;
 
-    public ServiceBinder(Context context) {
+    public ServiceBinder(Context context, Dialog loadingDialog) {
         this.context = context;
+        this.loadingDialog = loadingDialog;
     }
 
     protected Context getApplicationContext() {
         return context;
+    }
+
+    protected void closeLoadingDialog() {
+        if (this.loadingDialog != null) {
+            loadingDialog.cancel();
+        }
     }
 
     protected String getToken() {

@@ -1,15 +1,16 @@
 package ch.ffhs.esa.proximety.service.binder.setting;
 
+import android.app.Dialog;
 import android.content.Context;
 
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 
 /**
- * Created by boe on 15.12.2014.
+ * Created Patrick Bösch.
  */
 public class SettingServiceBinder extends ServiceBinder {
-    public SettingServiceBinder(Context context) {
-        super(context);
+    public SettingServiceBinder(Context context, Dialog loadingDialog) {
+        super(context, loadingDialog);
     }
 
     public void setFriendSetting(int friendId, int distance, boolean alarm, String token) {

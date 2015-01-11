@@ -1,5 +1,6 @@
 package ch.ffhs.esa.proximety.service.binder.user;
 
+import android.app.Dialog;
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -19,11 +20,11 @@ import ch.ffhs.esa.proximety.service.client.RestClient;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 /**
- * Created by boe on 19.12.2014.
+ * Created by Patrick Bösch.
  */
 public class UserServiceBinder extends ServiceBinder {
-    public UserServiceBinder(Context context) {
-        super(context);
+    public UserServiceBinder(Context context, Dialog loadingDialog) {
+        super(context, loadingDialog);
     }
 
     public void login(String email, String password, final ResponseHandler responseHandler) {
@@ -44,16 +45,19 @@ public class UserServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -79,16 +83,19 @@ public class UserServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -112,16 +119,19 @@ public class UserServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });

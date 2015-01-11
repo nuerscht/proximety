@@ -1,6 +1,7 @@
 package ch.ffhs.esa.proximety.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,14 +23,12 @@ import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.async.GravatarImage;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.helper.Gravatar;
+import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.list.OpenRequestList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 public class OpenRequestsActivity extends ActionBarActivity {
-
-    private final String LOG_TAG = "OpenRequetActivity";
-
     String[] ids = null;
 
     @Override
@@ -41,11 +40,14 @@ public class OpenRequestsActivity extends ActionBarActivity {
     }
 
     private void loadList() {
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
+        loadingDialog.show();
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
         fsb.queryOpenRequests(new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 if (statusCode == 200) {
+                    loadingDialog.cancel();
                     onListLoadSuccess((JSONArray) response);
                 } else {
                     Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
@@ -67,12 +69,14 @@ public class OpenRequestsActivity extends ActionBarActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String id = ids[(int)button.getTag()];
-
-                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                final Dialog loadingDialog = LoadingDialogHelper.createDialog(getParent());
+                loadingDialog.show();
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
                 fsb.confirmRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
                         if (statusCode == 200) {
+                            loadingDialog.cancel();
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -87,8 +91,6 @@ public class OpenRequestsActivity extends ActionBarActivity {
         builder.setMessage(getText(R.string.friend_accept_info)).setTitle(getText(R.string.friend_accept));
         AlertDialog dialog = builder.create();
         dialog.show();
-
-        String id = ids[(int)button.getTag()];
     }
 
     public void onButtonRequestCancel(final View button) {
@@ -105,10 +107,14 @@ public class OpenRequestsActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String id = ids[(int)button.getTag()];
 
-                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                final Dialog loadingDialog = LoadingDialogHelper.createDialog(getParent());
+                loadingDialog.show();
+
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
                 fsb.declineRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
+                        loadingDialog.cancel();
                         if (statusCode == 200) {
                             Intent intent = getIntent();
                             finish();

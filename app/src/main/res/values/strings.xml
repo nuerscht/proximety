@@ -51,5 +51,6 @@
     <string name="friend_accept_info">Wollen Sie diese Anfrage wirklich akzeptieren?</string>
     <string name="accept">Akzeptieren</string>
     <string name="setting_saved">Einstellung gespeichert</string>
+    <string name="please_wait">Bitte warten...</string>
 
 </resources>

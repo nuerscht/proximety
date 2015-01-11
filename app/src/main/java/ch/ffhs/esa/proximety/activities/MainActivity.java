@@ -2,6 +2,7 @@ package ch.ffhs.esa.proximety.activities;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,7 +52,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
@@ -68,6 +68,7 @@ import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.helper.Gravatar;
+import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
@@ -88,7 +89,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
 
@@ -116,7 +116,8 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     }
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @SuppressWarnings("deprecation")
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -249,7 +250,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     private void sendRegistrationIdToBackend() {
         Log.i(TAG, "sendRegistrationIdToBackend" + regid);
 
-        UserServiceBinder usb = new UserServiceBinder(getApplicationContext());
+        UserServiceBinder usb = new UserServiceBinder(getApplicationContext(), null);
         usb.setClientId(regid, new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
@@ -385,7 +386,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, (float) location.getLongitude());
         editor.apply();
 
-        LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
+        LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext(), null);
         lsb.updateLocation(location.getLatitude(), location.getLongitude(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
@@ -575,13 +576,16 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
             final View rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
 
-            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext());
+            final Dialog loadingDialog = LoadingDialogHelper.createDialog(getActivity());
+            loadingDialog.show();
+            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext(), loadingDialog);
             fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, Object response) {
                     if (statusCode == 200) {
-                        onListLoadSuccess(inflater, rootView, (JSONArray)response);
+                        onListLoadSuccess(inflater, rootView, (JSONArray)response, loadingDialog);
                     } else {
+                        loadingDialog.cancel();
                         Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -590,7 +594,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 			return rootView;
 		}
 
-        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
+        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson, Dialog loadingDialog) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
             String[] distance = new String[friendListJson.length()];
@@ -699,6 +703,8 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
+
+            loadingDialog.cancel();
         }
     }
 

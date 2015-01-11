@@ -1,6 +1,7 @@
 package ch.ffhs.esa.proximety.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -39,6 +40,7 @@ import org.json.JSONObject;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
+import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
@@ -62,6 +64,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
     Friend friend;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_detail);
@@ -105,11 +108,15 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
 
         String friendId = getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID);
 
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+
+        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
+        loadingDialog.show();
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
 
         fsb.getFriendDetails(friendId, new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
+                loadingDialog.cancel();
                 if(statusCode == 200){
                     JSONArray resp = (JSONArray) response;
                     try {
@@ -132,7 +139,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
     }
 
     public void onToggleButtonClick(View button) {
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
         fsb.updateSettings(friend.id, ((ToggleButton)button).isChecked(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
@@ -153,7 +160,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext());
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
                 fsb.deleteFriend(friend.id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {

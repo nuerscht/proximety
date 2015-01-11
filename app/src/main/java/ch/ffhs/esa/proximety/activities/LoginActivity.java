@@ -1,5 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import org.apache.http.Header;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Token;
+import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
@@ -64,14 +66,16 @@ public class LoginActivity extends ActionBarActivity {
     }
 	
 	public void onLoginButtonClick(View button){
-
-        UserServiceBinder usb = new UserServiceBinder(getApplicationContext());
+        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
+        loadingDialog.show();
+        UserServiceBinder usb = new UserServiceBinder(getApplicationContext(), loadingDialog);
 
         EditText user = (EditText)findViewById(R.id.inputEmail);
         EditText password = (EditText)findViewById(R.id.inputPassword);
         usb.login(user.getText().toString(), password.getText().toString(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
+                loadingDialog.cancel();
                 if (statusCode == 200) {
                     onLoginSuccess((Token)response);
                 } else {

@@ -1,8 +1,7 @@
 package ch.ffhs.esa.proximety.service.binder.friend;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -13,10 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
-import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.FriendRequest;
 import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
@@ -24,12 +20,12 @@ import ch.ffhs.esa.proximety.service.client.RestClient;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 /**
- * Created by boe on 15.12.2014.
+ * Created by Patrick Bösch.
  */
 public class FriendServiceBinder extends ServiceBinder {
 
-    public FriendServiceBinder(Context context) {
-        super(context);
+    public FriendServiceBinder(Context context, Dialog loadingDialog) {
+        super(context, loadingDialog);
     }
 
     public void sendRequest(String email, final ResponseHandler responseHandler) {
@@ -50,16 +46,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -82,16 +81,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -110,16 +112,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -140,16 +145,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -168,16 +176,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -195,16 +206,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -223,16 +237,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });
@@ -260,16 +277,19 @@ public class FriendServiceBinder extends ServiceBinder {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onError(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
             }
         });

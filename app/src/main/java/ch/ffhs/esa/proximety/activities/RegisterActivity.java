@@ -1,5 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import org.apache.http.Header;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
@@ -69,7 +71,9 @@ public class RegisterActivity extends ActionBarActivity {
 
 
 	public void onRegisterButtonClick(View button){
-        UserServiceBinder usb = new UserServiceBinder(getApplicationContext());
+        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
+        loadingDialog.show();
+        UserServiceBinder usb = new UserServiceBinder(getApplicationContext(), loadingDialog);
 
         EditText name = (EditText)findViewById(R.id.inputName);
         EditText user = (EditText)findViewById(R.id.inputEmail);
@@ -82,6 +86,7 @@ public class RegisterActivity extends ActionBarActivity {
                 passwordConfirm.getText().toString(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
+                loadingDialog.cancel();
                 if (statusCode == 200) {
                     onLoginSuccess();
                 } else {
