@@ -202,6 +202,21 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         }
     }
 
+    @Override
+    protected void onStop() {
+        if (gcm == null) {
+            gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+        }
+
+        try {
+            gcm.unregister();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
+    }
+
     /**
      * Registers the application with GCM servers asynchronously.
      * <p>
@@ -257,7 +272,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         usb.setClientId(regid, new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
-                Log.i(TAG, ((Message)response).message);
+                Log.i(TAG, ((Message) response).message);
             }
         });
     }

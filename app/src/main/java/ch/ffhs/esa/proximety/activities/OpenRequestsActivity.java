@@ -69,14 +69,11 @@ public class OpenRequestsActivity extends ActionBarActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String id = ids[(int)button.getTag()];
-                final Dialog loadingDialog = LoadingDialogHelper.createDialog(getParent());
-                loadingDialog.show();
-                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
                 fsb.confirmRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
                         if (statusCode == 200) {
-                            loadingDialog.cancel();
                             Intent intent = getIntent();
                             finish();
                             startActivity(intent);
@@ -106,15 +103,10 @@ public class OpenRequestsActivity extends ActionBarActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String id = ids[(int)button.getTag()];
-
-                final Dialog loadingDialog = LoadingDialogHelper.createDialog(getParent());
-                loadingDialog.show();
-
-                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
+                FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
                 fsb.declineRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
-                        loadingDialog.cancel();
                         if (statusCode == 200) {
                             Intent intent = getIntent();
                             finish();
