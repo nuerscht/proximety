@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onRegisterButtonClick"
-            android:text="@string/action_register" />
+            style="@style/ButtonStyle"
+            android:text="@string/action_register"/>
         
         <Button
             android:id="@+id/button2"
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onLoginButtonClick"
+            style="@style/ButtonStyle"
             android:text="@string/action_login" />
     </LinearLayout>
 

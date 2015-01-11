@@ -49,5 +49,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
         android:text="@string/action_invite"
+        style="@style/ButtonStyle"
         android:onClick="onButtonInviteClick" />
 </RelativeLayout>

@@ -67,6 +67,7 @@
         android:layout_marginTop="40dp"
         android:layout_below="@+id/text_alarm"
         android:text="@string/friend_delete"
+        style="@style/ButtonStyle"
         android:onClick="onButtonDeleteFriendClick"/>
 
 </RelativeLayout>

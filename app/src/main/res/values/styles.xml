@@ -17,7 +17,7 @@
         <item name="android:textColorPrimary">@color/primary_text</item>
 
         <!-- Some how the custom button theme makes the buttons unusable on 4.x since using AppCompat.. worked before -->
-        <!-- <item name="android:buttonStyle">@style/ButtonStyle</item> -->
+        <!--<item name="android:buttonStyle">@style/ButtonStyle</item>-->
     </style>
 
     <!-- Application theme. -->
@@ -41,6 +41,7 @@
 
     <style name="ButtonStyle" parent="@style/Widget.AppCompat.ActionButton">
         <item name="android:background">@drawable/btn_custom</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
 
 </resources>

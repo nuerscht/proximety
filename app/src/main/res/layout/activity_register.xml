@@ -84,6 +84,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
+        style="@style/ButtonStyle"
         android:text="@string/action_register"
         android:onClick="onRegisterButtonClick" />
 
