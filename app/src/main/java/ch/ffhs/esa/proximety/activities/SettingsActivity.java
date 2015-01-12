@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * @author alo
+ * @author Jonas Alder
  *
  * Little workaround for AppCompat has to be done, as the PreferenceActivity has no support for the
  * SupportActionBar, thus doing standard ActionBarActivity with a PrerefenceFragment instead.

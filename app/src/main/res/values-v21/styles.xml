@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- @author alo -->
+    <!-- @author Jonas Alder -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- on 5.0 we want the new style button which has the correct color -->
         <item name="android:colorPrimary">@color/primary</item>

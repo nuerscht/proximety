@@ -1,6 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 /**
- * @author boe, alo
+ * @author Patrik Bösch, Jonas Alder
  */
 
 import android.app.AlertDialog;
