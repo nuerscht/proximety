@@ -337,7 +337,8 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if (!mGoogleApiClient.isConnected())
+            mGoogleApiClient.connect();
     }
 
     @Override
