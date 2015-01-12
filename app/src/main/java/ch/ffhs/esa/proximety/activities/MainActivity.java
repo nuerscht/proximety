@@ -145,7 +145,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         //Workaround for Icon in Android older 5.0
-        //actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 
 		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
 			@Override
