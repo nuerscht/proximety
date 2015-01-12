@@ -17,7 +17,7 @@ import ch.ffhs.esa.proximety.service.client.RestClient;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class LocationServiceBinder extends ServiceBinder {
 

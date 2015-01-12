@@ -8,7 +8,7 @@ import android.util.Log;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class ServiceBinder {
     private final Context context;

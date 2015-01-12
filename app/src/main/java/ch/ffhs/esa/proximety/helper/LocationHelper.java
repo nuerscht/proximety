@@ -13,7 +13,7 @@ import java.util.List;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class LocationHelper {
 

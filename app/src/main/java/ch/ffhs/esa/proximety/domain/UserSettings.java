@@ -3,7 +3,7 @@ package ch.ffhs.esa.proximety.domain;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class UserSettings {
     @SerializedName("active")

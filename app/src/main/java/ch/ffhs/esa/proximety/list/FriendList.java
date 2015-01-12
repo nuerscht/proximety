@@ -11,7 +11,7 @@ import android.widget.TextView;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class FriendList extends ArrayAdapter<String> {
     private final LayoutInflater inflater;

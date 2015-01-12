@@ -11,7 +11,7 @@ import android.view.View;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 @SuppressWarnings("deprecation")
 public class DrawerNavActivityDelegate {

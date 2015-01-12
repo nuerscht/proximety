@@ -26,7 +26,7 @@ import ch.ffhs.esa.proximety.activities.SettingsActivity;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public class GcmIntentService extends IntentService {
     private static final int NOTIFICATION_ID = 1;

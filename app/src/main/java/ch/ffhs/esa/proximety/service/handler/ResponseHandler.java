@@ -12,7 +12,7 @@ import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
- * Created by Patrick Bösch.
+ * @author Patrick Bösch.
  */
 public abstract class ResponseHandler {
     public abstract void onSuccess(int statusCode, Header[] headers, Object response);
