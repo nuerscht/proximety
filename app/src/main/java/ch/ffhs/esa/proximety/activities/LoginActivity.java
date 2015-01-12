@@ -18,6 +18,10 @@ import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
+/**
+ * @author Andy Villiger
+ */
+
 public class LoginActivity extends ActionBarActivity {
     private static final String SESSION_INPUT_EMAIL = "input_email";
 
