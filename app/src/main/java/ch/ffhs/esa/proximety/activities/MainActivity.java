@@ -4,7 +4,6 @@ package ch.ffhs.esa.proximety.activities;
  */
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -27,10 +25,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Layout;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +61,7 @@ import com.google.gson.Gson;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -74,7 +72,6 @@ import ch.ffhs.esa.proximety.delegate.DrawerNavActivityDelegate;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.domain.Message;
 import ch.ffhs.esa.proximety.helper.Gravatar;
-import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.list.FriendList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
@@ -89,32 +86,31 @@ import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
  * http://developer.android.com/training/implementing-navigation/lateral.html
  */
 public class MainActivity extends ActionBarActivity implements ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
-    protected static final String TAG = MainActivity.class.getName();
+    private static final String TAG = MainActivity.class.getName();
     //300000 = 5 Minutes
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 300000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
 
-    String SENDER_ID = "201494589339";
+    private final String SENDER_ID = "201494589339";
 
-	AppSectionsPagerAdapter sectionsPagerAdapter;
-	ViewPager viewPager;
-    DrawerLayout drawerLayout;
-    ListView drawerList;
+    private ViewPager viewPager;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
 
     //Drawer Navigation
-    DrawerNavActivityDelegate drawerDelegate;
+    private final DrawerNavActivityDelegate drawerDelegate;
 
-    protected GoogleApiClient mGoogleApiClient;
-    protected LocationRequest mLocationRequest;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
 
-    static MapViewFragment mapViewFragment;
+    private static MapViewFragment mapViewFragment;
 
-    GoogleCloudMessaging gcm;
-    String regid;
+    private GoogleCloudMessaging gcm;
+    private String regid;
 
 
     public MainActivity() {
@@ -135,7 +131,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         String[] menuList = getResources().getStringArray(R.array.main_drawer_list);
 
         // Set adapter for drawer
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
+        drawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.drawer_list_item, menuList));
 
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -143,8 +139,8 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 		final ActionBar actionBar = getSupportActionBar();
 
 		// Create the adapter which returns the section pages fragments
-		sectionsPagerAdapter = new AppSectionsPagerAdapter(
-				getSupportFragmentManager());
+        AppSectionsPagerAdapter sectionsPagerAdapter = new AppSectionsPagerAdapter(
+                getSupportFragmentManager());
 
 		// Specify that tabs should be displayed in the action bar.
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -349,13 +345,10 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (drawerDelegate.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return drawerDelegate.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -364,7 +357,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         createLocationRequest();
     }
 
-    protected void createLocationRequest() {
+    void createLocationRequest() {
         mLocationRequest = new LocationRequest();
 
         // Sets the desired interval for active location updates. This interval is
@@ -386,7 +379,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         startLocationUpdates();
     }
 
-    protected void startLocationUpdates() {
+    void startLocationUpdates() {
         // The final argument to {@code requestLocationUpdates()} is a LocationListener
         // (http://developer.android.com/reference/com/google/android/gms/location/LocationListener.html).
 
@@ -485,12 +478,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		drawerDelegate.onConfigurationChanged(newConfig);
-	}
-
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	/**
@@ -597,7 +584,16 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
             Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
-            loadFriendList(inflater, getView(), null);
+            loadFriendList(inflater, getView());
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            setRefreshing();
+            loadFriendList(inflater, getView());
         }
 
 		@Override
@@ -606,37 +602,59 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
             View rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
 
-            final Dialog loadingDialog = LoadingDialogHelper.createDialog(getActivity());
-            loadingDialog.show();
-
-            loadFriendList(inflater, rootView, loadingDialog);
-
             refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
             refreshLayout.setOnRefreshListener(this);
             refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
                     android.R.color.holo_green_light,
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
+            refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+            setRefreshing();
+
+            loadFriendList(inflater, rootView);
 
 			return rootView;
 		}
 
-        private void loadFriendList(final LayoutInflater inflater, final View rootView, final Dialog loadingDialog) {
-            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext(), loadingDialog);
-            fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
+        private void setRefreshing() {
+            refreshLayout.post(new Runnable() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, Object response) {
-                    if (statusCode == 200) {
-                        onListLoadSuccess(inflater, rootView, (JSONArray)response, loadingDialog);
-                    } else {
-                        loadingDialog.cancel();
-                        Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
-                    }
+                public void run() {
+                    refreshLayout.setRefreshing(true);
                 }
             });
         }
 
-        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson, Dialog loadingDialog) {
+        private void loadFriendList(final LayoutInflater inflater, final View rootView) {
+            FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext(), null);
+            fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, Object response) {
+                    if (statusCode == 200) {
+                        onListLoadSuccess(inflater, rootView, (JSONArray)response);
+                    } else {
+                        Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onError(statusCode, headers, throwable, errorResponse);
+                    refreshLayout.setRefreshing(false);
+                }
+
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    refreshLayout.setRefreshing(false);
+                }
+
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+        }
+
+        private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson) {
             String[] friends = new String[friendListJson.length()];
             String[] places = new String[friendListJson.length()];
             String[] distance = new String[friendListJson.length()];
@@ -666,6 +684,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     friends[i] = friend.name;
                     if (friend.isLocationSet()) {
                         String address = LocationHelper.getAddressDescription(friend.latitude, friend.longitude, getActivity());
+
                         if (address.length() > 35) {
                             address = address.substring(0, 35).concat("...");
                         }
@@ -750,8 +769,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                 dialog.show();
             }
 
-            if (loadingDialog != null)
-                loadingDialog.cancel();
             refreshLayout.setRefreshing(false);
         }
     }

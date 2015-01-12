@@ -44,9 +44,18 @@ public abstract class ResponseHandler {
         return context.getString(R.string.unknown_error_msg);
     }
 
+    protected String getNoDataErrorMessage() {
+        return context.getString(R.string.no_data);
+    }
+
     protected String getErrorMessage(Object object) {
         String errorMsg = getUnknownErrorMessage();
-        String objMsg = object.toString();
+        String objMsg = "";
+
+        if (object != null)
+            objMsg = object.toString();
+        else
+            errorMsg = getNoDataErrorMessage();
 
         if (!objMsg.isEmpty()) {
             errorMsg = errorMsg.concat(" (").concat(objMsg).concat(")");
@@ -58,7 +67,10 @@ public abstract class ResponseHandler {
     protected  String getErrorMessage(JSONObject errorResponse) {
         String errorMsg = getUnknownErrorMessage();
         try {
-            errorMsg = errorResponse.getString(ProximetyConsts.JSON_RETURN_MESSAGE);
+            if (errorResponse != null)
+                errorMsg = errorResponse.getString(ProximetyConsts.JSON_RETURN_MESSAGE);
+            else
+                errorMsg = getNoDataErrorMessage();
         } catch (JSONException e) {
             e.printStackTrace();
         }
