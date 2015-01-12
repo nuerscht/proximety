@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.async.GravatarImage;
@@ -28,30 +30,75 @@ import ch.ffhs.esa.proximety.list.OpenRequestList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class OpenRequestsActivity extends ActionBarActivity {
+public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout refreshLayout;
     String[] ids = null;
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+        loadList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setRefreshing();
+        loadList();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_requests);
 
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        setRefreshing();
+
         loadList();
     }
 
     private void loadList() {
-        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
-        loadingDialog.show();
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
         fsb.queryOpenRequests(new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 if (statusCode == 200) {
-                    loadingDialog.cancel();
                     onListLoadSuccess((JSONArray) response);
                 } else {
                     Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onError(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                refreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void setRefreshing() {
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
             }
         });
     }
@@ -161,6 +208,6 @@ public class OpenRequestsActivity extends ActionBarActivity {
         //List view
         final ListView listView = (ListView)findViewById(R.id.listview);
         listView.setAdapter(openRequestList);
+        refreshLayout.setRefreshing(false);
     }
-
 }
