@@ -16,7 +16,7 @@ import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 /**
- * @author Patrick Bösch.
+ * @author Patrick Bösch, Andy Villiger
  */
 public class FriendAddActivity extends ActionBarActivity {
     @Override
