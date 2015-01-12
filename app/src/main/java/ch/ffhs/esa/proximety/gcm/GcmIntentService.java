@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -19,7 +20,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 import ch.ffhs.esa.proximety.R;
-import ch.ffhs.esa.proximety.activities.MainActivity;
+import ch.ffhs.esa.proximety.activities.FriendDetailActivity;
+import ch.ffhs.esa.proximety.activities.OpenRequestsActivity;
+import ch.ffhs.esa.proximety.activities.SettingsActivity;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
 /**
@@ -52,33 +55,68 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(Bundle extras) {
-        String type = extras.getString("type");
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean push_toggle = sharedPref.getBoolean(SettingsActivity.PROXIMETY_SETTING_PUSH_TOGGLE, true);
 
 
-        Log.i("location-updates", "data: " + extras.toString());
+        if (push_toggle) {
+            String type = extras.getString("type");
 
-        Log.i("location-updates", "type: " + type);
-        switch (type) {
-            case "alert":
-                sendNotificationAlert(extras);
-                break;
-            case "friend_request":
-                break;
+
+            Log.i("location-updates", "data: " + extras.toString());
+
+            Log.i("location-updates", "type: " + type);
+            switch (type) {
+                case "alert":
+                    sendNotificationAlert(extras);
+                    break;
+                case "friend_request":
+                    sendNotificationFriendRequest(extras);
+                    break;
+            }
         }
+    }
+
+    private void sendNotificationFriendRequest(Bundle extras) {
+        NotificationManager mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String friend_name = extras.getString("name");
+
+        Intent intent = new Intent(this, OpenRequestsActivity.class);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(getText(R.string.notification_proximity_friend))
+                        .setContentText(friend_name)
+                        .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
+                        .setLights(Color.BLUE, 3000, 3000);
+
+        mBuilder.setContentIntent(contentIntent);
+        Notification notification = mBuilder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        mNotificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     private void sendNotificationAlert(Bundle extras) {
         NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
-
-
+        String friend_id = extras.getString("_id");
         String friend_name = extras.getString("name");
-        String friend_lat  = extras.getString("latitude");
-        String friend_long  = extras.getString("longitude");
+        String friend_lat = extras.getString("latitude");
+        String friend_long = extras.getString("longitude");
 
+        Intent intent = new Intent(this, FriendDetailActivity.class);
+        intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, friend_id);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                intent, 0);
 
         Bitmap mapPicture = null;
         try {

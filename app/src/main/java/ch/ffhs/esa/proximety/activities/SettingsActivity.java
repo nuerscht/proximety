@@ -14,6 +14,7 @@ import ch.ffhs.esa.proximety.R;
  * SupportActionBar, thus doing standard ActionBarActivity with a PrerefenceFragment instead.
  */
 public class SettingsActivity extends ActionBarActivity {
+    public static String PROXIMETY_SETTING_PUSH_TOGGLE = "alert_toggle";
 
 	@SuppressWarnings("deprecation")
 	@Override

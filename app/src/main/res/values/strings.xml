@@ -56,5 +56,6 @@
     <string name="hello_my_friend">Hallo mein Freund..</string>
     <string name="send_email">E-Mail versenden...</string>
     <string name="no_data">Die Anwort beinhaltet keine Daten!</string>
+    <string name="notification_proximity_friend">Neue Proximety Freundesanfrage</string>
 
 </resources>
