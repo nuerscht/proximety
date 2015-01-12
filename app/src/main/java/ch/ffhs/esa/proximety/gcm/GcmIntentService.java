@@ -94,6 +94,7 @@ public class GcmIntentService extends IntentService {
                         .setSmallIcon(R.drawable.proximety_push)
                         .setContentTitle(getText(R.string.notification_proximity_friend))
                         .setContentText(getText(R.string.from_friend) + " " + friend_name)
+                        .setColor(getResources().getColor(R.color.primary))
                         .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
                         .setLights(Color.BLUE, 3000, 3000);
 
@@ -142,6 +143,7 @@ public class GcmIntentService extends IntentService {
                                 .setSummaryText(friend_name)
                                 .bigPicture(mapPicture))
                         .setContentText(friend_name)
+                        .setColor(getResources().getColor(R.color.primary))
                         .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
                         .setLights(Color.BLUE, 3000, 3000);
 
