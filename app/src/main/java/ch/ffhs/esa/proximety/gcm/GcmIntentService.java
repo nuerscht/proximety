@@ -91,10 +91,9 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.proximety_push)
                         .setContentTitle(getText(R.string.notification_proximity_friend))
-                        .setContentText(getText(R.string.from_friend) + friend_name)
+                        .setContentText(getText(R.string.from_friend) + " " + friend_name)
                         .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
                         .setLights(Color.BLUE, 3000, 3000);
 
@@ -136,8 +135,7 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.proximety_push)
                         .setContentTitle(getText(R.string.settings_proximity_alert))
                         .setStyle(new NotificationCompat.BigPictureStyle()
                                 .setBigContentTitle(getText(R.string.settings_proximity_alert))
