@@ -94,7 +94,7 @@ public class GcmIntentService extends IntentService {
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
                         .setSmallIcon(R.drawable.ic_launcher)
                         .setContentTitle(getText(R.string.notification_proximity_friend))
-                        .setContentText(friend_name)
+                        .setContentText(getText(R.string.from_friend) + friend_name)
                         .setVibrate(new long[] { 1000, 500, 500, 1000, 500, 500 })
                         .setLights(Color.BLUE, 3000, 3000);
 
