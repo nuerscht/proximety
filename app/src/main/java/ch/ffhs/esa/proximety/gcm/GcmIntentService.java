@@ -66,6 +66,9 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(Bundle extras) {
         String type = extras.getString("type");
 
+
+        Log.i("location-updates", "data: " + extras.toString());
+
         Log.i("location-updates", "type: " + type);
         switch (type) {
             case "alert":
