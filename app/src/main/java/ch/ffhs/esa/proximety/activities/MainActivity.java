@@ -592,20 +592,18 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 
 	public static class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
         private SwipeRefreshLayout refreshLayout;
-        private View rootView;
-        private LayoutInflater inflater;
-
         @Override
         public void onRefresh() {
             Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
-            loadFriendList(inflater, rootView, null);
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
+            loadFriendList(inflater, getView(), null);
         }
 
 		@Override
 		public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-            this.inflater = inflater;
-            rootView = inflater.inflate(R.layout.fragment_section_list,
+            View rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
 
             final Dialog loadingDialog = LoadingDialogHelper.createDialog(getActivity());
