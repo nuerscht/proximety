@@ -436,16 +436,16 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case 3:
-                Toast.makeText(getApplicationContext(), "Help is currently unavailable!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getText(R.string.help_text), Toast.LENGTH_SHORT).show();
                 break;
             case 4:
-                Toast.makeText(getApplicationContext(), "About what?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getText(R.string.about_text), Toast.LENGTH_SHORT).show();
                 break;
             case 5:
                 logout();
                 break;
             default:
-                Toast.makeText(getApplicationContext(), "Invalid menu option selected!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getText(R.string.invalid_option), Toast.LENGTH_SHORT).show();
         }
 
         // Highlight the selected item, update the title, and close the drawer
