@@ -609,9 +609,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     android.R.color.holo_orange_light,
                     android.R.color.holo_red_light);
             refreshLayout.setSize(SwipeRefreshLayout.LARGE);
-            setRefreshing();
-
-            loadFriendList(inflater, rootView);
 
 			return rootView;
 		}

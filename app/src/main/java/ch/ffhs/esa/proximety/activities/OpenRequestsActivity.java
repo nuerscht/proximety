@@ -60,8 +60,6 @@ public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefr
                 android.R.color.holo_red_light);
         refreshLayout.setSize(SwipeRefreshLayout.LARGE);
         setRefreshing();
-
-        loadList();
     }
 
     private void loadList() {
