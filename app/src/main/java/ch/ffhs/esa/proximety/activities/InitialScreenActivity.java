@@ -9,6 +9,9 @@ import android.view.View;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
+/**
+ * @author Andy Villiger
+ */
 public class InitialScreenActivity extends ActionBarActivity {
 
 	@Override
