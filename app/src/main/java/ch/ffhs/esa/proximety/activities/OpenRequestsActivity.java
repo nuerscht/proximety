@@ -1,7 +1,6 @@
 package ch.ffhs.esa.proximety.activities;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,14 +24,13 @@ import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.async.GravatarImage;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.helper.Gravatar;
-import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.list.OpenRequestList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
-    String[] ids = null;
+    private String[] ids = null;
 
     @Override
     public void onRefresh() {
@@ -49,6 +47,7 @@ public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefr
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_requests);

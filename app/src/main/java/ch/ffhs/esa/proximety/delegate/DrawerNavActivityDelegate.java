@@ -1,40 +1,34 @@
 package ch.ffhs.esa.proximety.delegate;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
 import ch.ffhs.esa.proximety.R;
 
 /**
  * Created by Patrick Bösch.
  */
+@SuppressWarnings("deprecation")
 public class DrawerNavActivityDelegate {
-    private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private ListView mDrawerList;
 
-    private ActionBarActivity activity;
+    private final ActionBarActivity activity;
 
     public DrawerNavActivityDelegate(ActionBarActivity activity) {
         this.activity = activity;
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onCreate(Bundle savedInstanceState) {
-        mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) activity.findViewById(R.id.left_drawer);
-
         mTitle = mDrawerTitle = activity.getTitle();
-        mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout,
                 R.drawable.ic_launcher, R.string.drawer_open, R.string.drawer_close) {
 
@@ -60,6 +54,7 @@ public class DrawerNavActivityDelegate {
         activity.getSupportActionBar().setHomeButtonEnabled(true);
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void onPostCreate(Bundle savedInstanceState) {
         mDrawerToggle.syncState();
     }
@@ -72,11 +67,6 @@ public class DrawerNavActivityDelegate {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if  (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        } else {
-            return false;
-        }
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 }

@@ -21,8 +21,8 @@ import ch.ffhs.esa.proximety.service.binder.user.UserServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
 public class RegisterActivity extends ActionBarActivity {
-    private static String SESSION_INPUT_NAME  = "input_name";
-    private static String SESSION_INPUT_EMAIL = "input_email";
+    private static final String SESSION_INPUT_NAME  = "input_name";
+    private static final String SESSION_INPUT_EMAIL = "input_email";
 
 
 	@Override

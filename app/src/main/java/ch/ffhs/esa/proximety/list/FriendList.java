@@ -1,6 +1,5 @@
 package ch.ffhs.esa.proximety.list;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import ch.ffhs.esa.proximety.R;
 

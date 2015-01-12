@@ -1,6 +1,5 @@
 package ch.ffhs.esa.proximety.service.binder.location;
 
-import android.app.Dialog;
 import android.content.Context;
 
 import com.google.gson.Gson;
@@ -22,8 +21,8 @@ import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
  */
 public class LocationServiceBinder extends ServiceBinder {
 
-    public LocationServiceBinder(Context context, Dialog loadingDialog) {
-        super(context, loadingDialog);
+    public LocationServiceBinder(Context context) {
+        super(context, null);
     }
 
     public void updateLocation(double latitude, double longitude, final ResponseHandler responseHandler) {

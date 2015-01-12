@@ -26,7 +26,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -215,7 +214,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
      */
     private void registerInBackground() {
         final Context context = getApplicationContext();
-        new AsyncTask() {
+        new AsyncTask<Object, Void, String>() {
             @Override
             protected String doInBackground(Object... params) {
                 try {
@@ -403,7 +402,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         editor.putFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LONGITUDE, (float) location.getLongitude());
         editor.apply();
 
-        LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext(), null);
+        LocationServiceBinder lsb = new LocationServiceBinder(getApplicationContext());
         lsb.updateLocation(location.getLatitude(), location.getLongitude(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
@@ -597,6 +596,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         }
 
 		@Override
+        @SuppressWarnings("deprecation")
 		public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_section_list,

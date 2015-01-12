@@ -3,7 +3,7 @@ package ch.ffhs.esa.proximety.async;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.widget.ImageView;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -17,12 +17,12 @@ import ch.ffhs.esa.proximety.helper.Gravatar;
  * Created by Patrick Bösch
  */
 public abstract class GravatarImage extends AsyncTask<Gravatar, Void, Gravatar> {
-    private String GRAVATAR_BASE_URL = "http://www.gravatar.com/avatar/";
 
     protected Gravatar doInBackground(Gravatar... gravatars) {
         Gravatar gravatar = gravatars[0];
         Bitmap bitmap = null;
         try {
+            String GRAVATAR_BASE_URL = "http://www.gravatar.com/avatar/";
             if (gravatar.getEmail() != null && !gravatar.getEmail().isEmpty())
                 bitmap = BitmapFactory.decodeStream((InputStream) new URL(GRAVATAR_BASE_URL.concat(md5Hex(gravatar.getEmail()))).getContent());
         } catch (Exception e) {
@@ -36,22 +36,22 @@ public abstract class GravatarImage extends AsyncTask<Gravatar, Void, Gravatar> 
 
     protected abstract void onPostExecute(Gravatar gravatar);
 
-    public static String hex(byte[] array) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < array.length; ++i) {
-            sb.append(Integer.toHexString((array[i]
-                    & 0xFF) | 0x100).substring(1,3));
+    private static String hex(byte[] array) {
+        StringBuilder sb = new StringBuilder();
+        for (byte anArray : array) {
+            sb.append(Integer.toHexString((anArray
+                    & 0xFF) | 0x100).substring(1, 3));
         }
         return sb.toString();
     }
 
-    public static String md5Hex (String message) {
+    private static String md5Hex(String message) {
         try {
             MessageDigest md =
                     MessageDigest.getInstance("MD5");
             return hex (md.digest(message.getBytes("CP1252")));
-        } catch (NoSuchAlgorithmException e) {
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            Log.i("GravatarImage", e.getMessage());
         }
         return null;
     }

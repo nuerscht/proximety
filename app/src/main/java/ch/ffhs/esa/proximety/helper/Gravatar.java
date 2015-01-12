@@ -1,17 +1,16 @@
 package ch.ffhs.esa.proximety.helper;
 
 import android.graphics.Bitmap;
-import android.widget.ImageView;
 
 /**
  * Created by Patrick Bösch.
  */
 public class Gravatar {
-    private String email;
+    private final String email;
 
     private Bitmap image;
 
-    private int position;
+    private final int position;
 
     public Gravatar(String email, int position) {
         this.email = email;

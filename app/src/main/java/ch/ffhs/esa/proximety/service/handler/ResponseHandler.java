@@ -30,7 +30,7 @@ public abstract class ResponseHandler {
     }
 
 
-    private Context context;
+    private final Context context;
 
     public ResponseHandler(Context context) {
         this.context = context;
@@ -40,11 +40,11 @@ public abstract class ResponseHandler {
         return this.context;
     }
 
-    protected String getUnknownErrorMessage() {
+    String getUnknownErrorMessage() {
         return context.getString(R.string.unknown_error_msg);
     }
 
-    protected String getNoDataErrorMessage() {
+    String getNoDataErrorMessage() {
         return context.getString(R.string.no_data);
     }
 
@@ -64,7 +64,7 @@ public abstract class ResponseHandler {
         return errorMsg;
     }
 
-    protected  String getErrorMessage(JSONObject errorResponse) {
+    String getErrorMessage(JSONObject errorResponse) {
         String errorMsg = getUnknownErrorMessage();
         try {
             if (errorResponse != null)
@@ -77,7 +77,7 @@ public abstract class ResponseHandler {
         return errorMsg;
     }
 
-    protected String getErrorMessage(JSONArray errorResponse) {
+    String getErrorMessage(JSONArray errorResponse) {
         StringBuilder sb = new StringBuilder();
         int count = 0;
         while (count < errorResponse.length()) {

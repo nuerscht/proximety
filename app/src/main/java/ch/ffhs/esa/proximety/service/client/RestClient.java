@@ -26,8 +26,8 @@ import ch.ffhs.esa.proximety.R;
 public class RestClient {
     private static final String BASE_URL = "http://api.proximety.ch/";
 
-    private static AsyncHttpClient syncClient = new SyncHttpClient();
-    private static AsyncHttpClient asyncClient = new AsyncHttpClient();
+    private static final AsyncHttpClient syncClient = new SyncHttpClient();
+    private static final AsyncHttpClient asyncClient = new AsyncHttpClient();
 
     public static void get(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         if (isOnline(context)) {
@@ -37,13 +37,14 @@ public class RestClient {
         }
     }
 
+    /*
     public static void put(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         if (isOnline(context)) {
             getClient().put(context, getAbsoluteUrl(url), params, responseHandler);
         } else {
             Toast.makeText(context, context.getText(R.string.network_not_available), Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     public static void put(Context context, String url, JSONObject jsonObject, AsyncHttpResponseHandler responseHandler) {
         if (isOnline(context)) {
@@ -92,8 +93,7 @@ public class RestClient {
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
-        String url = BASE_URL + relativeUrl;
-        return url;
+        return BASE_URL + relativeUrl;
     }
 
     private static boolean isOnline(Context context) {

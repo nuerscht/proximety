@@ -10,12 +10,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,17 +20,13 @@ import java.net.URL;
 
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.activities.MainActivity;
-import ch.ffhs.esa.proximety.activities.OpenRequestsActivity;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
-import ch.ffhs.esa.proximety.helper.LocationHelper;
 
 /**
  * Created by Patrick Bösch.
  */
 public class GcmIntentService extends IntentService {
-    public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
+    private static final int NOTIFICATION_ID = 1;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -42,11 +35,6 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
-
         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
             /*
              * Filter messages based on message type. Since it is likely that GCM
@@ -80,7 +68,7 @@ public class GcmIntentService extends IntentService {
     }
 
     private void sendNotificationAlert(Bundle extras) {
-        mNotificationManager = (NotificationManager)
+        NotificationManager mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,

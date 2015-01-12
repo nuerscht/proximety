@@ -1,7 +1,6 @@
 package ch.ffhs.esa.proximety.list;
 
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -10,10 +10,10 @@ import ch.ffhs.esa.proximety.consts.ProximetyConsts;
  * Created by Patrick Bösch.
  */
 public class ServiceBinder {
-    private Context context;
-    private Dialog loadingDialog;
+    private final Context context;
+    private final Dialog loadingDialog;
 
-    public ServiceBinder(Context context, Dialog loadingDialog) {
+    protected ServiceBinder(Context context, Dialog loadingDialog) {
         this.context = context;
         this.loadingDialog = loadingDialog;
     }
