@@ -1,31 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/actionbar_extended"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/primary"
-        />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_friend_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:textAllCaps="true"
-        android:textSize="30sp"
-        android:textColor="@color/primary_text"
-        />
+        <TextView
+            android:id="@+id/actionbar_extended"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/primary"
+            />
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/actionbar_extended"
-        tools:context="ch.ffhs.esa.proximety.activities.FriendDetailActivity" />
+        <TextView
+            android:id="@+id/text_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:textAllCaps="true"
+            android:textSize="30sp"
+            android:textColor="@color/primary_text"
+            />
 
-</RelativeLayout>
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/actionbar_extended"
+            tools:context="ch.ffhs.esa.proximety.activities.FriendDetailActivity" />
+
+    </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

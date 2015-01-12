@@ -5,7 +5,6 @@ package ch.ffhs.esa.proximety.activities;
  */
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -16,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -48,12 +48,30 @@ import org.json.JSONObject;
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
-import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
+import ch.ffhs.esa.proximety.domain.UserSettings;
 import ch.ffhs.esa.proximety.helper.LocationHelper;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
 
-public class FriendDetailActivity extends ActionBarActivity implements ActionBar.TabListener, OnMapReadyCallback {
+public class FriendDetailActivity extends ActionBarActivity implements ActionBar.TabListener, OnMapReadyCallback, SwipeRefreshLayout.OnRefreshListener {
+    private SwipeRefreshLayout refreshLayout;
+    @Override
+    public void onRefresh() {
+        Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+
+        setRefreshing();
+        loadUserDetails();
+        loadSettings();
+    }
+
+    private void setRefreshing() {
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+            }
+        });
+    }
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -67,14 +85,19 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_detail);
 
-        //Todo: Get Data with given user id
-        //Toast.makeText(getApplicationContext(), getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID), Toast.LENGTH_SHORT).show();
-
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        refreshLayout.setSize(SwipeRefreshLayout.LARGE);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -113,17 +136,26 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
 
 
         String friendId = getIntent().getExtras().getString(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID);
+        friend = new Friend();
+        friend.id = friendId;
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
-        loadingDialog.show();
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
+        setRefreshing();
+        loadUserDetails();
+        loadSettings();
+    }
 
-        fsb.getFriendDetails(friendId, new ResponseHandler(getApplicationContext()) {
+    private void loadUserDetails() {
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
+
+        fsb.getFriendDetails(friend.id, new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
-                loadingDialog.cancel();
-                if(statusCode == 200){
+                if (statusCode == 200) {
                     JSONArray resp = (JSONArray) response;
                     try {
                         JSONObject singleRow = resp.getJSONObject(0);
@@ -134,6 +166,50 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
                 } else {
                     Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onError(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                refreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void loadSettings() {
+        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
+        fsb.getSettings(friend.id, new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                UserSettings userSettings = (UserSettings)response;
+
+                ToggleButton toggleButton = (ToggleButton)findViewById(R.id.detail_toggle_button);
+                toggleButton.setChecked(userSettings.active == 1);
+                toggleButton.setEnabled(true);
+            }
+
+            public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onError(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                refreshLayout.setRefreshing(false);
+            }
+
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                refreshLayout.setRefreshing(false);
             }
         });
     }
@@ -146,7 +222,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
 
     public void onToggleButtonClick(View button) {
         FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
-        fsb.updateSettings(friend.id, ((ToggleButton)button).isChecked(), new ResponseHandler(getApplicationContext()) {
+        fsb.updateSettings(friend.id, ((ToggleButton) button).isChecked(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
                 Toast.makeText(getApplicationContext(), R.string.setting_saved, Toast.LENGTH_SHORT).show();
@@ -211,6 +287,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
             distanceView.setText(getText(R.string.na));
         }
 
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -311,7 +388,6 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
 
     }
 
-
     public static class MapViewFragment extends Fragment implements
             OnMapReadyCallback {
 
@@ -359,6 +435,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
     }
 
     public static class FriendDetailFragment extends Fragment {
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

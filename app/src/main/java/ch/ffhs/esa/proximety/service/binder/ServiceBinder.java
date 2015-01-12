@@ -3,6 +3,7 @@ package ch.ffhs.esa.proximety.service.binder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 
@@ -30,6 +31,8 @@ public class ServiceBinder {
 
     protected String getToken() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
+        String token = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_TOKEN, "");
+        Log.i("ServiceBinder", "token: " + token);
+        return token;
     }
 }

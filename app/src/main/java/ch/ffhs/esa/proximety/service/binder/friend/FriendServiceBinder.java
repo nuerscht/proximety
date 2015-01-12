@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.FriendRequest;
 import ch.ffhs.esa.proximety.domain.Message;
+import ch.ffhs.esa.proximety.domain.UserSettings;
 import ch.ffhs.esa.proximety.service.binder.ServiceBinder;
 import ch.ffhs.esa.proximety.service.client.RestClient;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
@@ -233,6 +234,37 @@ public class FriendServiceBinder extends ServiceBinder {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 responseHandler.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                closeLoadingDialog();
+                responseHandler.onError(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                closeLoadingDialog();
+                responseHandler.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                closeLoadingDialog();
+                responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    public void getSettings(String friendId, final ResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+
+        RestClient.get(getApplicationContext(), "api/friend/".concat(friendId).concat("/alarm"), params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Gson gson = new Gson();
+                responseHandler.onSuccess(statusCode, headers, gson.fromJson(response.toString(), UserSettings.class));
             }
 
             @Override
