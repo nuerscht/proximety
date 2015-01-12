@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import ch.ffhs.esa.proximety.R;
 
 /**
- * Created by Patrick Bösch.
+ * @author  Patrick Bösch.
  */
 public class LoadingDialogHelper {
 

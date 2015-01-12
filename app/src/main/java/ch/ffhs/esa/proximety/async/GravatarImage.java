@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import ch.ffhs.esa.proximety.helper.Gravatar;
 
 /**
- * Created by Patrick Bösch
+ * @author  Sandro Dallo.
  */
 public abstract class GravatarImage extends AsyncTask<Gravatar, Void, Gravatar> {
 

@@ -3,7 +3,7 @@ package ch.ffhs.esa.proximety.helper;
 import android.graphics.Bitmap;
 
 /**
- * Created by Patrick Bösch.
+ * @author  Sandro Dallo.
  */
 public class Gravatar {
     private final String email;

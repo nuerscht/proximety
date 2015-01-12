@@ -27,7 +27,9 @@ import ch.ffhs.esa.proximety.helper.Gravatar;
 import ch.ffhs.esa.proximety.list.OpenRequestList;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
-
+/**
+ * @author  Sandro Dallo.
+ */
 public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout refreshLayout;
     private String[] ids = null;
