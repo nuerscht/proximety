@@ -55,6 +55,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(Bundle extras) {
+        Log.i("push-notification", "reveived");
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean push_toggle = sharedPref.getBoolean(SettingsActivity.PROXIMETY_SETTING_PUSH_TOGGLE, true);
