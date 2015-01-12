@@ -122,7 +122,7 @@ public class GcmIntentService extends IntentService {
         Bitmap mapPicture = null;
         try {
             SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, Context.MODE_PRIVATE);
-            String url = "http://maps.googleapis.com/maps/api/staticmap?size=400x150&markers=color:red%7Clabel:F%7C";
+            String url = "http://maps.googleapis.com/maps/api/staticmap?size=800x300&markers=color:red%7Clabel:F%7C";
             url = url.concat(friend_lat).concat(",").concat(friend_long);
             url = url.concat("&markers=color:0x336699%7Clabel:M%7C");
             url = url.concat(Float.toString(sharedPreferences.getFloat(ProximetyConsts.PROXIMETY_SHARED_PREF_LATITUDE, 0))).concat(",");
