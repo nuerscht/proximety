@@ -17,14 +17,17 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -587,15 +590,40 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         }
 	}
 
-	public static class ListViewFragment extends Fragment {
+	public static class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+        private SwipeRefreshLayout refreshLayout;
+        private View rootView;
+        private LayoutInflater inflater;
+
+        @Override
+        public void onRefresh() {
+            Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
+            loadFriendList(inflater, rootView, null);
+        }
+
 		@Override
 		public View onCreateView(final LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_section_list,
+            this.inflater = inflater;
+            rootView = inflater.inflate(R.layout.fragment_section_list,
 					container, false);
 
             final Dialog loadingDialog = LoadingDialogHelper.createDialog(getActivity());
             loadingDialog.show();
+
+            loadFriendList(inflater, rootView, loadingDialog);
+
+            refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+            refreshLayout.setOnRefreshListener(this);
+            refreshLayout.setColorScheme(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
+
+			return rootView;
+		}
+
+        private void loadFriendList(final LayoutInflater inflater, final View rootView, final Dialog loadingDialog) {
             FriendServiceBinder fsb = new FriendServiceBinder(getActivity().getApplicationContext(), loadingDialog);
             fsb.getListOfFriends(new ResponseHandler(getActivity().getApplicationContext()) {
                 @Override
@@ -608,9 +636,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                     }
                 }
             });
-
-			return rootView;
-		}
+        }
 
         private void onListLoadSuccess(LayoutInflater inflater, View rootView, JSONArray friendListJson, Dialog loadingDialog) {
             String[] friends = new String[friendListJson.length()];
@@ -726,7 +752,9 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
                 dialog.show();
             }
 
-            loadingDialog.cancel();
+            if (loadingDialog != null)
+                loadingDialog.cancel();
+            refreshLayout.setRefreshing(false);
         }
     }
 
