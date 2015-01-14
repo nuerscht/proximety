@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.identity.intents.AddressConstants;
 import com.google.gson.Gson;
 
 import org.apache.http.Header;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import ch.ffhs.esa.proximety.R;
 import ch.ffhs.esa.proximety.async.GravatarImage;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.domain.Friend;
 import ch.ffhs.esa.proximety.helper.Gravatar;
 import ch.ffhs.esa.proximety.list.OpenRequestList;
@@ -114,15 +116,16 @@ public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefr
         builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String id = ids[(int)button.getTag()];
+                final String id = ids[(int)button.getTag()];
                 FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
                 fsb.confirmRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
                         if (statusCode == 200) {
-                            Intent intent = getIntent();
-                            finish();
+                            Intent intent = new Intent(getApplicationContext(), FriendDetailActivity.class);
+                            intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, id);
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                         }
@@ -148,15 +151,15 @@ public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefr
         builder.setPositiveButton(R.string.refuse, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String id = ids[(int)button.getTag()];
+                final String id = ids[(int)button.getTag()];
                 FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
                 fsb.declineRequest(id, new ResponseHandler(getApplicationContext()) {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
                         if (statusCode == 200) {
                             Intent intent = getIntent();
-                            finish();
                             startActivity(intent);
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
                         }
