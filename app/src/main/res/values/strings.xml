@@ -43,13 +43,13 @@
     <string name="cancel">Abbrechen</string>
     <string name="na">N/A</string>
     <string name="network_not_available">Keine Internetverbindung vorhanden</string>
-    <string name="friend_delete_info">Wollen Sie diesen Freund wirklich löschen?</string>
+    <string name="friend_delete_info">Willst Du diesen Freund wirklich löschen?</string>
     <string name="delete">Löschen</string>
     <string name="friend_refuse">Anfrage ablehnen</string>
-    <string name="friend_refuse_info">Wollen Sie diese Anfrage wirklich ablehnen?</string>
+    <string name="friend_refuse_info">Willst Du diese Anfrage wirklich ablehnen?</string>
     <string name="refuse">Ablehnen</string>
     <string name="friend_accept">Anfrage annehmen</string>
-    <string name="friend_accept_info">Wollen Sie diese Anfrage wirklich akzeptieren?</string>
+    <string name="friend_accept_info">Willst Du diese Anfrage wirklich akzeptieren?</string>
     <string name="accept">Akzeptieren</string>
     <string name="setting_saved">Einstellung gespeichert</string>
     <string name="please_wait">Bitte warten…</string>
@@ -62,5 +62,6 @@
     <string name="invalid_option">Ungültige Option ausgewählt</string>
     <string name="from_friend">von </string>
     <string name="alarm_distance">Alarm-Distanz (in km)</string>
+    <string name="same_email">Du kannst nicht mit Dir selber befreundet sein.</string>
 
 </resources>

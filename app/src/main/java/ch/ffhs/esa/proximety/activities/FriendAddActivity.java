@@ -2,6 +2,7 @@ package ch.ffhs.esa.proximety.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import org.apache.http.Header;
 
 import ch.ffhs.esa.proximety.R;
+import ch.ffhs.esa.proximety.consts.ProximetyConsts;
 import ch.ffhs.esa.proximety.helper.LoadingDialogHelper;
 import ch.ffhs.esa.proximety.service.binder.friend.FriendServiceBinder;
 import ch.ffhs.esa.proximety.service.handler.ResponseHandler;
@@ -36,23 +38,29 @@ public class FriendAddActivity extends ActionBarActivity {
     }
 
     public void onButtonInviteClick(View button){
-        final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
-        loadingDialog.show();
-
-        FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
-
-
         EditText email = (EditText)findViewById(R.id.inputEmail);
-        fsb.sendRequest(email.getText().toString(), new ResponseHandler(getApplicationContext()) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, Object response) {
-                if (statusCode == 200) {
-                    loadingDialog.cancel();
-                    onFriendRequest();
-                } else {
-                    Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        String loginEMail = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_EMAIL, "");
+
+        if (!loginEMail.equals(email.getText().toString())) {
+            final Dialog loadingDialog = LoadingDialogHelper.createDialog(this);
+            loadingDialog.show();
+            FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), loadingDialog);
+
+            fsb.sendRequest(email.getText().toString(), new ResponseHandler(getApplicationContext()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, Object response) {
+                    if (statusCode == 200) {
+                        loadingDialog.cancel();
+                        onFriendRequest();
+                    } else {
+                        Toast.makeText(getApplicationContext(), getErrorMessage(response), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), getText(R.string.same_email), Toast.LENGTH_SHORT).show();
+        }
     }
 }

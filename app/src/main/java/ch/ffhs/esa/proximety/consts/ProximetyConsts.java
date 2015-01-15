@@ -6,6 +6,7 @@ package ch.ffhs.esa.proximety.consts;
 public class ProximetyConsts {
     public static final String PROXIMETY_SHARED_PREF = "ProximetySharedPref";
     public static final String PROXIMETY_SHARED_PREF_TOKEN = "ProximetySharedPrefToken";
+    public static final String PROXIMETY_SHARED_PREF_EMAIL = "ProximetySharedPrefEMail";
     public static final String PROXIMETY_SHARED_PREF_LONGITUDE = "ProximetySharedPrefLongitude";
     public static final String PROXIMETY_SHARED_PREF_LATITUDE = "ProximetySharedPrefLatitude";
 

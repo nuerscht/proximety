@@ -76,6 +76,14 @@ public class LoginActivity extends ActionBarActivity {
 
         EditText user = (EditText)findViewById(R.id.inputEmail);
         EditText password = (EditText)findViewById(R.id.inputPassword);
+
+        //save login email address
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ProximetyConsts.PROXIMETY_SHARED_PREF_EMAIL, user.getText().toString());
+        editor.commit();
+
+        //invoke login service
         usb.login(user.getText().toString(), password.getText().toString(), new ResponseHandler(getApplicationContext()) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, Object response) {
