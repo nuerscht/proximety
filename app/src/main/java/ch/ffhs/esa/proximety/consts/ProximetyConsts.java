@@ -22,6 +22,7 @@ public class ProximetyConsts {
     public static final String SERVICE_PARAM_ID = "id";
     public static final String SERVICE_PARAM_FRIEND_ID = "friend_id";
     public static final String SERVICE_PARAM_ACTIVE = "active";
+    public static final String SERVICE_PARAM_DISTANCE = "distance";
 
     public static final String FRIENDS_DETAIL_FRIEND_ID = "FriendsDetailFriendId";
 }

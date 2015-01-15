@@ -44,10 +44,32 @@
         android:layout_below="@+id/text_distance"/>
 
     <TextView
+        android:id="@+id/text_distance_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_below="@+id/text_settings"
+        android:layout_marginTop="20dp"
+        android:text="@string/alarm_distance" />
+
+    <EditText
+        android:id="@+id/input_distance_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/text_settings"
+        android:inputType="number"
+        android:maxLength="2"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:ems="4"/>
+
+    <TextView
         android:id="@+id/text_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_settings"
+        android:layout_below="@+id/input_distance_setting"
         android:layout_marginTop="25dp"
         android:textStyle="bold"
         android:textSize="22sp"
@@ -57,18 +79,17 @@
         android:id="@+id/detail_toggle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_settings"
+        android:layout_below="@+id/input_distance_setting"
         android:layout_marginTop="20dp"
         android:layout_alignParentRight="true"
-        android:enabled="false"
-        android:onClick="onToggleButtonClick"/>
+        android:enabled="false" />
 
     <Button
         android:id="@+id/button_friend_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/text_alarm"
+        android:layout_below="@+id/detail_toggle_button"
         android:text="@string/friend_delete"
         style="@style/ButtonStyle"
         android:onClick="onButtonDeleteFriendClick"/>

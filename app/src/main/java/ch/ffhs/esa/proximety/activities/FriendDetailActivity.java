@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -78,6 +79,8 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
      */
     private ViewPager mViewPager;
     private Friend friend;
+    private int distance;
+    private boolean alarm;
 
     @Override
     @SuppressWarnings("deprecation")
@@ -149,6 +152,28 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
         loadSettings();
     }
 
+    @Override
+    public void onStop() {
+        ToggleButton toggleButton = (ToggleButton)findViewById(R.id.detail_toggle_button);
+        EditText editText = (EditText)findViewById(R.id.input_distance_setting);
+
+        boolean alarm = toggleButton.isChecked();
+        int distance = Integer.parseInt(editText.getText().toString());
+
+        //Nur Aufrufen wenn geändert
+        if (alarm != this.alarm || distance != this.distance) {
+            FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
+            fsb.updateSettings(friend.id, alarm, distance, new ResponseHandler(getApplicationContext()) {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, Object response) {
+                    Toast.makeText(getApplicationContext(), R.string.setting_saved, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        super.onStop();
+    }
+
     private void loadUserDetails() {
         FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
 
@@ -193,8 +218,13 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
                 UserSettings userSettings = (UserSettings)response;
 
                 ToggleButton toggleButton = (ToggleButton)findViewById(R.id.detail_toggle_button);
-                toggleButton.setChecked(userSettings.active == 1);
+                alarm = userSettings.active == 1;
+                toggleButton.setChecked(alarm);
                 toggleButton.setEnabled(true);
+
+                EditText editText = (EditText)findViewById(R.id.input_distance_setting);
+                distance = userSettings.distance;
+                editText.setText(Integer.toString(distance));
             }
 
             public void onError(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -220,7 +250,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
         finish();
     }
 
-    public void onToggleButtonClick(View button) {
+    /*public void onToggleButtonClick(View button) {
         FriendServiceBinder fsb = new FriendServiceBinder(getApplicationContext(), null);
         fsb.updateSettings(friend.id, ((ToggleButton) button).isChecked(), new ResponseHandler(getApplicationContext()) {
             @Override
@@ -228,7 +258,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
                 Toast.makeText(getApplicationContext(), R.string.setting_saved, Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     public void onButtonDeleteFriendClick(View button) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -287,15 +287,17 @@ public class FriendServiceBinder extends ServiceBinder {
         });
     }
 
-    public void updateSettings(String friendId, boolean active, final ResponseHandler responseHandler) {
+    public void updateSettings(String friendId, boolean active, int distance, final ResponseHandler responseHandler) {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+            jsonObj.put(ProximetyConsts.SERVICE_PARAM_DISTANCE, distance);
 
             if (active)
                 jsonObj.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 1);
             else
                 jsonObj.put(ProximetyConsts.SERVICE_PARAM_ACTIVE, 0);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

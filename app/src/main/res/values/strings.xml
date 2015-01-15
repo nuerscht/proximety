@@ -61,5 +61,6 @@
     <string name="about_text">Über was denn?</string>
     <string name="invalid_option">Ungültige Option ausgewählt</string>
     <string name="from_friend">von </string>
+    <string name="alarm_distance">Alarm-Distanz (in km)</string>
 
 </resources>
