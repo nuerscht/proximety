@@ -9,6 +9,8 @@ public class ProximetyConsts {
     public static final String PROXIMETY_SHARED_PREF_EMAIL = "ProximetySharedPrefEMail";
     public static final String PROXIMETY_SHARED_PREF_LONGITUDE = "ProximetySharedPrefLongitude";
     public static final String PROXIMETY_SHARED_PREF_LATITUDE = "ProximetySharedPrefLatitude";
+    public static final String PROXIMETY_SHARED_PREF_REG_ID = "registration_id";
+    public static final String PROXIMETY_SHARED_PREF_APP_VERSION = "appVersion";
 
     public static final String JSON_RETURN_MESSAGE = "msg";
 

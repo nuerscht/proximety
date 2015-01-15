@@ -91,8 +91,6 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
 
     private final String SENDER_ID = "201494589339";
 
@@ -271,8 +269,8 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         int appVersion = getAppVersion(context);
         Log.i(TAG, "Saving regId " + regId + " on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(PROPERTY_REG_ID, regId);
-        editor.putInt(PROPERTY_APP_VERSION, appVersion);
+        editor.putString(ProximetyConsts.PROXIMETY_SHARED_PREF_REG_ID, regId);
+        editor.putInt(ProximetyConsts.PROXIMETY_SHARED_PREF_APP_VERSION, appVersion);
         editor.apply();
     }
 
@@ -286,7 +284,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
      */
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGCMPreferences();
-        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        String registrationId = prefs.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_REG_ID, "");
         if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
             return "";
@@ -294,7 +292,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         // Check if app was updated; if so, it must clear the registration ID
         // since the existing regID is not guaranteed to work with the new
         // app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int registeredVersion = prefs.getInt(ProximetyConsts.PROXIMETY_SHARED_PREF_APP_VERSION, Integer.MIN_VALUE);
         int currentVersion = getAppVersion(context);
         if (registeredVersion != currentVersion) {
             Log.i(TAG, "App version changed.");
@@ -309,7 +307,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     private SharedPreferences getGCMPreferences() {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
-        return getSharedPreferences(MainActivity.class.getSimpleName(),
+        return getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF,
                 Context.MODE_PRIVATE);
     }
 
@@ -455,6 +453,20 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     }
 
     private void logout() {
+        UserServiceBinder usb = new UserServiceBinder(getApplicationContext(), null);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
+        String regid = sharedPreferences.getString(ProximetyConsts.PROXIMETY_SHARED_PREF_REG_ID, "");
+
+        usb.removeClientId(regid, new ResponseHandler(getApplicationContext()) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, Object response) {
+                finishLogout();
+            }
+        });
+    }
+
+    private void finishLogout() {
         //clear application session data
         SharedPreferences sharedPreferences = getSharedPreferences(ProximetyConsts.PROXIMETY_SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

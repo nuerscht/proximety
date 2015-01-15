@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -97,6 +98,35 @@ public class UserServiceBinder extends ServiceBinder {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 closeLoadingDialog();
                 responseHandler.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
+    public void removeClientId(String regid, final ResponseHandler responseHandler) {
+
+        RequestParams params = new RequestParams();
+        params.put(ProximetyConsts.SERVICE_PARAM_ID, regid);
+        params.put(ProximetyConsts.SERVICE_PARAM_TOKEN, getToken());
+
+        RestClient.delete(getApplicationContext(), "api/user/client-id", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                responseHandler.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                responseHandler.onSuccess(statusCode, headers, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                responseHandler.onSuccess(statusCode, headers, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                responseHandler.onSuccess(statusCode, headers, null);
             }
         });
     }
