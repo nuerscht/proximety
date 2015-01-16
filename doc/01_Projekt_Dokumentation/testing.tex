@@ -30,24 +30,13 @@ Folgende Umgebungen sind verfügbar. Eine Abkürzung für spätere referenzierun
 
 \begin{itemize}
 \item Android Emulator (Android 4.4) [AE-44]
-\item Samsung Galaxy Note 4 (Android 4.4) [Note-44]
+\item Samsung Galaxy Nexus (Android 4.3) [GNEX-43]
 \item Android Emulator (Android 5.0) [AE-50]
 \item Google/LG Nexus 5 (Android 5.0) [N5-50]
 \end{itemize}
 
-\subsection{Test Fälle}
-Referenzen zu automatisierten Test Fällen
-\begin{center}
-	\begin{tabular}{ | l | l | l | l | }
-	\hline
-	Name / Id & Priorität & Referenz & Abdeckung \\
-	\hline
-	 & & & \\
-	\hline
-	\end{tabular}
-\end{center}
-
-Manuelle Test Fälle:
+\newpage
+\subsection{Manuell Test Fälle}
 
 \begin{center}
 	\begin{tabular}{ | l | l | l | l | }
@@ -246,7 +235,7 @@ Manuelle Test Fälle:
 	  \mc{ Allg-Alarm ausschalten } & \mc{} \\
 	  \mc{ Abmelden, App schliessen } & \mc{} \\
 	  \mc{ App starten, Anmelden } & \mc{Hauptbildschirm erscheint} \\
-	  \mc{ Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{Einstellungen gespeichert, wie in Schritt 2,3} \\
+	  \mc{ Drawer Menu öffnen -> ``Einstellungen`` auswählen } & \mc{Einstellungen gespeichert, wie in Schritt 2 \& 3} \\
 	  \hline
 	\end{tabular}
 \end{center}
@@ -260,7 +249,7 @@ Hier werden die Resulatate der Ausführungen mit der verwendeten Umgebung aufgef
 	\hline
 	Name / Id & Datum & Umgebung & Resultat & Bemerkungen \\
 	\hline
-	\hyperlink{TC01}{TC01} & 14.1.2015 & N5-50 & \textcolor{green}{OK} &  \\
+	\hyperlink{TC01}{TC01} & 14.1.2015 & N5-50 & \textcolor{green}{OK} & \\
 	\hline
 	\hyperlink{TC02}{TC02} & 14.1.2015 & N5-50 & \textcolor{green}{OK} & \\
 	\hline
@@ -279,6 +268,34 @@ Hier werden die Resulatate der Ausführungen mit der verwendeten Umgebung aufgef
 	\hyperlink{TC09}{TC09} & 14.1.2015 & N5-50 & \textcolor{red}{NOK} & Alarm erscheint trotzdem. Einstellung wird nicht gespeichert\\
 	\hline
 	\hyperlink{TC10}{TC10} & 14.1.2015 & N5-50 & \textcolor{red}{NOK} & Einstellungen werden gespeichert. Es gibt jedoch keine Distanz Einstellung\\
+	\hline
+	\hyperlink{TC01}{TC01} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC02}{TC02} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC03}{TC03} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC04}{TC04} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC05}{TC05} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC06}{TC06} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC07}{TC07} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & Einstellung der Distanz pro Freund möglich \\
+	\hline
+	\hyperlink{TC08}{TC08} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC09}{TC09} & 15.1.2015 & GNEX-43 & \textcolor{red}{NOK} & Alarm erscheint trotzdem. Einstellung wird nicht gespeichert\\
+	\hline
+	\hyperlink{TC10}{TC10} & 15.1.2015 & GNEX-43 & \textcolor{green}{OK} & Einstellung der Distanz pro Freund möglich\\
+	\hline
+	\hyperlink{TC07}{TC07} & 16.1.2015 & N5-50 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC09}{TC09} & 16.1.2015 & N5-50 & \textcolor{green}{OK} & \\
+	\hline
+	\hyperlink{TC10}{TC10} & 16.1.2015 & N5-50 & \textcolor{green}{OK} & Einstellung der Distanz pro Freund möglich\\
+	\hline
+	\hyperlink{TC09}{TC09} & 16.1.2015 & GNEX-43 & \textcolor{green}{OK} & \\
 	\hline
 	\end{tabular}
 \end{center}
