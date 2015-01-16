@@ -154,11 +154,16 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
 
     @Override
     public void onStop() {
+        int distance;
         ToggleButton toggleButton = (ToggleButton)findViewById(R.id.detail_toggle_button);
         EditText editText = (EditText)findViewById(R.id.input_distance_setting);
 
         boolean alarm = toggleButton.isChecked();
-        int distance = Integer.parseInt(editText.getText().toString());
+        if(editText.getText().toString().equals("")) {
+            distance = this.distance;
+        } else {
+            distance = Integer.parseInt(editText.getText().toString());
+        }
 
         //Nur Aufrufen wenn geändert
         if (alarm != this.alarm || distance != this.distance) {
