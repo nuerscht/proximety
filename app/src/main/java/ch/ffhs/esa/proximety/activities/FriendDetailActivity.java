@@ -218,7 +218,7 @@ public class FriendDetailActivity extends ActionBarActivity implements ActionBar
                 UserSettings userSettings = (UserSettings)response;
 
                 ToggleButton toggleButton = (ToggleButton)findViewById(R.id.detail_toggle_button);
-                alarm = userSettings.active == 1;
+                alarm = userSettings.active;
                 toggleButton.setChecked(alarm);
                 toggleButton.setEnabled(true);
 

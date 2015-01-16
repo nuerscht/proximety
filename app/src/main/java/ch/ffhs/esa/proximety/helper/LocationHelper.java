@@ -43,7 +43,9 @@ public class LocationHelper {
         try {
             Geocoder geocoder = new Geocoder(activity.getApplicationContext());
             List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
-            Address address = addressList.get(0);
+            String addressDescription = "";
+            if (addressList.size() != 0) {
+                Address address = addressList.get(0);
             /*String addressDescription = "";
             for (int j = 0; j < address.getMaxAddressLineIndex(); j++) {
                 if (j != 0)
@@ -52,19 +54,20 @@ public class LocationHelper {
                 addressDescription = addressDescription.concat(address.getAddressLine(j).toString());
             }*/
 
-            String city="";
-            if (address.getLocality() != null) {
-                city=address.getLocality();
-            } else {
-                if (address.getSubAdminArea() != null) {
-                    city = address.getSubAdminArea();
+                String city = "";
+                if (address.getLocality() != null) {
+                    city = address.getLocality();
+                } else {
+                    if (address.getSubAdminArea() != null) {
+                        city = address.getSubAdminArea();
+                    }
                 }
+
+                addressDescription = city;
+
+                if (!address.getCountryName().isEmpty())
+                    addressDescription = addressDescription.concat(", ").concat(address.getCountryName());
             }
-
-            String addressDescription = city;
-
-            if (!address.getCountryName().isEmpty())
-                addressDescription = addressDescription.concat(", ").concat(address.getCountryName());
 
             return addressDescription;
         } catch (IOException e) {

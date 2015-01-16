@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class UserSettings {
     @SerializedName("active")
-    public int active;
+    public boolean active = true;
 
     @SerializedName("distance")
     public int distance = 5;
