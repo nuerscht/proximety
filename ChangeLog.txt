@@ -4,11 +4,11 @@ Proximety ChangeLog
 ------------------------------------------------------------------------------------------------------------------------
 Version 1.0.1
 ------------------------------------------------------------------------------------------------------------------------
-	Fixes: Vergessene Distanz-Einstellung beim Freund erg�nzt.
-	Fixes: Unterbunden, dass man sich selber als Freund hinzuf�gen kann.
-	Fixes: GCM Registration ID l�schen beim Logout.
-	Fixes: Location Update Priorit�t gesenkt, um Batterie zu sparen.
-	Fixes: Einstellungen pro Freund werden auf dem Server gespeichert und ber�cksichtigt.
+	Fixes: Vergessene Distanz-Einstellung beim Freund ergänzt.
+	Fixes: Unterbunden, dass man sich selber als Freund hinzufügen kann.
+	Fixes: GCM Registration ID löschen beim Logout.
+	Fixes: Location Update Priorität gesenkt, um Batterie zu sparen.
+	Fixes: Einstellungen pro Freund werden auf dem Server gespeichert und berücksichtigt.
 	Feature: Weiterleitung zur Freund Detail Activity, wenn Anfrage akzeptiert.
 	
 ------------------------------------------------------------------------------------------------------------------------
@@ -17,10 +17,10 @@ Version 1.0.0
 Erste Version der Android App zur Positionsbestimmung von Freunden und Benachrichtigung, wenn Freunde in einen einstell-
 baren Radius kommen.
 
-	Feature: Push-Nachrichten �ber GCM (Offene Anfrage/Freund in der N�he)
+	Feature: Push-Nachrichten über GCM (Offene Anfrage/Freund in der Nähe)
 	Feature: Benutzer registrieren
 	Feature: Freundschaftsanfrage versenden
-	Feature: Freundschaft aufl�sen
+	Feature: Freundschaft auflösen
 	Feature: Aktueller Standort eines Freundes abfragen
 	Feature: Proximity Alarm
 	Feature: Freund kontaktieren
