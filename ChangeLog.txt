@@ -4,7 +4,7 @@ Proximety ChangeLog
 ------------------------------------------------------------------------------------------------------------------------
 Version 1.0.1
 ------------------------------------------------------------------------------------------------------------------------
-	Fixes: Vergessene Distanz-Einstellung beim Freund ergänzt.
+	Fixes: Distanz-Einstellung beim Freund ergänzt.
 	Fixes: Unterbunden, dass man sich selber als Freund hinzufügen kann.
 	Fixes: GCM Registration ID löschen beim Logout.
 	Fixes: Location Update Priorität gesenkt, um Batterie zu sparen.
