@@ -123,7 +123,11 @@ public class OpenRequestsActivity extends ActionBarActivity implements SwipeRefr
                     public void onSuccess(int statusCode, Header[] headers, Object response) {
                         if (statusCode == 200) {
                             Intent intent = new Intent(getApplicationContext(), FriendDetailActivity.class);
-                            intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, id);
+                            try {
+                                intent.putExtra(ProximetyConsts.FRIENDS_DETAIL_FRIEND_ID, ((JSONObject)response).getString("_id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             startActivity(intent);
                             finish();
                         } else {
